@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "269731746651",
+    "firebase_url": "https://skugal-production.firebaseio.com",
+    "project_id": "skugal-production",
+    "storage_bucket": "skugal-production.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269731746651:android:e7e07caa0376ec6d5f007e",
+        "android_client_info": {
+          "package_name": "com.digitlschool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269731746651-41v8etj3qhctff4imb6mrgcijesmleh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCHl_vQDbp7Odk41zk0FjjsGudFUD-eO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269731746651-41v8etj3qhctff4imb6mrgcijesmleh4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

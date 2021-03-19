@@ -131,7 +131,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.teacherapp"
+        applicationId "com.digitlschool"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

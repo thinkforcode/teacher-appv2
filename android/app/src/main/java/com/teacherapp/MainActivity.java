@@ -1,4 +1,4 @@
-package com.teacherapp;
+package com.digitlschool;
 
 import com.facebook.react.ReactActivity;
 
