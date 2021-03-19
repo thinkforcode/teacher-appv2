@@ -145,23 +145,23 @@ const Login = (props) => {
                 ],
             }}>
 
-                <Text style={{ fontSize: 30, color: '#E53563', fontWeight: 'bold', }}>Welcome</Text>
-                <Text style={{ color: '#414268', fontSize: 18, }}>Enter your mobile number</Text>
+                <Text style={styles.HeaderText}>Welcome</Text>
+                <Text style={styles.titleText}>Enter your mobile number</Text>
 
                 <View style={{ marginTop: 20,}}>
-                    <Text style={{ color: '#35365F', fontSize: 14 }}>Select Your Country</Text>
-                    <TouchableOpacity onPress={() => { openModal() }} style={{ borderColor: '#C1C6D0',  height: 46, borderRadius: 10, borderWidth: 1, padding: 10, marginTop: 10, }}>
+                    <Text style={styles.Text}>Select Your Country</Text>
+                    <TouchableOpacity onPress={() => { openModal() }} style={styles.countryBox}>
                         <Text tyle={{ color: '#414268', fontSize: 16,}}> {countryName}</Text>
                     </TouchableOpacity>
 
                     <View style={{ marginTop: 14, borderBottomColor: '#DFE4EE', }}>
-                        <Text style={{ color: '#35365F', fontSize: 14, }}>Mobile Number</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 8 }}>
-                            <View style={{ width: 70, height: 46, borderWidth: 1, borderColor: "#C1C6D0", borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ color: '#C0C7D4', fontSize: 16, fontWeight: 'bold' }}>{cc}</Text>
+                        <Text style={styles.Text}>Mobile Number</Text>
+                        <View style={styles.mobileNumber}>
+                            <View style={styles.inputText}>
+                                <Text style={styles.mobileNumberText}>{cc}</Text>
                             </View>
 
-                            <View style={{ flex:1, height: 46, borderWidth: 1, borderColor: '#C1C6D0', borderRadius: 10, marginLeft: 6 }}>
+                            <View style={styles.inputBox}>
                                 <TextInput
                                     placeholderTextColor="#4A4441"
                                     placeholder="Mobile number *"
@@ -176,7 +176,7 @@ const Login = (props) => {
                 </View>
                 
 
-                <View style={{ marginTop: 22, flexDirection: 'row' }}>
+                <View style={{ marginTop: 22, flexDirection: 'row',}}>
                     <TouchableOpacity onPress={() => { _acceptTermsCondition() }}>
                         {
                             isChecked ?
@@ -233,7 +233,57 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#ffffff',
         textAlign: 'center',
+    },
+    HeaderText:{
+        fontSize: 30,
+         color: '#E53563',
+          fontWeight: 'bold' 
+    },
+    titleText:{
+        color: '#414268',
+         fontSize: 18,
+    },
+    countryBox:{
+        borderColor: '#C1C6D0', 
+         height: 46,
+         borderRadius: 10,
+          borderWidth: 1,
+           padding: 10,
+            marginTop: 10,
+    },
+    Text:{
+        color: '#35365F',
+         fontSize: 14 
+    },
+    inputBox:{
+        flex:1,
+         height: 46, 
+         borderWidth: 1,
+          borderColor: '#C1C6D0',
+           borderRadius: 10,
+            marginLeft: 6 
+    },
+    inputText:{
+        width: 70,
+         height: 46,
+          borderWidth: 1,
+           borderColor: "#C1C6D0",
+            borderRadius: 10,
+             justifyContent: 'center',
+              alignItems: 'center'
+    },
+    mobileNumber:
+    {
+        flexDirection: 'row',
+         alignItems: 'center', 
+         paddingTop: 10 
+    },
+    mobileNumberText:{
+        color: '#C0C7D4',
+         fontSize: 16,
+          fontWeight: 'bold'
     }
+    
 })
 
 export default Login
