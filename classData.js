@@ -1,0 +1,20 @@
+export var userIntrestData = [
+    { title: "Astronomy", isSelect: false, },
+    { title: "Science", isSelect: false, },
+    { title: "Biology", isSelect: false, },
+    { title: "Mathematics", isSelect: false, },
+    { title: "Psychology", isSelect: false, },
+    { title: "Dancing", isSelect: false, },
+    { title: "Music", isSelect: false, },
+    { title: "Guitar", isSelect: false, },
+    { title: "Football", isSelect: false, },
+    { title: "Sports", isSelect: false, },
+    { title: "Cricket", isSelect: false, },
+    { title: "Bowling", isSelect: false, },
+    { title: "Writing", isSelect: false, },
+    { title: "Gaming", isSelect: false, },
+    { title: "Computer Language ", isSelect: false, },
+    { title: "Cooking", isSelect: false, },
+    { title: "Stitching", isSelect: false, },
+    { title: "Debates", isSelect: false, }
+]
