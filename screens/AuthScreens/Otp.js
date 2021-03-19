@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Animated, TextInput,  StatusBar } from 'react-native'
-// import CustomButton from '../../components/CustomButton';
+ import CustomButton from '../../components/CustomButton';
 // import { verifyOtp } from '../../redux/actions/userAction';
 // import { connect } from 'react-redux'
 // import messaging from '@react-native-firebase/messaging';
-// import Loader from '../../components/Loader';
+ import Loader from '../../components/Loader';
 // import { onUserLogin } from '../../redux/actions/userAction'
-// import Headers from '../../components/Headers';
+ import Headers from '../../components/Headers';
 
 
 const Otp = (props) => {
@@ -157,7 +157,7 @@ const Otp = (props) => {
 
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" >
+        <KeyboardAvoidingView  behavior="padding" >
             <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
             <Headers {...props} title="Verify OTP" />
             <Animated.View style={{
@@ -172,12 +172,12 @@ const Otp = (props) => {
             }}>
 
 
-                <View style={{ alignSelf: 'center', marginTop: 50 }}>
-                    <Text style={{ color: '#35365F', fontSize: 16 }}>We have sent a 6-digit OTP to</Text>
-                    <Text style={{ textAlign: 'center', color: '#414268', paddingTop: 10 }}>{userReducer.loginData.mobileNumber}</Text>
+                <View style={styles.headerText}>
+                    <Text style={styles.titleText}>We have sent a 6-digit OTP to</Text>
+                    {/* <Text style={{ textAlign: 'center', color: '#414268', paddingTop: 10 }}>{userReducer.loginData.mobileNumber}</Text> */}
                 </View>
 
-                <View style={{ marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                <View style={styles.otpSection}>
                     <TextInput
                         style={styles.input}
                         ref={pin1}
@@ -229,7 +229,7 @@ const Otp = (props) => {
                     />
                 </View>
 
-                {
+                {/* {
                     otpVisible ?
                         <View style={{ alignSelf: 'flex-end', marginHorizontal: 30, marginTop: 70 }}><Text style={{ color: '#94A1AC', fontSize: 16, fontWeight: '500' }}>00:{seconds}</Text></View> :
                         <View style={{ marginTop: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
@@ -239,26 +239,27 @@ const Otp = (props) => {
                             </TouchableOpacity>
                         </View>
 
-                }
+                } */}
 
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 10 }}>
                     <CustomButton {...props} button={styles.button} _doAction={enterOtp} item={`${code1}${code2}${code3}${code4}${code5}${code6}`} buttonText={styles.buttonText} title="Verify" />
+                    
                 </View>
 
             </Animated.View>
 
-            { userReducer.otpLoading && <Loader />}
+            {/* { userReducer.otpLoading && <Loader />} */}
 
         </KeyboardAvoidingView>
     )
 }
 
-const mapStateToProps = (state) => ({
-    userReducer: state.userReducer,
-})
+// const mapStateToProps = (state) => ({
+//     userReducer: state.userReducer,
+// })
 
-export default connect(mapStateToProps, { verifyOtp, onUserLogin })(Otp);
-
+// export default connect(mapStateToProps, { verifyOtp, onUserLogin })(Otp);
+export default Otp
 
 const styles = StyleSheet.create({
     button: {
@@ -291,6 +292,25 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#ffffff',
         textAlign: 'center',
+    },
+    headerText:
+    {
+        alignSelf: 'center',
+         marginTop: 50
+    },
+
+    titleText:
+    {
+        color: '#35365F',
+         fontSize: 16 
+    },
+    otpSection:
+    {
+        marginTop: 30,
+         flexDirection: 'row',
+          alignItems: 'center',
+           justifyContent: 'space-evenly',
     }
 })
+
 
