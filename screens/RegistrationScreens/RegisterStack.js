@@ -1,12 +1,16 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
 
-const RegisterStack = () => {
-    return (
-        <View>
-            <Text>RegisterStack</Text>
-        </View>
-    )
-}
+import { createStackNavigator } from '@react-navigation/stack';
+import Signup from './Signup';
+import UserIntrest from './UserIntrest';
 
-export default RegisterStack
+const RootStack = createStackNavigator();
+
+const RegisterStack = ({ navigation }) => (
+    <RootStack.Navigator>
+        <RootStack.Screen options={{ headerShown: false }} name = "Signup"  component={Signup} />
+        <RootStack.Screen options={{ headerShown: false }}  name = "UserIntrest"   component={UserIntrest} />
+    </RootStack.Navigator>
+);
+
+export default RegisterStack;
