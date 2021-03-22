@@ -11,7 +11,8 @@ import UserIntrest from './screens/RegistrationScreens/UserIntrest';
 import Notification from './screens/Notification'
 import OnlineClas from './screens/OnlineClas';
 import Assignment from './screens/Assignment';
-
+import Gallery from './screens/Gallery';
+Gallery
 
 const App = () => {
 
@@ -30,8 +31,9 @@ const App = () => {
       {/* <UserIntrest /> */}
       {/* <Notification/> */}
       {/* <OnlineClas/> */}
-      <Assignment/>
+      {/* <Assignment/> */}
       {/* <SplashScreen/> */}
+      <Gallery/>
       
     </View>
   );
