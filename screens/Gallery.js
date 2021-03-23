@@ -24,7 +24,7 @@ const Gallery = (props) => {
 
     // const { getClassCurricullamData, dashboardReducer } = props
 
-
+          
 
     useEffect(() => {
         return Animated.parallel([

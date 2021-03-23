@@ -12,7 +12,8 @@ import Notification from './screens/Notification'
 import OnlineClas from './screens/OnlineClas';
 import Assignment from './screens/Assignment';
 import Gallery from './screens/Gallery';
-Gallery
+import Review from './screens/Review';
+
 
 const App = () => {
 
@@ -34,6 +35,7 @@ const App = () => {
       {/* <Assignment/> */}
       {/* <SplashScreen/> */}
       <Gallery/>
+      {/* <Review/> */}
       
     </View>
   );
