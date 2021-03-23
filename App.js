@@ -1,41 +1,32 @@
+
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
-import { Text, View,StatusBar } from 'react-native';
- import SplashScreen from 'react-native-splash-screen'
- 
-import Login from './screens/AuthScreens/Login';
-import AuthStack from './screens/AuthScreens/AuthStack';
-import Otp from './screens/AuthScreens/Otp';
-import Signup from './screens/RegistrationScreens/Signup';
-import UserIntrest from './screens/RegistrationScreens/UserIntrest';
-import Notification from './screens/Notification'
-import OnlineClas from './screens/OnlineClas';
-import Assignment from './screens/Assignment';
+import Routing from './Routing';
+import { store } from './redux/store';
+import { Provider } from 'react-redux';
+import SplashScreen from 'react-native-splash-screen'
+import { PermissionsAndroid, LogBox } from 'react-native'
 
 
-const App = () => {
+const App = (props) => {
 
-    useEffect(() => {
-         SplashScreen.hide();
-        return () => { }
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, [])
 
- return (
-    <View style = {{flex:1}}>
-     <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
-      {/* <Login/> */}
-      {/* <Otp/> */}
-      {/* <AuthStack/> */}
-      {/* <Signup/> */}
-      {/* <UserIntrest /> */}
-      {/* <Notification/> */}
-      {/* <OnlineClas/> */}
-      <Assignment/>
-      {/* <SplashScreen/> */}
-      
-    </View>
+
+  useEffect(() => {
+    SplashScreen.hide();
+    return () => { }
+  }, [])
+
+
+
+  return (
+    <Provider store={store}>
+      <Routing />
+    </Provider>
   );
 };
 
-export default App;
- 
+export default App

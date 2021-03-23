@@ -1,0 +1,2 @@
+export const loginEndPoint = "https://us-central1-skugal-production.cloudfunctions.net/production_skugal_mobileVerification"
+export const enternationLoginEndPoint = "https://us-central1-skugal-production.cloudfunctions.net/teachersInternationVerification"

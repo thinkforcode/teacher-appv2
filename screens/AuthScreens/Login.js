@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, TouchableOpacity, Animated, Text, TextInput, StyleSheet, StatusBar, Linking, Modal, ScrollView, connect } from 'react-native'
+import { View, TouchableOpacity, Animated, Text, TextInput, StyleSheet, StatusBar, Linking, Modal, ScrollView } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
-import CustomButton from '../../components/CustomButton'
-// import { connect } from 'react-redux'
-// import { onUserLogin } from '../../redux/actions/userAction'
-import country from '../../countrycode.json'
-// import Loader from '../../components/Loader'
 import Backbar from '../../components/Backbar'
+import CustomButton from '../../components/CustomButton'
+import Loader from '../../components/Loader'
+import country from '../../countrycode.json'
+import { onUserLogin } from '../../redux/actions/authActions'
+import { connect } from 'react-redux'
+
+
+
 
 const Login = (props) => {
     const [isChecked, setIsChecked] = useState(false)
@@ -22,7 +24,7 @@ const Login = (props) => {
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
 
-    const { userReducer, onUserLogin } = props
+    const { authReducer, onUserLogin } = props
 
     useEffect(() => {
         return Animated.parallel([
@@ -36,21 +38,22 @@ const Login = (props) => {
 
 
 
-    // useEffect(() => {
-    //     if (userReducer.loginData != null) {
-    //         if (userReducer.loginData.status) {
-    //             props.navigation.navigate('Otp')
-    //         }
-    //         else {
-    //             alert("Please talk to your School Administration for Signup !")
-    //         }
-    //     }
-    //     else {
-    //     }
-    // }, [userReducer.isLoginPage])
+    useEffect(() => {
+        if (authReducer.loginData != null) {
+            if (authReducer.loginData.status) {
+                props.navigation.navigate('Otp')
+            }
+            else {
+                alert("Please talk to your School Administration for Signup !")
+            }
+        }
+        else {
+        }
+    }, [authReducer.isLoginPage])
 
 
-    const getLogin = (arg1) => {
+    const getLogin = () => {
+        console.log("getLogin",  phoneNumber)
         if (phoneNumber.length < 10) {
             alert("Please enter a valid mobile number !")
         }
@@ -58,15 +61,16 @@ const Login = (props) => {
             alert("Please read and accept the Terms of Use & Privacy Policy to get started !")
         }
         else {
-            onUserLogin(`${cc}${arg1}`)
+            console.log("else condition")
+            onUserLogin(cc, phoneNumber)
         }
     }
 
-    //    const selectCountry = (item) => {
-    //         setModalVisible(!modalVisible)
-    //         setcc(item.dial_code)
-    //         setCountryName(item.name)
-    //     }
+       const selectCountry = (item) => {
+            setModalVisible(!modalVisible)
+            setcc(item.dial_code)
+            setCountryName(item.name)
+        }
 
     const _acceptTermsCondition = () => {
         setIsChecked(!isChecked)
@@ -167,7 +171,7 @@ const Login = (props) => {
                                     placeholder="Mobile number *"
                                     keyboardType="number-pad"
                                     maxLength={10}
-                                // onChangeText={phoneNumber => setPhoneNumber(`${phoneNumber}`)}
+                                      onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
                                 />
                             </View>
                         </View>
@@ -204,7 +208,7 @@ const Login = (props) => {
 
                 <View style={{ marginTop: 50, justifyContent: 'center' }}>
                     <Text style={{ textAlign: 'center', color: '#84859B', fontSize: 14, }}>We will send you a 6-digit OTP to verify</Text>
-                    <CustomButton {...props} button={styles.button} _doAction={getLogin} item={phoneNumber} buttonText={styles.buttonText} title="Submit" />
+                    <CustomButton {...props} button={styles.button} _doAction={getLogin}  buttonText={styles.buttonText} title="Submit" />
 
                 </View>
             </Animated.View>
@@ -213,6 +217,13 @@ const Login = (props) => {
         </ScrollView>
     )
 }
+
+const mapStateToProps = (state) => ({
+    authReducer: state.authReducer,
+})
+
+export default connect(mapStateToProps, { onUserLogin })(Login);
+
 
 
 
@@ -288,4 +299,3 @@ const styles = StyleSheet.create({
 
 })
 
-export default Login
