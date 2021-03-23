@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Animated, TextInput,  StatusBar } from 'react-native'
  import CustomButton from '../../components/CustomButton';
-// import { verifyOtp } from '../../redux/actions/userAction';
-// import { connect } from 'react-redux'
-// import messaging from '@react-native-firebase/messaging';
+import { connect } from 'react-redux'
+import messaging from '@react-native-firebase/messaging';
  import Loader from '../../components/Loader';
-// import { onUserLogin } from '../../redux/actions/userAction'
  import Headers from '../../components/Headers';
+import { verifyOtp, onUserLogin } from '../../redux/actions/authActions';
+ 
 
 
 const Otp = (props) => {
@@ -248,18 +248,17 @@ const Otp = (props) => {
 
             </Animated.View>
 
-            {/* { userReducer.otpLoading && <Loader />} */}
+            { authReducer.otpLoading && <Loader />}
 
         </KeyboardAvoidingView>
     )
 }
 
-// const mapStateToProps = (state) => ({
-//     userReducer: state.userReducer,
-// })
+const mapStateToProps = (state) => ({
+    authReducer: state.authReducer,
+})
 
-// export default connect(mapStateToProps, { verifyOtp, onUserLogin })(Otp);
-export default Otp
+export default connect(mapStateToProps, { verifyOtp, onUserLogin })(Otp);
 
 const styles = StyleSheet.create({
     button: {

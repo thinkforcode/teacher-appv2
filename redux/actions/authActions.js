@@ -1,7 +1,7 @@
 import { mergeDataInLocal, mergeDataInshowIntroPage } from "../../functions/localSorage"
 import { enternationLoginEndPoint, loginEndPoint } from "../api"
 import auth from '@react-native-firebase/auth';
-import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING } from '../actionTypes';
+import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING, DO_OTP } from '../actionTypes';
 
 
 export const onDoneIntroSlider = () => {
@@ -10,13 +10,12 @@ export const onDoneIntroSlider = () => {
             dispatch({ type: 'ON_DONE_SLIDER', payload: true })
             mergeDataInshowIntroPage({ showIntroPage: true })
         }
-        catch (e) { }
+        catch (e) { }  
     }
 }
 
 //Login functionality
 export const onUserLogin = (code, mobileNumber) => {
-    console.log("code, mobileNumber lin 20", code, mobileNumber)
     return async (dispatch) => {
         try {
             dispatch({ type: CLEAR_ERROR, payload: null })
@@ -31,12 +30,8 @@ export const onUserLogin = (code, mobileNumber) => {
                     if ( confirmResult.status) {
                        auth().signInWithCustomToken(confirmResult.token).then((res) => {
                         dispatch({ type: DO_LOGIN, payload: confirmResult })
-
-                           console.log("res 33", res)
                         }).catch((err) => {
                             dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } })
-
-                            console.log("err", err) 
                         })
 
                     } else {
@@ -56,12 +51,9 @@ export const onUserLogin = (code, mobileNumber) => {
                     console.log("confiremresult", confirmResult)
                     if (confirmResult && confirmResult.status) {
                         auth().signInWithCustomToken(confirmResult.token).then((res) => {
-                            // this.props.navigation.navigate('Otp', { otpdata: confirmResult, cc: this.state.cc, mob: this.state.phoneNumber, isAdmin: false })
-                            // this.setState({ isLoading: false, btnvisible: false })
                         }).catch((err) => { console.log("err", err) })
 
                     } else {
-                        // alert("Please talk to your school to, login with Skugal!")
                     }
                 }).catch((err) => {
                 })
@@ -70,6 +62,50 @@ export const onUserLogin = (code, mobileNumber) => {
         }
         catch (e) {
             dispatch({ type: 'ON_ERROR', payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } })
+        }
+    }
+}
+
+//Verify Otp
+export const verifyOtp = (code, id, deviceToken, mobileNumber) => {  
+    return async (dispatch) => {
+        try {
+            dispatch({ type: CLEAR_ERROR, payload: null })
+            firestore().collection('parents').doc(id).get().then((res) => {
+                if (res.data().otp!= code) {
+                    dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } })
+                }
+                else {
+                    dispatch({ type: OTP_LOADING, payload: true })
+                    if (!res.data().isBasicDetails) {
+                        firestore().collection('parents').doc(id).set({
+                            isBasicDetails: false,
+                            isOtpVerified: true,
+                            deviceToken: deviceToken,
+                            parentId: id,
+                            createdTime: new Date().getTime(),
+                        }, { merge: true }).then((res) => {
+                            dispatch({ type: DO_OTP, payload: { mobileNumber: mobileNumber, isBasicDetails: false, isOtpVerified: true, parentId: id } })
+                            mergeDataInLocal({ mobileNumber: mobileNumber, isBasicDetails: false, isOtpVerified: true, parentId: id })
+                        }).catch((e) => { })
+                    } else {
+                        let parentsData = res.data();
+                        if (parentsData.isBasicDetails) {
+                            firestore().collection('parents').doc(id).set({
+                                deviceToken: deviceToken
+                            }, { merge: true }).then((res) => {
+                                mergeDataInLocal(parentsData)
+                                dispatch({ type: DO_OTP, payload: parentsData })
+                            })
+                        } else {
+                            dispatch({ type: DO_OTP, payload: { mobileNumber: mobileNumber, isOtpVerified: true, parentId: id } })
+                        }
+                    }
+                }
+            }).catch((err) => { dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } }) })
+        }
+        catch (e) {
+            dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } })
         }
     }
 }

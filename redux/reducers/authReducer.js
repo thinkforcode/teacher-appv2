@@ -1,4 +1,4 @@
-import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING } from '../actionTypes';
+import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING, OTP_LOADING } from '../actionTypes';
 
 const INITIAL_STATE = {
     loginData: null,
@@ -50,6 +50,13 @@ export const authReducer = (state = INITIAL_STATE, action) => {
                 loginLoading: false,
                 loginData: action.payload,
                 isLoginPage: true
+            };
+
+            
+        case OTP_LOADING:
+            return {
+                ...state,
+                otpLoading: action.payload
             };
 
 

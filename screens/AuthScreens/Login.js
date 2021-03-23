@@ -53,7 +53,7 @@ const Login = (props) => {
 
 
     const getLogin = () => {
-        console.log("getLogin",  phoneNumber)
+        console.log("getLogin", phoneNumber)
         if (phoneNumber.length < 10) {
             alert("Please enter a valid mobile number !")
         }
@@ -66,11 +66,11 @@ const Login = (props) => {
         }
     }
 
-       const selectCountry = (item) => {
-            setModalVisible(!modalVisible)
-            setcc(item.dial_code)
-            setCountryName(item.name)
-        }
+    const selectCountry = (item) => {
+        setModalVisible(!modalVisible)
+        setcc(item.dial_code)
+        setCountryName(item.name)
+    }
 
     const _acceptTermsCondition = () => {
         setIsChecked(!isChecked)
@@ -98,7 +98,7 @@ const Login = (props) => {
 
 
     return (
-        <ScrollView contentContainerStyle={{flex:1}} keyboardShouldPersistTaps='handled' >
+        <ScrollView contentContainerStyle={{ flex: 1 }} keyboardShouldPersistTaps='handled' >
             <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
             <Modal
                 animationType="slide"
@@ -171,7 +171,7 @@ const Login = (props) => {
                                     placeholder="Mobile number *"
                                     keyboardType="number-pad"
                                     maxLength={10}
-                                      onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+                                    onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
                                 />
                             </View>
                         </View>
@@ -208,11 +208,11 @@ const Login = (props) => {
 
                 <View style={{ marginTop: 50, justifyContent: 'center' }}>
                     <Text style={{ textAlign: 'center', color: '#84859B', fontSize: 14, }}>We will send you a 6-digit OTP to verify</Text>
-                    <CustomButton {...props} button={styles.button} _doAction={getLogin}  buttonText={styles.buttonText} title="Submit" />
+                    <CustomButton {...props} button={styles.button} _doAction={getLogin} buttonText={styles.buttonText} title="Submit" />
 
                 </View>
             </Animated.View>
-            {/* {userReducer.loginLoading && <Loader />} */}
+            {authReducer.loginLoading && <Loader />}
 
         </ScrollView>
     )
