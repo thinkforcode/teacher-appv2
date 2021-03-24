@@ -13,8 +13,15 @@ import OnlineClas from './screens/OnlineClas';
 import Assignment from './screens/Assignment';
 import Gallery from './screens/Gallery';
 import Review from './screens/Review';
-
-
+import Remarks from './screens/Remarks';
+import StoryPreview from './screens/storyScreens/StoryPreview';
+import ContactUs from './screens/ContactUs';
+import Feed from './screens/storyScreens/Feed';
+import StoryProfile from './screens/storyScreens/StoryProfile';
+import PeopleLike from './screens/storyScreens/PeopleLike';
+import Comment from './screens/storyScreens/Comment';
+import CommentPopup from './screens/storyScreens/CommentPopup';
+import Preview from './components/Preview';
 const App = () => {
 
     useEffect(() => {
@@ -34,9 +41,17 @@ const App = () => {
       {/* <OnlineClas/> */}
       {/* <Assignment/> */}
       {/* <SplashScreen/> */}
-      <Gallery/>
+      {/* <Gallery/> */}
       {/* <Review/> */}
-      
+      {/* <Remarks/> */}
+      {/* <ContactUs/> */}
+      {/* <Feed/> */}
+      {/* <StoryProfile/> */}
+      {/* <PeopleLike/> */}
+      {/* <Comment/> */}
+           {/* <CommentPopup/> */}
+             {/* <StoryPreview/> */}
+             <Preview/>
     </View>
   );
 };

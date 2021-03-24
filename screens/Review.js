@@ -1,7 +1,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState, useRef } from 'react'
-import { View, Text, FlatList, TouchableOpacity, Animated, StatusBar, Dimensions } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, Animated, StatusBar, Dimensions,StyleSheet } from 'react-native'
 // import { connect } from 'react-redux'
 // import { getReviewRemarks } from '../redux/actions/dashboardAction'
 
@@ -18,9 +18,10 @@ const Review = (props) => {
 
     // const { getReviewRemarks, dashboardReducer } = props
 
-     const [reviewData,setreviewData] = useState(
-        {rating:4,messag:"good",teacherName:"deepak"},
-        {rating:4,messag:"good",teacherName:"deepak"} 
+     const [reviewData,setreviewData] = useState([
+        {rating:4,message:"good",teacherName:"deepak"},
+        {rating:4,message:"verry good verry good verry good verry good verry good",teacherName:"deepak"} 
+     ]
      )
 
     useEffect(() => {
@@ -78,41 +79,40 @@ const Review = (props) => {
             }}>
                 {/* { dashboardReducer.reviews.length > 0 && */}
                     <FlatList
-                        contentContainerStyle={{ paddingBottom: 50, marginTop: 10, }}
+                        contentContainerStyle={styles.contentContainerStyle}
                         // data={dashboardReducer.reviews}
                         // extraData={dashboardReducer.reviews}
                         data={reviewData}
                         extraData={reviewData}
                          keyExtractor={(item, index) => { return index.toString(); }}
-                        // renderItem={({ item, index }) => {
                             renderItem={({ item, index }) => {
                             return (
-                                <TouchableOpacity style={{ borderRadius: 10, marginHorizontal: 15, marginVertical: 10, borderWidth: 1, borderColor: '#ECF0F8' }}>
-                                    <View style={{ padding: 10, width: Dimensions.get('window').width - 20 }}>
+                                <TouchableOpacity style={styles.containerText}>
+                                    <View style={{  padding: 10, }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text>Subject</Text>
-                                            <View style={{ paddingLeft: 50 }}>
-                                                <Text style={{ fontSize: 14, color: '#fff', fontWeight: 'bold', backgroundColor: '#FEB62D', textAlign: "center", borderRadius: 8, alignItems: 'center', padding: 5 }}>
+                                            <Text style={styles.simpleText}>Subject</Text>
+                                            <View style={styles.subjectTextSpace}>
+                                                <Text style={styles.subjectText}>
                                                     {item.subject ? item.subject : 'No Subject '}</Text>
-                                                <Text style={{ fontSize: 9, color: '#848598' }}>{formatDate(item.creationTime ? item.creationTime : 'No Creation Time')}</Text>
+                                                <Text style={styles.dateText}>{formatDate(item.creationTime ? item.creationTime : 'No Creation Time')}</Text>
                                             </View>
 
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontSize: 14, color: '#848598' }}>Reviews</Text>
-                                            <Text style={{ paddingLeft: 40 }}>{item.rating ? renderStars(item.rating) : 'No Rating'}
-                                                <Text style={{ color: '#392C60', fontSize: 14, fontWeight: "bold" }}>{item.rating} out of 5</Text>
-                                            </Text>
+                                            <Text style={styles.simpleText}>Reviews</Text>
+                                            <Text style={styles.reviewTextSpace}>{item.rating ? renderStars(item.rating) : 'No Rating'}
+                                                </Text>
+                                            <Text style={styles.ratingText}>{item.rating} out of 5</Text>
+                                        </View>
+
+                                        <View style={{ flexDirection: 'row', }}>
+                                            <Text style={styles.simpleText}>Description</Text>
+                                            <Text style={styles.messageText}>{item.message ? item.message : 'No Message '}</Text>
                                         </View>
 
                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontSize: 14, color: '#848598' }}>Description</Text>
-                                            <Text style={{ paddingLeft: 28, color: '#392C60', fontSize: 14 }}>{item.messag ? item.message : 'No Message '}</Text>
-                                        </View>
-
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <Text style={{ fontSize: 14, color: '#848598' }}>Teacher</Text>
-                                            <Text style={{ paddingLeft: 48, color: '#392C60', fontSize: 14 }}>{item.teacherName ? item.teacherName : 'No Teacher  '}</Text>
+                                            <Text style={styles.simpleText}>Teacher</Text>
+                                            <Text style={styles.nameText}>{item.teacherName ? item.teacherName : 'No Teacher  '}</Text>
                                         </View>
                                     </View>
 
@@ -142,3 +142,73 @@ const Review = (props) => {
 // export default connect(mapStateToProps, { getReviewRemarks })(Review);
 
 export default Review
+
+
+
+const styles = StyleSheet.create({
+
+    contentContainerStyle:
+    {
+        flex:1,
+        paddingBottom: 50,
+         marginTop: 10,
+    },
+    containerText:{
+        
+        borderRadius: 10,
+         marginHorizontal: 15,
+          marginVertical: 10,
+           borderWidth: 1, 
+           borderColor: '#ECF0F8' 
+    },
+    simpleText:
+    {
+        fontSize: 14, 
+        color: '#848598'
+    },
+    subjectText:
+    {
+        fontSize: 14,
+         color: '#fff',
+          fontWeight: 'bold',
+           backgroundColor: '#FEB62D',
+            textAlign: "center",
+             borderRadius: 8, 
+             alignItems: 'center',
+              paddingHorizontal:5
+    },
+    dateText:
+    {
+        fontSize: 9, 
+        color: '#848598'
+    },
+    ratingText:
+    {
+        color: '#392C60',
+         fontSize: 14,
+          fontWeight: "bold"
+    },
+    messageText:
+    {
+        flex:1,
+        paddingLeft: 25,
+         color: '#392C60',
+          fontSize: 14
+    },
+    nameText:
+    {
+        flex:1, 
+        paddingLeft: 45,
+         color: '#392C60',
+          fontSize: 14 
+    },
+    subjectTextSpace:
+    {
+        paddingLeft: 50 
+    },
+    reviewTextSpace:
+    {
+        paddingLeft: 40
+    }  
+
+})
