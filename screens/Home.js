@@ -1,12 +1,25 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+import { doLogOut } from '../redux/actions/authActions'
 
-const Home = () => {
+
+
+const Home = (props) => {
+    const {doLogOut} = props
+
     return (
-        <View>
-            <Text>Home page</Text>
+        <View style = {{flex:1}}>
+            <TouchableOpacity onPress = {()=>{doLogOut()}}>
+                <Text>Logout</Text>
+            </TouchableOpacity>
         </View>
     )
 }
 
-export default Home
+const mapStateToProps = (state) => ({
+    authReducer: state.authReducer,
+})
+
+export default connect(mapStateToProps, { doLogOut })(Home);
+

@@ -4,6 +4,7 @@ import { Image, } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from './Home';
+import SelectClass from './SelectClass';
 
 const MainStack = createStackNavigator();
 const BrainTrainStackNavigator = createStackNavigator()
@@ -90,6 +91,8 @@ const TutorialStackNavigator = createStackNavigator()
 const MainAppNavigator = () => (
     <MainStack.Navigator headerMode={false}>
           <MainStack.Screen name="Home" component={Home} /> 
+          <MainStack.Screen name="SelectClass" component={SelectClass} /> 
+
         {/* <MainStack.Screen name="Home" component={MainTab} /> */}
         {/* <MainStack.Screen name="Notification" component={Notification} />
         <MainStack.Screen name="Categories" component={Categories} />

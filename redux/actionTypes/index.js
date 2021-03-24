@@ -8,9 +8,8 @@ export const ON_ERROR = 'ON_ERROR'
 export const LOGIN_LOADING = 'LOGIN_LOADING'
 export const OTP_LOADING = 'OTP_LOADING'
 export const DO_OTP = 'DO_OTP'
-
-
-
-
-
-
+export const UPDATE_LOCAL_DATA = 'UPDATE_LOCAL_DATA'
+export const LOG_OUT = 'LOG_OUT'
+export const SIGNUP_LOADING = 'SIGNUP_LOADING'
+export const REGISTER = 'REGISTER'
+export const USER_INTREST = 'USER_INTREST'

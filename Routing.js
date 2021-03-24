@@ -9,7 +9,9 @@ import Loader from './components/Loader';
 import AuthStack from './screens/AuthScreens/AuthStack';
 import RegisterStack from './screens/RegistrationScreens/RegisterStack';
 import MainAppNavigator from './screens/MainApp';
-
+import { UPDATE_LOCAL_DATA } from './redux/actionTypes';
+import { updateUserData } from './redux/actions/authActions';
+import { navigationRef } from './RootNavigation.js';
 
 
 
@@ -17,6 +19,7 @@ const Routing = (props) => {
   const [loginData, setLoginData] = useState(null)
   const [introPageStatus, setIntroPageStatus] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const {updateUserData} = props
 
 
   useEffect(() => {
@@ -27,12 +30,13 @@ const Routing = (props) => {
         setIntroPageStatus(JSON.parse(introData))
         setIsLoading(false)
         if (data!= null) {
-          console.group("if data is", data, "introData", introData)
+          console.group("if data is routing.js file", data,)
+          updateUserData(JSON.parse(data))
           setLoginData(JSON.parse(data))
-          // props.userDataUpdate(JSON.parse(data))
         }
         else {
-          console.group("else data is", props.authReducer.loginData, "introData", introData)
+          console.log("else data is routing.js file", props.authReducer.loginData)
+          updateUserData(props.authReducer.loginData)
           setLoginData(props.authReducer.loginData)
         }
 
@@ -51,7 +55,7 @@ const Routing = (props) => {
 
 
   return (
-    <NavigationContainer  >
+    <NavigationContainer ref = {navigationRef} >
       {
        isLoading ? <Loader />: introPageStatus == null ? (<IntroSlider />) : loginData != null ? !loginData.isBasicDetails ? (<RegisterStack />) : loginData.isBasicDetails ? (<MainAppNavigator />) : (<AuthStack />) : (<AuthStack />)
       }
@@ -66,6 +70,6 @@ const mapStateToProps = (state) => {
   }; 
 };
 
-export default connect(mapStateToProps, {  })(Routing);
+export default connect(mapStateToProps, {updateUserData })(Routing);
 
 

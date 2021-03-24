@@ -9,8 +9,6 @@ import { onUserLogin } from '../../redux/actions/authActions'
 import { connect } from 'react-redux'
 
 
-
-
 const Login = (props) => {
     const [isChecked, setIsChecked] = useState(false)
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -53,7 +51,6 @@ const Login = (props) => {
 
 
     const getLogin = () => {
-        console.log("getLogin", phoneNumber)
         if (phoneNumber.length < 10) {
             alert("Please enter a valid mobile number !")
         }
@@ -61,7 +58,6 @@ const Login = (props) => {
             alert("Please read and accept the Terms of Use & Privacy Policy to get started !")
         }
         else {
-            console.log("else condition")
             onUserLogin(cc, phoneNumber)
         }
     }
