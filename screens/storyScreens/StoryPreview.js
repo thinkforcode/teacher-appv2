@@ -48,9 +48,9 @@ const StoryPreview = (props) => {
 
 
     const likePost = (item) => {
-        let data = {...previewData}
+        let data = { ...previewData }
         let i = data.likedBy.indexOf(loginData.parentId)
-        if(i > -1){
+        if (i > -1) {
             data.likedBy.splice(loginData.parentId)
         }
         else {
@@ -60,30 +60,30 @@ const StoryPreview = (props) => {
         like(loginData, item)
     }
 
-   const closeModal = (visible) => {
-       setIsVisiblePopUp(visible)
-      }
+    const closeModal = (visible) => {
+        setIsVisiblePopUp(visible)
+    }
 
-      const perfomAction = (item) =>{
+    const perfomAction = (item) => {
         refRBSheet.current.close()
-          if(item.screen == "ReportAlert"){
+        if (item.screen == "ReportAlert") {
             setIsVisiblePopUp(!isVisiblePopUp)
-          }
-          else if(item.screen ==  'CopyLink' && (previewData.docType == "image" || previewData.docType == "pdf")){
+        }
+        else if (item.screen == 'CopyLink' && (previewData.docType == "image" || previewData.docType == "pdf")) {
             Clipboard.setString(previewData.resourceUrl)
             Toast('Copied successfully')
 
-          }
-          else {
+        }
+        else {
 
-          }
+        }
 
-      }
+    }
 
-      const selectReasons = (item) => {
-          console.log("item is", item)
+    const selectReasons = (item) => {
+        console.log("item is", item)
 
-      }
+    }
 
 
     return (
@@ -92,33 +92,33 @@ const StoryPreview = (props) => {
                     <ReportAlert _selectReasons = {selectReasons}  {...props} isModalVisible={isVisiblePopUp} isReportBtn = {isReportBtn}  setModalVisible={closeModal}/>
             } */}
             {/* { previewData.docType == 'image' && */}
-                <View style={{ backgroundColor: '#000' }}>
+            <View style={{ backgroundColor: '#000' }}>
 
-                    <ImageZoom onClick={() => { showHideOptions() }}
-                        cropWidth={Dimensions.get('window').width}
-                        cropHeight={Dimensions.get('window').height}
-                        imageWidth={Dimensions.get('window').width}
-                        imageHeight={Dimensions.get('window').height}
-                        minScale={1}
-                    >
+                <ImageZoom onClick={() => { showHideOptions() }}
+                    cropWidth={Dimensions.get('window').width}
+                    cropHeight={Dimensions.get('window').height}
+                    imageWidth={Dimensions.get('window').width}
+                    imageHeight={Dimensions.get('window').height}
+                    minScale={1}
+                >
 
-                        <Image
-                            style={{ height: null, width: null, flex: 1, resizeMode: 'contain' }}
-                            // source={{ uri: previewData.imageUrl ? previewData.imageUrl : previewData.resourceUrl }} />
-                            source={{ uri: "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"}} />
-                        {!showOptions &&
-                            <TouchableOpacity style={styles.header} onPress={() => refRBSheet.current.open()}>
-                                <MaterialCommunityIcons size={25} name="dots-vertical" color="#fff" />
-                            </TouchableOpacity>
-                        }
+                    <Image
+                        style={{ height: null, width: null, flex: 1, resizeMode: 'contain' }}
+                        // source={{ uri: previewData.imageUrl ? previewData.imageUrl : previewData.resourceUrl }} />
+                        source={{ uri: "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" }} />
+                    {!showOptions &&
+                        <TouchableOpacity style={styles.header} onPress={() => refRBSheet.current.open()}>
+                            <MaterialCommunityIcons size={25} name="dots-vertical" color="#fff" />
+                        </TouchableOpacity>
+                    }
 
-                        {!showOptions &&
-                            <View style={styles.footer}>
-                                {
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingBottom: 10 }}>
-                                        <TouchableOpacity onPress={() => { props.navigation.navigate('PeopleLike', { data: previewData }) }}>
-                                            <Text style={{ justifyContent: "center", alignItems: "center", }}>
-                                                {/* {previewData.likedBy.length > 0 &&
+                    {!showOptions &&
+                        <View style={styles.footer}>
+                            {
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingBottom: 10 }}>
+                                    <TouchableOpacity onPress={() => { props.navigation.navigate('PeopleLike', { data: previewData }) }}>
+                                        <Text style={{ justifyContent: "center", alignItems: "center", }}>
+                                            {/* {previewData.likedBy.length > 0 &&
                                                     <Text style={{ color: "#fff", fontSize: 14 }}>#Like by </Text>
                                                 }
                                                 {(previewData.likedBy.indexOf(loginData.parentId) > -1) &&
@@ -127,13 +127,13 @@ const StoryPreview = (props) => {
                                                 {previewData.likedBy.length > 0 &&
                                                     <Text style={{ color: "#fff", fontSize: 14 }}> {(previewData.likedBy.length > 0 && previewData.likedBy.indexOf(loginData.parentId) > -1) ? `and ${previewData.likedBy.length - 1} others` : `${previewData.likedBy.length} others`}</Text>
                                                 } */}
-                                            </Text>
-                                        </TouchableOpacity>
-                                        {/* <Text style={{ color: "#fff", fontSize: 14 }}>{previewData.commentCount ? previewData.commentCount : 0} Comments </Text> */}
-                                        {/* <Text style={{ color: "#fff", fontSize: 14 }}>{previewData.commentCount ? previewData.commentCount : 0} Comments </Text> */}
-                                    </View>
-                                }
-                                {/* <View style={{ flexDirection: "row", alignItems: "center", paddingTop: 10, borderTopColor: '#cecece', borderTopWidth: 0.5, justifyContent: "space-around" }}>
+                                        </Text>
+                                    </TouchableOpacity>
+                                    {/* <Text style={{ color: "#fff", fontSize: 14 }}>{previewData.commentCount ? previewData.commentCount : 0} Comments </Text> */}
+                                    {/* <Text style={{ color: "#fff", fontSize: 14 }}>{previewData.commentCount ? previewData.commentCount : 0} Comments </Text> */}
+                                </View>
+                            }
+                            {/* <View style={{ flexDirection: "row", alignItems: "center", paddingTop: 10, borderTopColor: '#cecece', borderTopWidth: 0.5, justifyContent: "space-around" }}>
                                     <TouchableOpacity onPress={() => { likePost(previewData) }}>
                                         <AntDesign size={18} color={previewData.likedBy.indexOf(loginData.parentId) > -1 ? "red" : '#fff'} name={previewData.likedBy.indexOf(loginData.parentId) > -1 ? "heart" : 'hearto'}> Like</AntDesign>
                                     </TouchableOpacity>
@@ -144,11 +144,11 @@ const StoryPreview = (props) => {
 
                                 </View> */}
 
-                            </View>
-                        }
+                        </View>
+                    }
 
-                    </ImageZoom>
-                </View>
+                </ImageZoom>
+            </View>
             {/* } */}
 
             <RBSheet
@@ -171,7 +171,7 @@ const StoryPreview = (props) => {
                     }
                 }}
             >
-                <ActionBottomSheet1 {...props} data={StoryPreviewOptions}  _doAction={perfomAction} />
+                <ActionBottomSheet1 {...props} data={StoryPreviewOptions} _doAction={perfomAction} />
 
             </RBSheet>
 

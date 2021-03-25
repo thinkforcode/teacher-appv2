@@ -30,9 +30,9 @@ const PeopleLike = (props) => {
 
     // }, [])
 
-    const [likes,setLikes] = useState([
-        {displayImageUrl:"https://reactnative.dev/img/tiny_logo.png",profileName:"Sonu Singh"},
-        {displayImageUrl:"https://reactnative.dev/img/tiny_logo.png",profileName:"Monu Singh"}
+    const [likes, setLikes] = useState([
+        { displayImageUrl: "https://reactnative.dev/img/tiny_logo.png", profileName: "Sonu Singh" },
+        { displayImageUrl: "https://reactnative.dev/img/tiny_logo.png", profileName: "Monu Singh" }
     ])
 
 
@@ -52,7 +52,7 @@ const PeopleLike = (props) => {
 
         }
     )
-      return (
+    return (
         <View style={{ flex: 1 }}>
             <Text style={{ backgroundColor: "#fff", height: 20 }}></Text>
 
@@ -110,7 +110,7 @@ const PeopleLike = (props) => {
                 </View>
 
             </Animated.View>
-             </View>
+        </View>
 
     )
 }

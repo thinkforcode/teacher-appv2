@@ -9,7 +9,7 @@ export default function Headers(props) {
         <SafeAreaView style={{ height: 60, backgroundColor: '#E61A50', justifyContent: 'center' }}>
             <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
                 {
-                    ( props.screen != 'ChatList' && props.screen != 'FeePayment' && props.screen != 'Chat' && props.screen != 'Settings' && props.screen != 'Notification' && props.screen != 'AttendanceReport') &&
+                    (props.screen != 'ChatList' && props.screen != 'FeePayment' && props.screen != 'Chat' && props.screen != 'Settings' && props.screen != 'Notification' && props.screen != 'AttendanceReport') &&
                     <TouchableOpacity onPress={() => { props.navigation.goBack() }}>
                         <MaterialCommunityIcons name="arrow-left" size={24} color="#fff" />
                     </TouchableOpacity>
