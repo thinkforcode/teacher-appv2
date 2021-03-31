@@ -26,7 +26,8 @@ import Home from './screens/Home';
 import MainAppNavigator from './screens/MainTab'
 import TotalStudent from './screens/TotalStudent';
 import ConfirmAttendance from './screens/ConfirmAttendance';
-
+import Standerd from './screens/Standerd';
+import Support from './screens/Support';
 
 const App = (props) => {
 
@@ -64,7 +65,9 @@ const App = (props) => {
       {/* <ClassesAssigned/> */}
       {/* <Home/> */}
       {/* <TotalStudent/> */}
-      <ConfirmAttendance/>
+      {/* <ConfirmAttendance/> */}
+      {/* <Standerd/> */}
+      <Support/>
       
       {/* <TouchableOpacity style={{paddingTop:20,alignItems:"center"}} onPress={() => { props.navigation.navigate('ClassesAssigned') }}>
         <Text>ClassesAssigned</Text>
