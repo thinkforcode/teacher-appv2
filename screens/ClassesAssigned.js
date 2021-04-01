@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-const ClassesAssigned = () => {
+import { connect } from 'react-redux'
+import { getClass } from '../redux/actions/authActions'
+const ClassesAssigned = (props) => {
+
+    const [loginData, setLoginData] = useState(null)
+    const { getClass, mainReducer } = props
+
+    console.log("mainReducer", mainReducer);
 
     const [data, setData] = useState([
         { standerd: "11th", section: "A", subject: "All" },
@@ -14,6 +22,19 @@ const ClassesAssigned = () => {
         { standerd: "11th", section: "A", subject: "All" },
         { standerd: "11th", section: "A", subject: "All" }
     ])
+
+    useEffect(() => {
+        AsyncStorage.getItem('login').then((r) => {
+            if (r != null) {
+                let d = JSON.parse(r)
+                setLoginData(d)
+                getClass(d.userId, d.schoolId)
+            }
+            return () => { unsubscribeStudent }
+        }).catch(e => {
+        })
+
+    }, [])
     return (
         <View style={{ flex: 1 }}>
             <TouchableOpacity style={styles.headerStyle}>
@@ -27,7 +48,7 @@ const ClassesAssigned = () => {
                 data={data}
                 renderItem={({ item }) => (
                     <View style={{ marginHorizontal: 15 }}>
-                        <TouchableOpacity style={styles.buttonStyle}>
+                        <TouchableOpacity style={styles.buttonStyle} onPress={() => { props.navigation.navigate('Home') }}>
                             <Text style={{ fontSize: 14, fontWeight: "bold" }}>Class Teacher</Text>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <Text>Standerd : </Text>
@@ -50,7 +71,7 @@ const ClassesAssigned = () => {
     )
 }
 
-export default ClassesAssigned
+
 
 const styles = StyleSheet.create({
     headerStyle:
@@ -88,3 +109,9 @@ const styles = StyleSheet.create({
 
 
 })
+
+const mapStateToProps = (state) => ({
+    mainReducer: state.mainReducer,
+})
+
+export default connect(mapStateToProps, { getClass })(ClassesAssigned);

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Animated, TextInput,  StatusBar } from 'react-native'
- import CustomButton from '../../components/CustomButton';
-// import { verifyOtp } from '../../redux/actions/userAction';
-// import { connect } from 'react-redux'
-// import messaging from '@react-native-firebase/messaging';
- import Loader from '../../components/Loader';
-// import { onUserLogin } from '../../redux/actions/userAction'
- import Headers from '../../components/Headers';
+import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Animated, TextInput, StatusBar } from 'react-native'
+import CustomButton from '../../components/CustomButton';
+import { connect } from 'react-redux'
+import messaging from '@react-native-firebase/messaging';
+import Loader from '../../components/Loader';
+import Headers from '../../components/Headers';
+import { verifyOtp, onUserLogin } from '../../redux/actions/authActions';
+
 
 
 const Otp = (props) => {
@@ -36,7 +36,7 @@ const Otp = (props) => {
     const pin5 = useRef(null);
     const pin6 = useRef(null);
 
-    const { userReducer, verifyOtp, onUserLogin } = props
+    const { authReducer, verifyOtp, onUserLogin } = props
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -64,17 +64,17 @@ const Otp = (props) => {
     })
 
 
-    const enterOtp = (arg1) => {
+    const enterOtp = () => {
         let code = `${code1}${code2}${code3}${code4}${code5}${code6}`
         if (code.trim() == "") {
             alert("OTP can not be empty !")
         }
         else {
-            verifyOtp(arg1, userReducer.loginData.parentId, deviceToken, userReducer.loginData.mobileNumber)
+            verifyOtp(code, deviceToken)
         }
     }
 
-   const _resendOtp = () => {
+    const _resendOtp = () => {
         setSeconds(30)
         setOtpVisible(true)
         onUserLogin(userReducer.loginData.mobileNumber)
@@ -127,7 +127,7 @@ const Otp = (props) => {
         if (code5 != "") {
             pin6.current.focus()
         }
-        else if(code5 == "" && isHighlighted) {
+        else if (code5 == "" && isHighlighted) {
             pin4.current.focus()
         }
         return () => { }
@@ -157,7 +157,7 @@ const Otp = (props) => {
 
 
     return (
-        <KeyboardAvoidingView  behavior="padding" >
+        <KeyboardAvoidingView behavior="padding" >
             <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
             <Headers {...props} title="Verify OTP" />
             <Animated.View style={{
@@ -242,24 +242,23 @@ const Otp = (props) => {
                 } */}
 
                 <View style={{ marginTop: 10 }}>
-                    <CustomButton {...props} button={styles.button} _doAction={enterOtp} item={`${code1}${code2}${code3}${code4}${code5}${code6}`} buttonText={styles.buttonText} title="Verify" />
-                    
+                    <CustomButton {...props} button={styles.button} _doAction={enterOtp} buttonText={styles.buttonText} title="Verify" />
+
                 </View>
 
             </Animated.View>
 
-            {/* { userReducer.otpLoading && <Loader />} */}
+            { authReducer.otpLoading && <Loader />}
 
         </KeyboardAvoidingView>
     )
 }
 
-// const mapStateToProps = (state) => ({
-//     userReducer: state.userReducer,
-// })
+const mapStateToProps = (state) => ({
+    authReducer: state.authReducer,
+})
 
-// export default connect(mapStateToProps, { verifyOtp, onUserLogin })(Otp);
-export default Otp
+export default connect(mapStateToProps, { verifyOtp, onUserLogin })(Otp);
 
 const styles = StyleSheet.create({
     button: {
@@ -296,20 +295,20 @@ const styles = StyleSheet.create({
     headerText:
     {
         alignSelf: 'center',
-         marginTop: 50
+        marginTop: 50
     },
 
     titleText:
     {
         color: '#35365F',
-         fontSize: 16 
+        fontSize: 16
     },
     otpSection:
     {
         marginTop: 30,
-         flexDirection: 'row',
-          alignItems: 'center',
-           justifyContent: 'space-evenly',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
     }
 })
 

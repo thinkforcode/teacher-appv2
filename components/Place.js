@@ -7,7 +7,7 @@ export default function Autoplace(props) {
     <GooglePlacesAutocomplete
       placeholder={props.title}
       minLength={2}
-       placeholderTextColor="#8F8FA6"
+      placeholderTextColor="#8F8FA6"
       autoFocus={false}
       returnKeyType={'search'}
       keyboardAppearance={'light'}

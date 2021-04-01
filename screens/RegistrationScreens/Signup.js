@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, TextInput, Animated, Dimensions, SafeAreaView, Image, StatusBar, ScrollView, TouchableOpacity } from 'react-native'
-// import { connect } from 'react-redux'
-// import { onUserRegister } from '../../redux/actions/userAction'
+import { View, Text, StyleSheet, TextInput, Animated, SafeAreaView,  StatusBar, ScrollView } from 'react-native'
+import { connect } from 'react-redux'
 import CustomButton from '../../components/CustomButton'
 import Autoplace from '../../components/Place'
-import Loader from '../../components/Loader'
 import Headers from '../../components/Headers'
-
-
+import Loader from '../../components/Loader'
+import { onUserRegister } from '../../redux/actions/authActions'
 
 const Signup = (props) => {
-    const { userReducer, onUserRegister } = props
+    const { authReducer, onUserRegister } = props
 
     const [fName, setfName] = useState('')
     const [lName, setlName] = useState('')
@@ -19,21 +17,13 @@ const Signup = (props) => {
 
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
-
     const _registerUser = () => {
-        let d = {
-            ...userReducer.loginData,
-            firstName: fName,
-            lastName: lName,
-            email: email,
-            address: address
-        }
-        onUserRegister(d, userReducer.loginData.parentId)
-
+        let d = { firstName: fName, lastName: lName, email: email, address: address}
+        onUserRegister(d)
     }
 
     const selectdAddress = (arg1, arg2) => {
-        setAddress(arg2);
+        setAddress(arg2.formatted_address);
         return;
     }
 
@@ -50,11 +40,10 @@ const Signup = (props) => {
 
 
     return (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={{ flex: 1 }}>
             <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
             <Headers {...props} title="New Account" />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-           
                 <View style={{ marginHorizontal: 15 }}>
                     <Animated.View style={{
                         marginTop: 30,
@@ -71,7 +60,7 @@ const Signup = (props) => {
                         <View style={{ marginTop: 10 }}>
                             <TextInput
                                 autoCompleteType="name"
-                                placeholder="Parent's First Name"
+                                placeholder="First Name"
                                 placeholderTextColor="#8F8FA6"
                                 value={fName}
                                 style={styles.input}
@@ -79,7 +68,7 @@ const Signup = (props) => {
                             />
 
                             <TextInput
-                                placeholder="Parent's Last Name"
+                                placeholder="Last Name"
                                 placeholderTextColor="#8F8FA6"
                                 value={lName}
                                 style={styles.input}
@@ -99,19 +88,17 @@ const Signup = (props) => {
                             <Autoplace addAddress={selectdAddress} title="Address" />
                             <Text style={styles.descriptionText}>Your basic details is your privacy, Skugal understands it. Skugal does not share it with any third party.</Text>
 
-                        <View style={{ marginTop: 20 }}>
-                            <CustomButton {...props} button={styles.button} _doAction={_registerUser} buttonText={styles.buttonText} title="NEXT" />
+                            <View style={{ marginTop: 20 }}>
+                                <CustomButton {...props} button={styles.button} _doAction={_registerUser} buttonText={styles.buttonText} title="NEXT" />
+                            </View>
                         </View>
 
-                        </View>
-
-                        
                     </Animated.View>
                 </View>
 
             </ScrollView>
 
-            {/* {userReducer.signUpLoading && <Loader />} */}
+            { authReducer.signUpLoading && <Loader /> }
 
         </SafeAreaView>
 
@@ -121,15 +108,13 @@ const Signup = (props) => {
 
 
 
-// const mapStateToProps = (state) => ({
-//     userReducer: state.userReducer,
-// })
+const mapStateToProps = (state) => ({
+    authReducer: state.authReducer,
+})
 
-// export default connect(mapStateToProps, { onUserRegister })(Signup);
-export default Signup
+export default connect(mapStateToProps, { onUserRegister })(Signup);
 
-const numColumns = 3;
-const size = (Dimensions.get('window').width - 80) / numColumns;
+
 
 const styles = StyleSheet.create({
     input: {

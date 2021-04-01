@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, StyleSheet, Animated, FlatList, Dimensions, TouchableOpacity, Image, StatusBar } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-// import { onUserIntrest } from '../../redux/actions/userAction';
-// import { connect } from 'react-redux';
-import Loader from '../../components/Loader';
+import { connect } from 'react-redux';
 import Headers from '../../components/Headers';
 import { userIntrestData } from '../../classData';
+import Loader from '../../components/Loader';
+import { onUserIntrest } from '../../redux/actions/authActions';
+
 
 const UserIntrest = (props) => {
     const [selectedData, setSelectedData] = useState([])
     const [selectCount, setSelectCount] = useState(1)
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
-    const { userReducer, onUserIntrest } = props
+    const { authReducer, onUserIntrest } = props
 
     useEffect(() => {
         return Animated.parallel([
@@ -44,7 +45,7 @@ const UserIntrest = (props) => {
     }
 
    const submitUserIntrest = () =>{
-        onUserIntrest(selectedData, userReducer.loginData.parentId)
+        onUserIntrest(selectedData)
     }
 
 
@@ -87,18 +88,17 @@ const UserIntrest = (props) => {
                 numColumns={3} />
             </Animated.View>
 
-            {/* { userReducer.signUpLoading && <Loader />} */}
+            { authReducer.signUpLoading && <Loader />}
 
         </View>
     )
 }
 
-// const mapStateToProps = (state) => ({
-//     userReducer: state.userReducer,
-// })
+const mapStateToProps = (state) => ({
+    authReducer: state.authReducer,
+})
 
-// export default connect(mapStateToProps, { onUserIntrest })(UserIntrest);
-export default UserIntrest
+export default connect(mapStateToProps, { onUserIntrest })(UserIntrest);
 
 const numColumns = 3;
 const size = (Dimensions.get('window').width - 20) / numColumns;
