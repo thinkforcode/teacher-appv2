@@ -1,9 +1,10 @@
-import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS } from '../actionTypes/index';
+import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS,GET_ASSIGNMENT } from '../actionTypes/index';
 
 const INITIAL_STATE = {
     classes: [],
     getStudent: [],
-    selectedClass: {}
+    selectedClass: {},
+    assignment:[]
 };
 
 export const mainReducer = (state = INITIAL_STATE, action) => {
@@ -28,6 +29,13 @@ export const mainReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 selectedClass: action.payload,
+                isLoading: false
+            }
+
+            case GET_ASSIGNMENT:
+            return {
+                ...state,
+                assignment: action.payload,
                 isLoading: false
             }
 

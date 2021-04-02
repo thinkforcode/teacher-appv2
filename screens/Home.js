@@ -8,10 +8,16 @@ import { doLogOut } from '../redux/actions/authActions'
 const Home = (props) => {
     const {doLogOut} = props
 
-    const listOfStudent =()=>
+    const Assignment =()=>
     {
-        props.navigation.navigate('TotalStudent')
+       props.navigation.navigate("Assignment")
     }
+
+    const Gallery =()=>
+    {
+       props.navigation.navigate("Gallery")
+    }
+    
 
     return (
         <View style = {{flex:1,margin:50}}>
@@ -19,9 +25,15 @@ const Home = (props) => {
                 <Text>Logout</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress = {()=>{listOfStudent()}}>
-                <Text style={{paddingTop:20}}>Camera</Text>
+            <TouchableOpacity onPress = {()=>{Assignment()}}>
+                <Text style={{paddingTop:20}}>Assignment</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity onPress = {()=>{Gallery()}}>
+                <Text style={{paddingTop:20}}>Gallery</Text>
+            </TouchableOpacity>
+
+            
         </View>
     )
 }

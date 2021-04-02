@@ -1,11 +1,12 @@
 import React from 'react';
-import { Image, } from 'react-native'
-
-import { createStackNavigator } from '@react-navigation/stack';
-
+import { Assets, createStackNavigator } from '@react-navigation/stack';
 import Home from './Home';
 import SelectClass from './SelectClass';
 import TotalStudent from './TotalStudent';
+import Assignment from './Assignment';
+import Gallery from './Gallery';
+
+
 
 
 
@@ -98,6 +99,9 @@ const MainAppNavigator = () => (
           <MainStack.Screen name="SelectClass" component={SelectClass} /> 
           <MainStack.Screen name="Home" component={Home} /> 
           <MainStack.Screen name="TotalStudent" component={TotalStudent} /> 
+          <MainStack.Screen name="Assignment" component={Assignment} />
+          <MainStack.Screen name="Gallery " component={Gallery} />
+
 
         {/* <MainStack.Screen name="Home" component={MainTab} /> */}
         {/* <MainStack.Screen name="Notification" component={Notification} />
