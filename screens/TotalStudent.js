@@ -7,20 +7,16 @@ import { getStudents } from '../redux/actions/mainActions';
 
 const TotalStudent = (props) => {
 
-    const [loginData, setLoginData] = useState({})
-    const { getStudents, getStudent, selectedClass } = props
+    const { getStudents, getStudent, selectedClass, loginData } = props
 
     useEffect(() => {
-        AsyncStorage.getItem('login').then((r) => {
-            if (r != null) {
-                let d = JSON.parse(r)
-                console.log("d is", d)
-                getStudents(d.userId, d.schoolId, selectedClass.standard, selectedClass.section)
-                setLoginData(d)
-            }
-            return () => { }
-        }).catch(e => {
-        })
+        if(loginData!= null){
+            getStudents(loginData.userId, loginData.schoolId, selectedClass.standard, selectedClass.section)
+        }
+
+        return () => { }
+
+
 
     }, [])
 
@@ -130,7 +126,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     getStudent: state.mainReducer.getStudent,
-    selectedClass: state.mainReducer.selectedClass
+    selectedClass: state.mainReducer.selectedClass,
+    loginData:state.mainReducer.loginData
 })
 
 export default connect(mapStateToProps, { getStudents })(TotalStudent);
