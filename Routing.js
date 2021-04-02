@@ -9,10 +9,8 @@ import Loader from './components/Loader';
 import AuthStack from './screens/AuthScreens/AuthStack';
 import RegisterStack from './screens/RegistrationScreens/RegisterStack';
 import MainAppNavigator from './screens/MainApp';
-import { UPDATE_LOCAL_DATA } from './redux/actionTypes';
-import { updateUserData } from './redux/actions/authActions';
+import { updateUserData } from './redux/actions/mainActions';
 import { navigationRef } from './RootNavigation.js';
-
 
 
 const Routing = (props) => {
@@ -30,12 +28,10 @@ const Routing = (props) => {
         setIntroPageStatus(JSON.parse(introData))
         setIsLoading(false)
         if (data!= null) {
-          console.group("if data is routing.js file", data,)
           updateUserData(JSON.parse(data))
           setLoginData(JSON.parse(data))
         }
         else {
-          console.log("else data is routing.js file", props.authReducer.loginData)
           updateUserData(props.authReducer.loginData)
           setLoginData(props.authReducer.loginData)
         }

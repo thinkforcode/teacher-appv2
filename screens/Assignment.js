@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
-import { getClassCurricullamData } from '../redux/actions/mainActions';
+import { getClassCurricullamData,getOnlineClass } from '../redux/actions/mainActions';
 import { formatDate } from '../functions/timeformat';
 import Headers from '../components/Headers'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,29 +10,39 @@ import Loader from '../components/Loader'
 
 
 const Assignment = (props) => {
-    const [loginData, setLoginData] = useState(null)
-    const {  getClassCurricullamData ,  assignment, selectedClass } = props
+    // const [loginData, setLoginData] = useState(null)
+    const {  getClassCurricullamData , loginData, assignment, selectedClass } = props
 
     const [assignmentData, setAssignmentData] = useState([
         { creationTime: 10, subject: "hindi ", teacher: "deepak" },
         { creationTime: 10, subject: "hindi", teacher: "rahul singh bisht" }
     ])
 
-    useEffect(() => {
-        AsyncStorage.getItem('login').then((r) => {
-            if (r != null) {
-                let d = JSON.parse(r)
-                setLoginData(d)
-                  getClassCurricullamData(d.userId, d.schoolId, selectedClass.standard, selectedClass.section, 'assignment', 'GET_ASSIGNMENT')
-            }
-            return () => { }
-        }).catch((e) => {
-        })
+    // useEffect(() => {
+    //     AsyncStorage.getItem('login').then((r) => {
+    //         if (r != null) {
+    //             let d = JSON.parse(r)
+    //             setLoginData(d)
+    //               getClassCurricullamData(d.userId, d.schoolId, selectedClass.standard, selectedClass.section, 'assignment', 'GET_ASSIGNMENT')
+    //         }
+    //         return () => { }
+    //     }).catch((e) => {
+    //     })
 
+    // }, [])
+
+    useEffect(() => {
+        // console.log("loginData", loginData)
+        if(loginData!= null){
+            getClassCurricullamData(loginData, selectedClass, 'assignment')
+        }
+        return () => { }
     }, [])
 
+    
+
     console.log("Assignment selectedClass", selectedClass)
-    console.log("Assignmentscreen ", assignment)
+    // console.log("Assignmentscreen ", assignment)
 
 
     const gotoPreview = (item) => {
@@ -186,9 +196,11 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => ({
+    loginData:state.mainReducer.loginData,
     assignment: state.mainReducer.assignment,
-    selectedClass: state.mainReducer.selectedClass
+    selectedClass: state.mainReducer.selectedClass,
+    
 })
 
 export default connect(mapStateToProps, { getClassCurricullamData})(Assignment);
-// export default Assignment
+

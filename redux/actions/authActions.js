@@ -1,12 +1,11 @@
 import { mergeDataInLocal, mergeDataInshowIntroPage, clearLocalStorage } from "../../functions/localSorage"
 import { enternationLoginEndPoint, loginEndPoint } from "../api"
 import auth from '@react-native-firebase/auth';
-import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING, DO_OTP, UPDATE_LOCAL_DATA, OTP_LOADING, LOG_OUT, SIGNUP_LOADING, REGISTER, USER_INTREST,GET_CLASSES } from '../actionTypes';
+import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING, DO_OTP, UPDATE_LOCAL_DATA, OTP_LOADING, LOG_OUT, SIGNUP_LOADING, REGISTER, USER_INTREST } from '../actionTypes';
 import { store } from "../store";
 import { version } from '../../package.json';
 import firestore from '@react-native-firebase/firestore';
 import * as RootNavigation from '../../RootNavigation.js';
-
 
 
 export const onDoneIntroSlider = () => {
@@ -16,19 +15,6 @@ export const onDoneIntroSlider = () => {
             mergeDataInshowIntroPage({ showIntroPage: true })
         }
         catch (e) { }
-    }
-}
-
-
-//Update local data global store
-export const updateUserData = (data) => {
-    return async (dispatch) => {
-        try {
-            dispatch({ type: UPDATE_LOCAL_DATA, payload: data })
-        }
-        catch (e) {
-        }
-
     }
 }
 

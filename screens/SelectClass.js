@@ -1,31 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux'
 import { getClass, selectClass } from '../redux/actions/mainActions';
 
 
 const SelectClass = (props) => {
-    const [loginData, setLoginData] = useState({})
-    const { getClass, classes, selectClass } = props
+    const { getClass, classes, selectClass, loginData } = props
 
     useEffect(() => {
-        AsyncStorage.getItem('login').then((r) => {
-            if (r != null) {
-                let d = JSON.parse(r)
-                getClass(d.userId, d.schoolId, d.teacherId)
-                setLoginData(d)
-            }
-            return () => { }
-        }).catch(e => {
-        })
-
+        console.log("loginData", loginData)
+        if(loginData!= null){
+             getClass(loginData.userId, loginData.schoolId, loginData.teacherId)
+        }
+        return () => { }
     }, [])
 
     const _selectClass = (item) => {
         selectClass(item)
     }
+
+    console.log("classes", classes, loginData)
 
 
     return (
@@ -77,8 +72,7 @@ const SelectClass = (props) => {
 
 
 const styles = StyleSheet.create({
-    headerStyle:
-    {
+    headerStyle:{
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
@@ -86,24 +80,23 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderColor: "#C1C6D0",
     },
-    headingText:
-    {
+
+    headingText:{
         paddingLeft: 4,
         fontSize: 14
     },
-    titleStyle:
-    {
+
+    titleStyle:{
         marginVertical: 10,
         justifyContent: "center",
         alignItems: "center"
     },
-    titleText:
-    {
+
+    titleText:{
         fontSize: 14
     },
-    buttonStyle:
-    {
-
+    
+    buttonStyle:{
         borderWidth: 1,
         borderColor: "#f2f2f2",
         paddingHorizontal: 10,
@@ -115,6 +108,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
+    loginData:state.mainReducer.loginData,
     classes: state.mainReducer.classes,
 })
 
