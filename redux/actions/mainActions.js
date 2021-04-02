@@ -78,35 +78,33 @@ export const selectClass = (item) => {
   }
 }
 
-  // Get class Curriculam Data
-
-// export const getClassCurricullamData = (userId, schoolId, standard, section, screen) => {
-//   console.log("userId, schoolId, standard, section",userId, schoolId, standard, section, screen)
-//   return async (dispatch) => {
-//     try {
-//       firestore().collection('users').doc(userId).collection('schools').doc(schoolId).collection("classes").doc(standard).collection('sections').doc(section).collection(screen)
-//       .get().then((assignment) => {
-//         let t = []
-//         assignment.forEach((doc) => {
-//           doc.data()['id'] = doc.id
-//           t.push(doc.data())
-//         })
-//         dispatch({ type: GET_CLASSES_DATA, payload: t })
-//         console.log("assignment", t);
-//       }).catch(e => {
-//         console.log(e)
-//       })
-//     }
-//     catch (e) {
-//       console.log(e)
-
-//     }
-
-//   }
-
-// }
 
 // Get class Curriculam Data
+
+// export const getClassCurricullamData = (userId, schoolId, standard, section, screen, type) => {
+//   console.log("userId, schoolId, standard, section, screen, type",userId, schoolId, standard, section, screen, type)
+//   return async (dispatch) => {
+//     try {
+//       // dispatch({ type: 'LOADING', payload: true })
+//       firestore().collection('users').doc(userId).collection('schools').doc(schoolId)
+//         .collection('classes').doc(standard).collection('sections').doc(section).collection(screen).orderBy('creationTime', "desc").limit(10).get().then((snapshot) => {
+//           let lastDocument = snapshot.docs[snapshot.docs.length - 1];
+//           let d = []
+//           snapshot.forEach(function (doc) {
+//             doc.data()['docId'] = doc.id
+//             d.push(doc.data())
+//           });
+//           console.log("assignments", d);
+//           dispatch({ type: type, payload: d })
+//         }).catch(e => {
+//           dispatch({ type: 'ON_MAIN_ERROR', payload: false })
+//         })
+//     }
+//     catch (e) {
+//       dispatch({ type: 'ON_MAIN_ERROR', payload: false })
+//     }
+//   }
+// }
 
 export const getClassCurricullamData = (userId, schoolId, standard, section, screen, type) => {
   console.log("userId, schoolId, standard, section, screen, type",userId, schoolId, standard, section, screen, type)
@@ -114,15 +112,14 @@ export const getClassCurricullamData = (userId, schoolId, standard, section, scr
     try {
       // dispatch({ type: 'LOADING', payload: true })
       firestore().collection('users').doc(userId).collection('schools').doc(schoolId)
-      .collection('classes').doc(standard).collection('sections').doc(section).collection(screen).get().then((snapshot) => {
-        // .collection('classes').doc(standard).collection('sections').doc(section).collection(screen).orderBy('creationTime', "desc").limit(10).get().then((snapshot) => {
-          // let lastDocument = snapshot.docs[snapshot.docs.length - 1];
+        .collection('classes').doc(standard).collection('sections').doc(section).collection(screen).orderBy('creationTime', "desc").limit(10).onSnapshot((snapshot) => {
+          let lastDocument = snapshot.docs[snapshot.docs.length - 1];
           let d = []
           snapshot.forEach(function (doc) {
             doc.data()['docId'] = doc.id
             d.push(doc.data())
           });
-          console.log("assignment", d);
+          console.log("assignment data", d);
           dispatch({ type: type, payload: d })
         }).catch(e => {
           dispatch({ type: 'ON_MAIN_ERROR', payload: false })

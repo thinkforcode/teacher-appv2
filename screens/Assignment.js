@@ -11,7 +11,7 @@ import Loader from '../components/Loader'
 
 const Assignment = (props) => {
     const [loginData, setLoginData] = useState(null)
-    const {  getClassCurricullamData , ClassData, selectedClass } = props
+    const {  getClassCurricullamData ,  assignment, selectedClass } = props
 
     const [assignmentData, setAssignmentData] = useState([
         { creationTime: 10, subject: "hindi ", teacher: "deepak" },
@@ -24,7 +24,6 @@ const Assignment = (props) => {
                 let d = JSON.parse(r)
                 setLoginData(d)
                   getClassCurricullamData(d.userId, d.schoolId, selectedClass.standard, selectedClass.section, 'assignment', 'GET_ASSIGNMENT')
-                // getClassCurricullamData(d.userId, d.schoolId, selectedClass.standard, selectedClass.section, 'assignment')
             }
             return () => { }
         }).catch((e) => {
@@ -33,6 +32,7 @@ const Assignment = (props) => {
     }, [])
 
     console.log("Assignment selectedClass", selectedClass)
+    console.log("Assignmentscreen ", assignment)
 
 
     const gotoPreview = (item) => {
