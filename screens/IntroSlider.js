@@ -1,17 +1,15 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, StatusBar,Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Image, StatusBar, Dimensions } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux'
 import { onDoneIntroSlider } from '../redux/actions/authActions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
-
 const IntroSlider = (props) => {
-    const { authReducer, onDoneIntroSlider  } = props
-    const width= Dimensions.get('window').width
-    const height= Dimensions.get('window').height
+    const { authReducer, onDoneIntroSlider } = props
+    const width = Dimensions.get('window').width
+    const height = Dimensions.get('window').height
 
     const onDone = () => {
         onDoneIntroSlider();
@@ -22,13 +20,13 @@ const IntroSlider = (props) => {
         return (
             <TouchableOpacity style={styles.buttonCircle}>
                 <Text style={styles.btnText}>
-                <MaterialCommunityIcons name="arrow-right" size={18} color="#fff" />
+                    <MaterialCommunityIcons name="arrow-right" size={18} color="#fff" />
                 </Text>
             </TouchableOpacity>
         );
     };
 
-   const _renderDoneButton = () => {
+    const _renderDoneButton = () => {
         return (
 
             <TouchableOpacity style={styles.buttonCircle}>
@@ -39,28 +37,28 @@ const IntroSlider = (props) => {
 
     const RenderItem = ({ item }) => {
         return (
-
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
-                <Image source={item.image} />
+                <Image source={item.image} style={{ height: 300, resizeMode: 'contain' }} />
                 <Text style={styles.introTitleStyle}>
                     {item.title}
                 </Text>
                 <Text style={styles.introTextStyle}>
                     {item.text}
                 </Text>
-                 
+
             </View>
         );
     };
 
     return (
-        <View style={{ flex: 1,}}>
+        <View style={{ flex: 1, }}>
             <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
             <AppIntroSlider
                 data={slides}
                 renderItem={RenderItem}
                 onDone={onDone}
-                activeDotStyle={{ backgroundColor: '#263238',width:20,height:10}}
+                activeDotStyle={{ backgroundColor: '#263238', width: 20, height:5 }}
+                dotStyle = {{backgroundColor:'grey'}}
                 bottomButton={true}
                 renderDoneButton={_renderDoneButton}
                 renderNextButton={_renderNextButton}
@@ -93,9 +91,8 @@ const styles = StyleSheet.create({
     btnText: {
         color: '#fff',
         textAlign: 'center',
-        
-    },
 
+    },
 
     introTextStyle: {
         fontSize: 16,
@@ -145,6 +142,7 @@ const slides = [
         text: 'Tell your friends about \n your learning',
         backgroundColor: '#FFF6E2',
     },
+
     {
         key: 'key5',
         image: require('../assets/images/management.png'),
