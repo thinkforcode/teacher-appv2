@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, CLEAR_ERROR, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION,GET_COMPLAIN } from '../actionTypes';
+import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, CLEAR_ERROR, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION, GET_COMPLAIN } from '../actionTypes';
 import * as RootNavigation from '../../RootNavigation.js';
 
 
@@ -7,11 +7,11 @@ import * as RootNavigation from '../../RootNavigation.js';
 //Update local data global store
 export const updateUserData = (data) => {
   return async (dispatch) => {
-      try {
-          dispatch({ type: UPDATE_LOCAL_DATA, payload: data })
-      }
-      catch (e) {
-      }
+    try {
+      dispatch({ type: UPDATE_LOCAL_DATA, payload: data })
+    }
+    catch (e) {
+    }
   }
 }
 
@@ -86,18 +86,18 @@ export const selectClass = (item) => {
 
 // Get class Curriculam Data
 export const getClassCurricullamData = (loginData, selectedClass, screen) => {
-  console.log("loginData, selectedClass, screen",loginData, selectedClass, screen)
+  console.log("loginData, selectedClass, screen", loginData, selectedClass, screen)
   return async (dispatch) => {
     try {
-      let ref =   firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('classes').doc(selectedClass.standard)
-      .collection('sections').doc(selectedClass.section).collection(screen)
+      let ref = firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('classes').doc(selectedClass.standard)
+        .collection('sections').doc(selectedClass.section).collection(screen)
       dispatch({ type: CLEAR_ERROR, payload: null })
       dispatch({ type: LOADING, payload: true })
-   
+
       const d = [];
-     
+
       ref.orderBy('createdAt', 'desc').limit(10).onSnapshot({ includeMetadataChanges: false }, (snapshot) => {
-       console.log("snapshot",snapshot)
+        console.log("snapshot", snapshot)
         if (!snapshot.empty) {
           let lastDocument = snapshot.docs[snapshot.docs.length - 1]
           snapshot.docChanges().forEach((change, index) => {
@@ -110,18 +110,18 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
                 d.push({ ...change.doc.data() });
               }
             }
-            else if(change.type === "modified") {
+            else if (change.type === "modified") {
               d[change.newIndex] = change.doc.data();
             }
-            else if(change.type === "removed") {
+            else if (change.type === "removed") {
               d.splice(change.oldIndex, 1)
             }
             else {
               dispatch({ type: LOADING, payload: true })
             }
           });
-          console.log("assignment",d)
-          dispatch({ type: GET_CLASSES_DATA, payload: { classData:d, lastVisible: lastDocument } })
+          console.log("assignment", d)
+          dispatch({ type: GET_CLASSES_DATA, payload: { classData: d, lastVisible: lastDocument } })
           dispatch({ type: LOADING, payload: false })
 
         }
@@ -130,7 +130,7 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
         }
       });
     }
-   
+
     catch (e) {
       dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Error!' } })
       dispatch({ type: LOADING, payload: true })
@@ -143,10 +143,10 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
 export const getIndividualData = (loginData, studentUid, screen) => {
   return async (dispatch) => {
     try {
-      let ref =   firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('allStudents').doc(studentUid).collection(screen)
+      let ref = firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('allStudents').doc(studentUid).collection(screen)
       dispatch({ type: CLEAR_ERROR, payload: null })
       dispatch({ type: LOADING, payload: true })
-   
+
       const d = [];
 
       ref.orderBy('createdAt', 'desc').limit(10).onSnapshot({ includeMetadataChanges: false }, (snapshot) => {
@@ -162,10 +162,10 @@ export const getIndividualData = (loginData, studentUid, screen) => {
                 d.push({ ...change.doc.data() });
               }
             }
-            else if(change.type === "modified") {
+            else if (change.type === "modified") {
               d[change.newIndex] = change.doc.data();
             }
-            else if(change.type === "removed") {
+            else if (change.type === "removed") {
               d.splice(change.oldIndex, 1)
             }
             else {
@@ -173,7 +173,7 @@ export const getIndividualData = (loginData, studentUid, screen) => {
             }
           });
           console.log("storyData and local data is line 48", d)
-          dispatch({ type: GET_INDIVIDUAL_DATA, payload: { classData:d, lastVisible: lastDocument } })
+          dispatch({ type: GET_INDIVIDUAL_DATA, payload: { classData: d, lastVisible: lastDocument } })
           dispatch({ type: LOADING, payload: false })
 
         }
@@ -242,7 +242,7 @@ export const getOnlineClass = (userId, schoolId, standard, section) => {
             for (var groupName in groups) {
               groupData.push({ group: groupName, events: groups[groupName] });
             }
-            console.log("groupData",groupData)
+            console.log("groupData", groupData)
             dispatch({ type: 'GET_ONLINE_CLASS', payload: groupData })
           }
           else {
@@ -257,21 +257,21 @@ export const getOnlineClass = (userId, schoolId, standard, section) => {
   }
 }
 
-//Get List of Activit
+//Get List of Activity Data
 
 export const getActivityData = (loginData, collectionname, actionType) => {
-  console.log("loginData, type, actionType",loginData, collectionname, actionType)
+  console.log("loginData, type, actionType", loginData, collectionname, actionType)
   return async (dispatch) => {
     try {
       firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('activity').where('type', '==', collectionname).orderBy('createdAt', 'desc').onSnapshot((res) => {
-          let dt = []
-          res.forEach((doc) => {
-            doc.data()['id'] = doc.id
-            dt.push(doc.data())
-          })
-          console.log('activity Data',dt)
-          dispatch({ type: actionType, payload: dt })
+        let dt = []
+        res.forEach((doc) => {
+          doc.data()['id'] = doc.id
+          dt.push(doc.data())
         })
+        console.log('activity Data', dt)
+        dispatch({ type: actionType, payload: dt })
+      })
 
     }
     catch (e) {
@@ -279,3 +279,4 @@ export const getActivityData = (loginData, collectionname, actionType) => {
     }
   }
 }
+
