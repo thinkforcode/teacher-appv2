@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, CLEAR_ERROR, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION } from '../actionTypes';
+import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, CLEAR_ERROR, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION,GET_COMPLAIN } from '../actionTypes';
 import * as RootNavigation from '../../RootNavigation.js';
 
 
@@ -120,7 +120,7 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
               dispatch({ type: LOADING, payload: true })
             }
           });
-          
+          console.log("assignment",d)
           dispatch({ type: GET_CLASSES_DATA, payload: { classData:d, lastVisible: lastDocument } })
           dispatch({ type: LOADING, payload: false })
 
@@ -252,6 +252,29 @@ export const getOnlineClass = (userId, schoolId, standard, section) => {
     }
     catch (e) {
       dispatch({ type: 'ON_ERROR ', payload: false })
+
+    }
+  }
+}
+
+//Get List of Activit
+
+export const getActivityData = (loginData, collectionname, actionType) => {
+  console.log("loginData, type, actionType",loginData, collectionname, actionType)
+  return async (dispatch) => {
+    try {
+      firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('activity').where('type', '==', collectionname).orderBy('createdAt', 'desc').onSnapshot((res) => {
+          let dt = []
+          res.forEach((doc) => {
+            doc.data()['id'] = doc.id
+            dt.push(doc.data())
+          })
+          console.log('activity Data',dt)
+          dispatch({ type: actionType, payload: dt })
+        })
+
+    }
+    catch (e) {
 
     }
   }

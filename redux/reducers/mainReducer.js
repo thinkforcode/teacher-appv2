@@ -1,4 +1,4 @@
-import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION, GET_ONLINE_CLASS} from '../actionTypes/index';
+import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION, GET_ONLINE_CLASS,GET_COMPLAIN,GET_GATEPASS} from '../actionTypes/index';
 
 const INITIAL_STATE = {
     loginData: null,
@@ -8,7 +8,9 @@ const INITIAL_STATE = {
     classData: [],
     individualData: [],
     notifications: [],
-    onlineClass:[]
+    onlineClass:[],
+    complain:[],
+    gatepass:[]
 };
 
 export const mainReducer = (state = INITIAL_STATE, action) => {
@@ -68,6 +70,18 @@ export const mainReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 onlineClass: action.payload,
+                isLoading: false
+            };
+            case GET_COMPLAIN:
+            return {
+                ...state,
+                complain: action.payload,
+                isLoading: false
+            };
+            case GET_GATEPASS:
+            return {
+                ...state,
+                gatepass: action.payload,
                 isLoading: false
             };
 
