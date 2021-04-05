@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const IntroSlider = (props) => {
     const { authReducer, onDoneIntroSlider } = props
     const width = Dimensions.get('window').width
-    const height = Dimensions.get('window').height
+    const Height = Dimensions.get('window').height
 
     const onDone = () => {
         onDoneIntroSlider();
@@ -41,7 +41,7 @@ const IntroSlider = (props) => {
 
             <ScrollView>
                 <StatusBar translucent backgroundColor="transparent" />
-                <View style={{ backgroundColor: item.backgroundColor, width: width, height: Dimensions.get('window').height/2, alignItems: "center" }}>
+                <View style={{ backgroundColor: item.backgroundColor, width: width, height:Height/2, alignItems: "center" }}>
                    <Image source={item.image} style={styles.imageStyle} />
 
                 </View>
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
     },
 
     introTitleStyle: {
-        paddingTop: 10,
         fontSize: 25,
         fontWeight: 500,
         color: '#263238',
@@ -132,7 +131,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: 300,
         resizeMode: "contain",
-        marginTop:150
+        marginTop: Dimensions.get('window').height / 8,
+        marginBottom:50
     },
 
     activeDot:{

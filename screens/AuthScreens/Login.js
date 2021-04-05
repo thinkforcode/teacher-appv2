@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, TouchableOpacity, Animated, Text, TextInput, StyleSheet, StatusBar, Linking, Modal, ScrollView } from 'react-native'
+import { View, TouchableOpacity, Animated, Text, TextInput, StyleSheet, StatusBar, Linking, Modal, ScrollView, Dimensions, Image } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Backbar from '../../components/Backbar'
 import CustomButton from '../../components/CustomButton'
@@ -54,9 +54,9 @@ const Login = (props) => {
         if (phoneNumber.length < 10) {
             alert("Please enter a valid mobile number !")
         }
-        else if (!isChecked) {
-            alert("Please read and accept the Terms of Use & Privacy Policy to get started !")
-        }
+        // else if (!isChecked) {
+        //     alert("Please read and accept the Terms of Use & Privacy Policy to get started !")
+        // }
         else {
             onUserLogin(cc, phoneNumber)
         }
@@ -92,19 +92,19 @@ const Login = (props) => {
     }
 
 
-
     return (
-        <ScrollView contentContainerStyle={{ flex: 1 }} keyboardShouldPersistTaps='handled' >
-            <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
+
+        <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} keyboardShouldPersistTaps='handled' >
+            <StatusBar backgroundColor="#FFF6E2" barStyle="light-content" />
             <Modal
                 animationType="slide"
                 visible={modalVisible}
                 onRequestClose={() => { setModalVisible(!modalVisible); }}>
-                <View style={{ marginHorizontal: 20 }}>
+                <View >
                     <Backbar {...props} title="Select Your Country" screen="Login" close={_closeModal} />
                 </View>
-                <View style={{ flex: 1 }}>
-                    <View style={{ marginHorizontal: 20 }}>
+                <View style={{ marginTop: 20 }}>
+                    <View >
                         <TextInput
                             style={{ margin: 10, }}
                             autoFocus={true}
@@ -117,7 +117,10 @@ const Login = (props) => {
                     <ScrollView showsHorizontalScrollIndicator={false}>
                         {
                             countrycode.map((item, index) => (
-                                <TouchableOpacity onPress={() => { selectCountry(item) }} key={index} style={{ flexDirection: 'row', marginVertical: 10, borderBottomWidth: 1, borderBottomColor: '#DFE4EE', justifyContent: 'space-between', alignContent: 'space-between', marginHorizontal: 20 }}>
+                                <TouchableOpacity onPress={() => { selectCountry(item) }}
+                                    key={index} style={{
+                                        flexDirection: 'row', marginVertical: 10, borderBottomWidth: 1, borderBottomColor: '#DFE4EE', justifyContent: 'space-between', alignContent: 'space-between',
+                                    }}>
                                     <View>
                                         <Text style={{ padding: 5 }}>{item.dial_code}</Text>
                                     </View>
@@ -134,7 +137,6 @@ const Login = (props) => {
                 </View>
             </Modal>
             <Animated.View style={{
-                marginHorizontal: 15, marginTop: 100,
                 transform: [
                     {
                         translateX: SlideInLeft.interpolate({
@@ -144,18 +146,24 @@ const Login = (props) => {
                     }
                 ],
             }}>
-
-                <Text style={styles.HeaderText}>Welcome</Text>
-                <Text style={styles.titleText}>Enter your mobile number</Text>
-
-                <View style={{ marginTop: 20, }}>
-                    <Text style={styles.Text}>Select Your Country</Text>
+                <View style={styles.headerPart}>
+                    <Image
+                        style={styles.imageStyle}
+                        source={require('../../assets/images/login_illustration.png')} />
+                </View>
+                <View style={{ marginHorizontal: 15, marginTop: 40 }}>
+                    <Text style={styles.Text}>Enter Your Mobile Number</Text>
                     <TouchableOpacity onPress={() => { openModal() }} style={styles.countryBox}>
-                        <Text tyle={{ color: '#414268', fontSize: 16, }}> {countryName}</Text>
+                        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                            <Text tyle={{ color: '#263238', fontSize: 18, }}> {countryName}</Text>
+                            <View style={styles.dropDownStyle}>
+                                <MaterialCommunityIcons name="chevron-down" color="#707070" size={18} />
+                            </View>
+                        </View>
                     </TouchableOpacity>
 
-                    <View style={{ marginTop: 14, borderBottomColor: '#DFE4EE', }}>
-                        <Text style={styles.Text}>Mobile Number</Text>
+                    <View style={{ marginTop: 15, }}>
+
                         <View style={styles.mobileNumber}>
                             <View style={styles.inputText}>
                                 <Text style={styles.mobileNumberText}>{cc}</Text>
@@ -163,8 +171,8 @@ const Login = (props) => {
 
                             <View style={styles.inputBox}>
                                 <TextInput
-                                    placeholderTextColor="#4A4441"
-                                    placeholder="Mobile number *"
+                                    placeholderTextColor="#A3A4A7"
+                                    placeholder="Enter Your Mobile Number"
                                     keyboardType="number-pad"
                                     maxLength={10}
                                     onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
@@ -175,42 +183,15 @@ const Login = (props) => {
 
                 </View>
 
-
-                <View style={{ marginTop: 22, flexDirection: 'row', }}>
-                    <TouchableOpacity onPress={() => { _acceptTermsCondition() }}>
-                        {
-                            isChecked ?
-                                <View>
-                                    <MaterialCommunityIcons name="checkbox-marked" color="#007FEB" size={30} />
-                                </View> :
-                                <View>
-                                    <MaterialCommunityIcons name="checkbox-blank-outline" color="#B8B7B7" size={30} />
-                                </View>
-
-                        }
-                    </TouchableOpacity>
-
-                    <View style={{ flex: 1 }}>
-                        <Text style={{ paddingLeft: 5, }}>
-                            <Text style={{ color: '#ADB7CB', fontSize: 14 }}>I have read and understood the</Text>
-                            <Text style={{ color: "#E53563" }} onPress={() => { Linking.openURL('https://skugal.com/terms-of-use') }}> Terms of Use </Text>
-                            <Text style={{ color: '#ADB7CB', fontSize: 14 }}>and</Text>
-                            <Text style={{ color: "#E53563", paddingLeft: 5 }} onPress={() => { Linking.openURL('https://skugal.com/privacy-policy') }}> Privacy Policy.</Text>
-                        </Text>
-
-                    </View>
-                </View>
-
-
-                <View style={{ marginTop: 50, justifyContent: 'center' }}>
-                    <Text style={{ textAlign: 'center', color: '#84859B', fontSize: 14, }}>We will send you a 6-digit OTP to verify</Text>
-                    <CustomButton {...props} button={styles.button} _doAction={getLogin} buttonText={styles.buttonText} title="Submit" />
+                <View style={styles.buttonStyle}>
+                    <CustomButton {...props} button={styles.button} _doAction={getLogin} buttonText={styles.buttonText} title="Next" screen='Login' />
 
                 </View>
             </Animated.View>
             {authReducer.loginLoading && <Loader />}
 
         </ScrollView>
+
     )
 }
 
@@ -225,23 +206,26 @@ export default connect(mapStateToProps, { onUserLogin })(Login);
 
 
 const styles = StyleSheet.create({
+
+
     button: {
-        borderRadius: 10,
-        marginTop: 20,
-        elevation: 3,
-        width: 147,
+        borderRadius: 14,
+        marginTop: 50,
+        marginBottom: 5,
+        width: '100%',
         height: 50,
         alignItems: 'center',
-        justifyContent: 'center',
         alignSelf: 'center',
-        backgroundColor: '#E53563'
+        justifyContent: 'space-around',
+        backgroundColor: '#2B454E',
     },
 
 
     buttonText: {
         fontSize: 16,
         color: '#ffffff',
-        textAlign: 'center',
+        fontWeight: "500",
+        marginLeft: 20
     },
     HeaderText: {
         fontSize: 30,
@@ -253,44 +237,65 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     countryBox: {
-        borderColor: '#C1C6D0',
-        height: 46,
-        borderRadius: 10,
-        borderWidth: 1,
-        padding: 10,
-        marginTop: 10,
+        borderBottomWidth: 0.5,
+        borderColor: '#A3A4A7',
+        height: 35,
+        marginTop: 30,
     },
     Text: {
-        color: '#35365F',
-        fontSize: 14
+        color: '#263238',
+        fontSize: 25,
+        fontWeight: "500"
     },
     inputBox: {
         flex: 1,
-        height: 46,
-        borderWidth: 1,
-        borderColor: '#C1C6D0',
-        borderRadius: 10,
-        marginLeft: 6
+        height: 45,
+        borderBottomWidth: 0.5,
+        borderColor: '#A3A4A7',
+
+
     },
     inputText: {
-        width: 70,
-        height: 46,
-        borderWidth: 1,
-        borderColor: "#C1C6D0",
-        borderRadius: 10,
+        width: 45,
+        height: 45,
+        borderBottomWidth: 0.5,
+        borderColor: "#A3A4A7",
         justifyContent: 'center',
-        alignItems: 'center'
+
     },
     mobileNumber:
     {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 10
+
     },
     mobileNumberText: {
-        color: '#C0C7D4',
+        color: '#263238',
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: '500'
+    },
+
+    imageStyle: {
+        alignItems: "center",
+        height: Dimensions.get('window').height / 2.5,
+        resizeMode: "contain",
+    },
+    headerPart: {
+        backgroundColor: '#FFF6E2',
+        width: '100%',
+        height: Dimensions.get('window').height / 2.5,
+        alignItems: "center"
+    },
+    dropDownStyle: {
+        backgroundColor: "#f2f2f2",
+        justifyContent: "center",
+        alignItems: "center",
+        width: 20,
+        height: 20,
+        borderRadius: 10
+    },
+    buttonStyle: {
+        marginHorizontal: 30,
     }
 
 })
