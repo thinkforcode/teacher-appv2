@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, StatusBar, Dimensions,ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image, StatusBar, Dimensions, ScrollView } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux'
@@ -40,11 +40,13 @@ const IntroSlider = (props) => {
     const RenderItem = ({ item, index }) => {
         console.log("item", item, index)
         return (
-            <ScrollView >
-                <View style={{ backgroundColor: item.backgroundColor, width: '100%', height: 320, alignItems: "center" }}>
-                    <Image source={item.image} style={{ alignItems: "center", height: 300, resizeMode: "contain", position: "absolute", bottom: -50 }} />
+
+            <ScrollView>
+                <StatusBar translucent backgroundColor="transparent" />
+                <View style={{ backgroundColor: item.backgroundColor, width: width, height: 300, alignItems: "center" }}>
+                    <Image source={item.image} style={styles.imageStyle} />
                 </View>
-                <View style={{ marginTop: 50 }}>
+                <View style={styles.titleStyle}>
                     <Text style={styles.introTitleStyle}>
                         {item.title}
                     </Text>
@@ -53,9 +55,7 @@ const IntroSlider = (props) => {
                     </Text>
                 </View>
             </ScrollView>
-
-
-        );
+     );
     };
 
     return (
@@ -64,8 +64,8 @@ const IntroSlider = (props) => {
                 data={slides}
                 renderItem={RenderItem}
                 onDone={onDone}
-                activeDotStyle={{ backgroundColor: '#263238', width: 20, height: 5 }}
-                dotStyle={{ backgroundColor: "#A3A4A7", height: 5 }}
+                activeDotStyle={styles.activeDot}
+                dotStyle={styles.dotStyleText}
                 bottomButton={true}
                 renderDoneButton={_renderDoneButton}
                 renderNextButton={_renderNextButton}
@@ -127,7 +127,31 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "center"
-    }
+    },
+    imageStyle:
+    {
+        alignItems: "center",
+        height: 300,
+        resizeMode: "contain",
+        position: "absolute",
+        bottom: -50
+    },
+    activeDot:
+    {
+        backgroundColor: '#263238',
+        width: 20,
+        height: 5
+    },
+    titleStyle:
+    {
+        marginTop: 50
+    },
+    dotStyleText:
+    {
+        backgroundColor: "#A3A4A7",
+        height: 5
+    },
+    
 
 });
 
