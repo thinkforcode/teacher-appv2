@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Animated, TextInput, StatusBar } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Animated, TextInput, StatusBar, ScrollView } from 'react-native'
 import CustomButton from '../../components/CustomButton';
 import { connect } from 'react-redux'
 import messaging from '@react-native-firebase/messaging';
 import Loader from '../../components/Loader';
 import Headers from '../../components/Headers';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { verifyOtp, onUserLogin } from '../../redux/actions/authActions';
 
 
@@ -157,100 +158,116 @@ const Otp = (props) => {
 
 
     return (
-        <KeyboardAvoidingView behavior="padding" >
-            <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
-            <Headers {...props} title="Verify OTP" />
-            <Animated.View style={{
-                transform: [
-                    {
-                        translateX: SlideInLeft.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [600, 0]
-                        })
-                    }
-                ],
-            }}>
+        <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} keyboardShouldPersistTaps='handled' >
+            <KeyboardAvoidingView behavior="padding" >
+                {/* <StatusBar backgroundColor="#fff" barStyle="light-content" /> */}
+                {/* <Headers {...props} title="Verify OTP" /> */}
 
-
-                <View style={styles.headerText}>
-                    <Text style={styles.titleText}>We have sent a 6-digit OTP to</Text>
-                    {/* <Text style={{ textAlign: 'center', color: '#414268', paddingTop: 10 }}>{userReducer.loginData.mobileNumber}</Text> */}
-                </View>
-
-                <View style={styles.otpSection}>
-                    <TextInput
-                        style={styles.input}
-                        ref={pin1}
-                        keyboardType="number-pad"
-                        maxLength={1}
-                        onChangeText={code1 => setCode1(code1)
+                <Animated.View style={{
+                    transform: [
+                        {
+                            translateX: SlideInLeft.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [600, 0]
+                            })
                         }
-                    />
+                    ],
+                }}>
 
-                    <TextInput
-                        ref={pin2}
-                        style={styles.input}
-                        keyboardType="number-pad"
-                        maxLength={1}
-                        onChangeText={code2 => setCode2(code2)}
-                    />
 
-                    <TextInput
-                        ref={pin3}
-                        style={styles.input}
-                        keyboardType="number-pad"
-                        maxLength={1}
-                        onChangeText={code3 => setCode3(code3)}
-                    />
+                    <View style={styles.headerText}>
+                        <TouchableOpacity onPress={() => { props.navigation.goBack() }} style={styles.dropDownStyle} >
+                            <MaterialCommunityIcons name="chevron-left" color="#707070" size={18} />
+                        </TouchableOpacity>
+                        <Text style={styles.titleText}>Enter 6 digit verification </Text>
+                        <Text style={styles.titleTextTwo}>code sent to your number</Text>
 
-                    <TextInput
-                        ref={pin4}
-                        style={styles.input}
-                        keyboardType="number-pad"
-                        maxLength={1}
-                        onChangeText={code4 => setCode4(code4)}
-                    />
+                        {/* <Text style={{ textAlign: 'center', color: '#414268', paddingTop: 10 }}>{userReducer.loginData.mobileNumber}</Text> */}
+                    </View>
 
-                    <TextInput
-                        ref={pin5}
-                        style={styles.input}
-                        keyboardType="number-pad"
-                        maxLength={1}
-                        onChangeText={code5 => setCode5(code5)}
-                    />
+                    <View style={styles.otpSection}>
+                        <TextInput
+                            style={styles.input}
+                            ref={pin1}
+                            keyboardType="number-pad"
+                            maxLength={1}
+                            onChangeText={code1 => setCode1(code1)
+                            }
+                        />
 
-                    <TextInput
-                        onFocus={() => { setIsHighlighted(true) }}
-                        ref={pin6}
-                        style={styles.input}
-                        keyboardType="number-pad"
-                        maxLength={1}
-                        onChangeText={code6 => setCode6(code6)}
-                    />
-                </View>
+                        <TextInput
+                            ref={pin2}
+                            style={styles.input}
+                            keyboardType="number-pad"
+                            maxLength={1}
+                            onChangeText={code2 => setCode2(code2)}
+                        />
 
-                {/* {
+                        <TextInput
+                            ref={pin3}
+                            style={styles.input}
+                            keyboardType="number-pad"
+                            maxLength={1}
+                            onChangeText={code3 => setCode3(code3)}
+                        />
+
+                        <TextInput
+                            ref={pin4}
+                            style={styles.input}
+                            keyboardType="number-pad"
+                            maxLength={1}
+                            onChangeText={code4 => setCode4(code4)}
+                        />
+
+                        <TextInput
+                            ref={pin5}
+                            style={styles.input}
+                            keyboardType="number-pad"
+                            maxLength={1}
+                            onChangeText={code5 => setCode5(code5)}
+                        />
+
+                        <TextInput
+                            onFocus={() => { setIsHighlighted(true) }}
+                            ref={pin6}
+                            style={styles.input}
+                            keyboardType="number-pad"
+                            maxLength={1}
+                            onChangeText={code6 => setCode6(code6)}
+                        />
+                    </View>
+
+                    {
                     otpVisible ?
-                        <View style={{ alignSelf: 'flex-end', marginHorizontal: 30, marginTop: 70 }}><Text style={{ color: '#94A1AC', fontSize: 16, fontWeight: '500' }}>00:{seconds}</Text></View> :
-                        <View style={{ marginTop: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                            <Text style={{ color: '#C1C6D0', fontSize: 14 }}>Didn't Receive OTP ?</Text>
-                            <TouchableOpacity onPress={_resendOtp}>
-                                <Text style={{ color: "#E53563", fontSize: 16, fontWeight: '500' }}>Resend</Text>
+                        <View style={{alignItems:"center", marginTop: 50,justifyContent:"center" }}><Text style={{ fontSize: 14, fontWeight: "500", color: "#263238" }}>Resend code in 00:{seconds}</Text></View> :
+                        // <View style={{ marginTop: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                        //     <Text style={{ color: '#C1C6D0', fontSize: 14 }}>Didn't Receive OTP ?</Text>
+
+                            <View style={{alignItems:"center"}}>
+                                <Text style={{fontSize:16,color:"#D92410",fontWeight:"500",marginTop:50}}>
+                                    The OTP you entered is incorrect
+                                </Text>
+                            <TouchableOpacity onPress={_resendOtp} style={{marginTop:20}}>
+                                <Text style={{ color: "#263238", fontSize: 14, fontWeight: '500' }}>Resend OTP</Text>
                             </TouchableOpacity>
                         </View>
 
-                } */}
+                }
 
-                <View style={{ marginTop: 10 }}>
-                    <CustomButton {...props} button={styles.button} _doAction={enterOtp} buttonText={styles.buttonText} title="Verify" />
+                    {/* <View style={{ alignItems: "center", justifyContent: "center", marginTop: 50 }}>
+                        <Text style={{ fontSize: 14, fontWeight: "500", color: "#263238" }}>Resend code in 00:30</Text>
+                    </View> */}
 
-                </View>
+                    <View style={{ marginHorizontal: 30, }}>
+                        <CustomButton {...props} button={styles.button} _doAction={enterOtp} buttonText={styles.buttonText} title="Verify OTP" screen='Otp' />
+                    </View>
 
-            </Animated.View>
+                </Animated.View>
 
-            { authReducer.otpLoading && <Loader />}
+                {authReducer.otpLoading && <Loader />}
 
-        </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
 
@@ -262,27 +279,25 @@ export default connect(mapStateToProps, { verifyOtp, onUserLogin })(Otp);
 
 const styles = StyleSheet.create({
     button: {
-        borderRadius: 10,
-        marginTop: 20,
-        elevation: 3,
-        width: 147,
+        borderRadius: 14,
+        marginTop: 70,
         height: 50,
-        alignItems: 'center',
         justifyContent: 'center',
-        alignSelf: 'center',
-        backgroundColor: '#E53563'
+        backgroundColor: '#2B454E',
     },
 
 
     input: {
-        width: 50,
-        height: 50,
-        borderColor: '#C1C6D0',
+        width: 45,
+        height: 45,
+        borderColor: '#A3A4A7',
         borderWidth: 1,
         textAlign: 'center',
-        fontWeight: '600',
-        padding: 10,
+        justifyContent:"center",
+        fontSize:24,
+        padding: 5,
         borderRadius: 10,
+        color:'#FFC800'
     },
 
 
@@ -292,24 +307,40 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         textAlign: 'center',
     },
-    headerText:
-    {
-        alignSelf: 'center',
-        marginTop: 50
+    headerText: {
+        marginTop: 20,
+        marginHorizontal: 15,
+
     },
 
-    titleText:
+    titleText: {
+        color: '#263238',
+        fontSize: 24,
+        marginTop: 50,
+        fontWeight: "bold"
+    },
+    titleTextTwo:
     {
-        color: '#35365F',
-        fontSize: 16
+        color: '#263238',
+        fontSize: 24,
+        fontWeight: "bold"
     },
     otpSection:
     {
-        marginTop: 30,
+        marginTop: 70,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-    }
+        marginHorizontal: 15
+    },
+    dropDownStyle: {
+        backgroundColor: "#f2f2f2",
+        justifyContent: "center",
+        alignItems: "center",
+        width: 20,
+        height: 20,
+        borderRadius: 10
+    },
 })
 
 

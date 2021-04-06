@@ -211,12 +211,10 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 14,
         marginTop: 50,
-        marginBottom: 5,
-        width: '100%',
         height: 50,
         alignItems: 'center',
-        alignSelf: 'center',
-        justifyContent: 'space-around',
+        flexDirection:'row',
+        justifyContent: 'space-between',
         backgroundColor: '#2B454E',
     },
 
@@ -244,8 +242,8 @@ const styles = StyleSheet.create({
     },
     Text: {
         color: '#263238',
-        fontSize: 25,
-        fontWeight: "500"
+        fontSize: 24,
+        fontWeight: 'bold'
     },
     inputBox: {
         flex: 1,
