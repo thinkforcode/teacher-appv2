@@ -95,7 +95,7 @@ const Login = (props) => {
     return (
 
         <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} keyboardShouldPersistTaps='handled' >
-            <StatusBar backgroundColor="#FFF6E2" barStyle="light-content" />
+            <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
             <Modal
                 animationType="slide"
                 visible={modalVisible}
@@ -150,8 +150,11 @@ const Login = (props) => {
                     <Image
                         style={styles.imageStyle}
                         source={require('../../assets/images/login_illustration.png')} />
+                        {/* <Text style={{fontSize:40,fontWeight:"bold",color:"#fff",paddingLeft:15}}>Enter Your</Text>
+                        <Text style={{fontSize:40,fontWeight:"bold",color:"#fff",paddingLeft:15}}>Mobile Number</Text> */}
                 </View>
-                <View style={{ marginHorizontal: 15, marginTop: 40 }}>
+                
+                <View style={{ marginHorizontal: 15, marginTop: 50 }}>
                     <Text style={styles.Text}>Enter Your Mobile Number</Text>
                     <TouchableOpacity onPress={() => { openModal() }} style={styles.countryBox}>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -162,7 +165,7 @@ const Login = (props) => {
                         </View>
                     </TouchableOpacity>
 
-                    <View style={{ marginTop: 15, }}>
+                    <View style={{ marginTop: 10, }}>
 
                         <View style={styles.mobileNumber}>
                             <View style={styles.inputText}>
@@ -170,7 +173,7 @@ const Login = (props) => {
                             </View>
 
                             <View style={styles.inputBox}>
-                                <TextInput
+                                <TextInput 
                                     placeholderTextColor="#A3A4A7"
                                     placeholder="Enter Your Mobile Number"
                                     keyboardType="number-pad"
@@ -184,7 +187,7 @@ const Login = (props) => {
                 </View>
 
                 <View style={styles.buttonStyle}>
-                    <CustomButton {...props} button={styles.button} _doAction={getLogin} buttonText={styles.buttonText} title="Next" screen='Login' />
+                    <CustomButton {...props} button={styles.button} _doAction={getLogin} buttonText={styles.buttonText} title="Verify & Proceed" />
 
                 </View>
             </Animated.View>
@@ -210,12 +213,13 @@ const styles = StyleSheet.create({
 
     button: {
         borderRadius: 14,
-        marginTop: 50,
+        marginTop: 70,
         height: 50,
         alignItems: 'center',
-        flexDirection:'row',
-        justifyContent: 'space-between',
+        flexDirection: 'row',
+        justifyContent: 'center',
         backgroundColor: '#2B454E',
+        marginBottom:5
     },
 
 
@@ -223,7 +227,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#ffffff',
         fontWeight: "500",
-        marginLeft: 20
     },
     HeaderText: {
         fontSize: 30,
@@ -238,11 +241,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderColor: '#A3A4A7',
         height: 35,
-        marginTop: 30,
+        marginTop:30
+        
     },
     Text: {
         color: '#263238',
-        fontSize: 24,
+        fontSize: 25,
         fontWeight: 'bold'
     },
     inputBox: {
@@ -250,6 +254,7 @@ const styles = StyleSheet.create({
         height: 45,
         borderBottomWidth: 0.5,
         borderColor: '#A3A4A7',
+        fontWeight: "500"
 
 
     },
@@ -275,14 +280,17 @@ const styles = StyleSheet.create({
 
     imageStyle: {
         alignItems: "center",
-        height: Dimensions.get('window').height / 2.5,
+        height: Dimensions.get('window').height / 3,
+        position: "absolute",
+        bottom: 0,
         resizeMode: "contain",
     },
     headerPart: {
         backgroundColor: '#FFF6E2',
         width: '100%',
         height: Dimensions.get('window').height / 2.5,
-        alignItems: "center"
+        // justifyContent:"center"
+        alignItems:"center"
     },
     dropDownStyle: {
         backgroundColor: "#f2f2f2",

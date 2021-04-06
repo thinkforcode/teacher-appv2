@@ -20,7 +20,7 @@ const IntroSlider = (props) => {
         return (
             <TouchableOpacity style={styles.buttonCircle}>
                 <Text style={styles.btnText}>
-                    <MaterialCommunityIcons name="arrow-right" size={18} color="#fff" />
+                    <MaterialCommunityIcons name="chevron-right" size={18} color="#fff" />
                 </Text>
             </TouchableOpacity>
         );
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-        backgroundColor: '#FFC800'
+        backgroundColor: '#263238'
     },
 
     btnText: {
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     nextButton: {
         width: 145,
         height: 45,
-        backgroundColor: "#FFC800",
+        backgroundColor: "#263238",
         borderRadius: 4,
         alignItems: "center",
         justifyContent: "center",
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     },
 
     activeDot:{
-        backgroundColor: '#263238',
+        backgroundColor: '#FFC800',
         width: 20,
         height: 5
     },

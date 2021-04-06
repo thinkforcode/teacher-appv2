@@ -4,7 +4,6 @@ import CustomButton from '../../components/CustomButton';
 import { connect } from 'react-redux'
 import messaging from '@react-native-firebase/messaging';
 import Loader from '../../components/Loader';
-import Headers from '../../components/Headers';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { verifyOtp, onUserLogin } from '../../redux/actions/authActions';
 
@@ -161,7 +160,7 @@ const Otp = (props) => {
         <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} keyboardShouldPersistTaps='handled' >
             <KeyboardAvoidingView behavior="padding" >
                 {/* <StatusBar backgroundColor="#fff" barStyle="light-content" /> */}
-                {/* <Headers {...props} title="Verify OTP" /> */}
+                
 
                 <Animated.View style={{
                     transform: [
@@ -239,14 +238,17 @@ const Otp = (props) => {
 
                     {
                     otpVisible ?
-                        <View style={{alignItems:"center", marginTop: 50,justifyContent:"center" }}><Text style={{ fontSize: 14, fontWeight: "500", color: "#263238" }}>Resend code in 00:{seconds}</Text></View> :
-                        // <View style={{ marginTop: 70, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                        //     <Text style={{ color: '#C1C6D0', fontSize: 14 }}>Didn't Receive OTP ?</Text>
+                        <View style={{alignItems:"center", marginTop: 50,justifyContent:"center" }}>
+                            <Text style={{ fontSize: 14, fontWeight: "500", color: "#263238" }}>Resend code in 00:{seconds}</Text>
+                            </View> :
+                        <View style={{alignItems:"center"}}>
+                                    
+                                     {/* Otp error */}
 
-                            <View style={{alignItems:"center"}}>
-                                <Text style={{fontSize:16,color:"#D92410",fontWeight:"500",marginTop:50}}>
+                                 {/* <Text style={{fontSize:16,color:"#D92410",fontWeight:"500",marginTop:50}}>
                                     The OTP you entered is incorrect
-                                </Text>
+                                </Text> */}
+                                  
                             <TouchableOpacity onPress={_resendOtp} style={{marginTop:20}}>
                                 <Text style={{ color: "#263238", fontSize: 14, fontWeight: '500' }}>Resend OTP</Text>
                             </TouchableOpacity>
@@ -254,9 +256,7 @@ const Otp = (props) => {
 
                 }
 
-                    {/* <View style={{ alignItems: "center", justifyContent: "center", marginTop: 50 }}>
-                        <Text style={{ fontSize: 14, fontWeight: "500", color: "#263238" }}>Resend code in 00:30</Text>
-                    </View> */}
+                   
 
                     <View style={{ marginHorizontal: 30, }}>
                         <CustomButton {...props} button={styles.button} _doAction={enterOtp} buttonText={styles.buttonText} title="Verify OTP" screen='Otp' />
@@ -280,7 +280,7 @@ export default connect(mapStateToProps, { verifyOtp, onUserLogin })(Otp);
 const styles = StyleSheet.create({
     button: {
         borderRadius: 14,
-        marginTop: 70,
+        marginTop: 120,
         height: 50,
         justifyContent: 'center',
         backgroundColor: '#2B454E',
@@ -289,15 +289,13 @@ const styles = StyleSheet.create({
 
     input: {
         width: 45,
-        height: 45,
         borderColor: '#A3A4A7',
-        borderWidth: 1,
+        // borderColor: '#E94147',
+        borderBottomWidth: 1,
         textAlign: 'center',
         justifyContent:"center",
-        fontSize:24,
-        padding: 5,
-        borderRadius: 10,
-        color:'#FFC800'
+        fontSize:25,
+        color:'#263238'
     },
 
 
@@ -331,7 +329,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        marginHorizontal: 15
+        marginHorizontal: 30
     },
     dropDownStyle: {
         backgroundColor: "#f2f2f2",

@@ -29,12 +29,13 @@ export default function Autoplace(props) {
 
         textInput: {
           fontSize: 16,
-          borderWidth: 1,
+          // borderWidth: 1,
+          borderBottomWidth:1,
           borderColor: '#C1C6D0',
           marginVertical: 10,
           backgroundColor: 'transparent',
           color: '#94A1AC',
-          borderRadius:10
+          // borderRadius:10
 
         },
         predefinedPlacesDescription: {

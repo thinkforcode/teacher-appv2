@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, TextInput, Animated, SafeAreaView,  StatusBar, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Animated, SafeAreaView, StatusBar, ScrollView, Dimensions, Linking } from 'react-native'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
 import CustomButton from '../../components/CustomButton'
 import Autoplace from '../../components/Place'
-import Headers from '../../components/Headers'
 import Loader from '../../components/Loader'
 import { onUserRegister } from '../../redux/actions/authActions'
 
@@ -18,7 +18,7 @@ const Signup = (props) => {
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
     const _registerUser = () => {
-        let d = { firstName: fName, lastName: lName, email: email, address: address}
+        let d = { firstName: fName, lastName: lName, email: email, address: address }
         onUserRegister(d)
     }
 
@@ -36,14 +36,16 @@ const Signup = (props) => {
             }),
         ]).start();
     })
-
-
-
-    return (
+               return (
         <SafeAreaView style={{ flex: 1 }}>
-            <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
-            <Headers {...props} title="New Account" />
+            <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
+
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+                <View style={styles.headerPart}>
+                    <Text style={styles.headerText}>Create</Text>
+                    <Text style={styles.headerText}>Account</Text>
+                    <Text style={styles.titleText}>Enter your basic details</Text>
+                </View>
                 <View style={{ marginHorizontal: 15 }}>
                     <Animated.View style={{
                         marginTop: 30,
@@ -56,49 +58,58 @@ const Signup = (props) => {
                             }
                         ],
                     }}>
-                        <Text style={styles.titleText}>Enter Your Basic Details</Text>
-                        <View style={{ marginTop: 10 }}>
-                            <TextInput
-                                autoCompleteType="name"
-                                placeholder="First Name"
-                                placeholderTextColor="#8F8FA6"
-                                value={fName}
-                                style={styles.input}
-                                onChangeText={(value) => { setfName(value) }}
-                            />
-
-                            <TextInput
-                                placeholder="Last Name"
-                                placeholderTextColor="#8F8FA6"
-                                value={lName}
-                                style={styles.input}
-                                onChangeText={(value) => { setlName(value) }}
-                            />
-
-                            <TextInput
-                                keyboardType="email-address"
-                                autoCompleteType="email"
-                                placeholder="Email Id"
-                                placeholderTextColor="#8F8FA6"
-                                value={email}
-                                style={styles.input}
-                                onChangeText={(value) => { setEmail(value) }}
-                            />
-
-                            <Autoplace addAddress={selectdAddress} title="Address" />
-                            <Text style={styles.descriptionText}>Your basic details is your privacy, Skugal understands it. Skugal does not share it with any third party.</Text>
-
-                            <View style={{ marginTop: 20 }}>
-                                <CustomButton {...props} button={styles.button} _doAction={_registerUser} buttonText={styles.buttonText} title="NEXT" />
+                           <View style={{ marginTop: 10 }}>
+                            <View style={styles.inputBox}>
+                                <MaterialCommunityIcons name="account" color="#707070" size={16} />
+                                <TextInput
+                                    autoCompleteType="name"
+                                    placeholder="First Name"
+                                    placeholderTextColor="#707070"
+                                    value={fName}
+                                    style={styles.input}
+                                    onChangeText={(value) => { setfName(value) }}
+                                />
                             </View>
+                            <View style={styles.inputBox}>
+                                <MaterialCommunityIcons name="account" color="#707070" size={16} />
+                                <TextInput
+                                    placeholder="Last Name"
+                                    placeholderTextColor="#707070"
+                                    value={lName}
+                                    style={styles.input}
+                                    onChangeText={(value) => { setlName(value) }}
+                                />
+                            </View>
+                            <View style={styles.inputBox}>
+                                <MaterialCommunityIcons name="email-outline" color="#707070" size={16} />
+                                <TextInput
+                                    keyboardType="email-address"
+                                    autoCompleteType="email"
+                                    placeholder="Email ID"
+                                    placeholderTextColor="#707070"
+                                    value={email}
+                                    style={styles.input}
+                                    onChangeText={(value) => { setEmail(value) }}
+                                />
+                            </View>
+                            <Autoplace addAddress={selectdAddress} title="Address" />
+                             <Text style={styles.discriptionText}>By Registering,your confirm that you accept our</Text>
+                            <View style={{ flexDirection: "row" }}>
+                                <Text style={styles. linkText} onPress={() => { Linking.openURL('https://skugal.com/terms-of-use') }}>Terms to Use</Text>
+                                <Text style={{ color: "#707070", fontSize: 14 }}> and</Text>
+                                <Text style={styles. linkText} onPress={() => { Linking.openURL('https://skugal.com/privacy-policy') }}> Privacy Policy</Text>
+                                 </View>
                         </View>
 
+                      <View style={styles.buttonStyle}>
+                            <CustomButton {...props} button={styles.button} _doAction={_registerUser} buttonText={styles.buttonText} title="NEXT" />
+                        </View>
                     </Animated.View>
                 </View>
 
             </ScrollView>
 
-            { authReducer.signUpLoading && <Loader /> }
+            { authReducer.signUpLoading && <Loader />}
 
         </SafeAreaView>
 
@@ -118,41 +129,73 @@ export default connect(mapStateToProps, { onUserRegister })(Signup);
 
 const styles = StyleSheet.create({
     input: {
+        flex: 1,
         fontSize: 16,
-        borderWidth: 1,
-        borderColor: '#C1C6D0',
-        marginVertical: 10,
-        borderRadius: 10,
-        paddingLeft: 10
+    },
+    inputOne: {
+        flex: 1,
+        fontSize: 16,
     },
 
     button: {
-        borderRadius: 10,
+        borderRadius: 14,
         marginTop: 20,
-        elevation: 3,
-        width: 147,
         height: 50,
         alignItems: 'center',
+        flexDirection: 'row',
         justifyContent: 'center',
-        alignSelf: 'center',
-        backgroundColor: '#E53563'
+        backgroundColor: '#2B454E',
+        marginBottom: 5
     },
 
 
     buttonText: {
         fontSize: 16,
         color: '#ffffff',
-        textAlign: 'center',
+        fontWeight: "500",
     },
-    titleText:
-    {
-        color: '#35365F',
-        fontSize: 16,
-    },
+
     descriptionText:
     {
         color: '#8F8FA6',
         fontSize: 12,
         marginTop: 30
+    },
+    headerPart: {
+        backgroundColor: '#2B454E',
+        width: '100%',
+        height: Dimensions.get('window').height / 3,
+        justifyContent: "center"
+    },
+    buttonStyle: {
+        marginHorizontal: 30,
+        marginTop: 20
+    },
+    headerText:{
+        fontSize: 40,
+         fontWeight: "bold", 
+         color: "#fff",
+          paddingLeft: 15
+    },
+    titleText:{
+        fontSize: 16, 
+        color: "#C6DBE2",
+         paddingLeft: 15,
+          paddingTop: 10
+    },
+    inputBox:{
+        flexDirection: "row",
+         alignItems: "center",
+          borderBottomWidth: 0.5, 
+          borderColor: "#A3A4A7" 
+    },
+    discriptionText:{
+        paddingTop: 15, 
+        color: "#707070",
+         fontSize: 14
+    },
+    linkText:{
+        color: "#FFC800",
+        fontSize: 14
     }
 })
