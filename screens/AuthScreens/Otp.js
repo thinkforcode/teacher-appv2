@@ -7,8 +7,6 @@ import Loader from '../../components/Loader';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { verifyOtp, onUserLogin } from '../../redux/actions/authActions';
 
-
-
 const Otp = (props) => {
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
@@ -66,18 +64,13 @@ const Otp = (props) => {
 
     const enterOtp = () => {
         let code = `${code1}${code2}${code3}${code4}${code5}${code6}`
-        if (code.trim() == "") {
-            alert("OTP can not be empty !")
-        }
-        else {
-            verifyOtp(code, deviceToken)
-        }
+        verifyOtp(code, deviceToken)
     }
 
     const _resendOtp = () => {
         setSeconds(30)
         setOtpVisible(true)
-        onUserLogin(userReducer.loginData.mobileNumber)
+        onUserLogin(authReducer.loginData.mobileNumber)
     }
 
     useEffect(() => {
@@ -244,10 +237,14 @@ const Otp = (props) => {
                             <View style={{ alignItems: "center" }}>
 
                                 {/* Otp error */}
+                                {
+                                 authReducer.isError &&
+                                    <Text style={{fontSize:16,color:"#D92410",fontWeight:"500",marginTop:50}}>
+                                    {authReducer.errorMessage}
+                                </Text>
+                                }
 
-                                {/* <Text style={{fontSize:16,color:"#D92410",fontWeight:"500",marginTop:50}}>
-                                    The OTP you entered is incorrect
-                                </Text> */}
+                       
 
                                 <TouchableOpacity onPress={_resendOtp} style={{ marginTop: 20 }}>
                                     <Text style={{ color: "#263238", fontSize: 14, fontWeight: '500' }}>Resend OTP</Text>

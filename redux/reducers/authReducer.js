@@ -2,7 +2,7 @@ import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING, OTP_LOA
 
 const INITIAL_STATE = {
     loginData: null,
-    errorData: null,
+    errorMessage: null,
     signUpLoading: false,
     loginLoading: false,
     otpLoading: false,
@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     showIntroPage: false,
     isBasicDetails: false,
     isLogout: false,
-    isHome: false
+    isHome: false,
+    isError:false
 };
 
 export const authReducer = (state = INITIAL_STATE, action) => {
@@ -20,15 +21,18 @@ export const authReducer = (state = INITIAL_STATE, action) => {
         case CLEAR_ERROR:
             return {
                 ...state,
-                errorData: action.payload,
-                signUpLoading: false
+                errorMessage: action.payload,
+                signUpLoading: false,
+                isError:false
             }
 
         case ON_ERROR:
             return {
                 ...state,
-                errorData: action.payload,
-                signUpLoading: false
+                errorMessage: action.payload.errorMessage,
+                signUpLoading: false,
+                otpLoading:false,
+                isError:action.payload.isError
             };
 
         case LOGIN_LOADING:

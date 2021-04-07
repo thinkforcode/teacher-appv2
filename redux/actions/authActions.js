@@ -81,15 +81,15 @@ export const verifyOtp = (code, deviceToken) => {
             let teacherId = temp[temp.length - 1];
             let ref = firestore().collection('users').doc(userId).collection('schools').doc(schoolId).collection('teachers').doc(teacherId)
             if (code.trim() == "") {
-                alert("OTP can not be empty!")
+                dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'OTP can not be empty !' } })
             }
             else {
-                dispatch({ type: OTP_LOADING, payload: true })
                 ref.get().then((res) => {
                     if (res.data().otp != code) {
-                        alert("Incorrect OTP you have entered!")
+                        dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } })
                     }
                     else {
+                        dispatch({ type: OTP_LOADING, payload: true })
                         console.log("res.data().isBasicDetails", res.data().isBasicDetails)
                         if (!res.data().isBasicDetails) {
                             ref.set({
