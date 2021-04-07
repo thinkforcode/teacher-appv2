@@ -19,9 +19,7 @@ const Signup = (props) => {
 
     const _registerUser = () => {
                         
-        if (fName.length < 3) {
-            alert("Please enter a valid user name !")
-        }
+        
 
         let d = { firstName: fName, lastName: lName, email: email, address: address }
         onUserRegister(d)
@@ -177,7 +175,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     headerText:{
-        fontSize: 40,
+        fontSize: 35,
          fontWeight: "bold", 
          color: "#fff",
           paddingLeft: 15

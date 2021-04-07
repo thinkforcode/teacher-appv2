@@ -17,6 +17,11 @@ const Home = (props) => {
     {
        props.navigation.navigate("Gallery")
     }
+
+    const UserIntrest =()=>
+    {
+       props.navigation.navigate("UserIntrest")
+    }
     
 
     return (
@@ -31,6 +36,10 @@ const Home = (props) => {
 
             <TouchableOpacity onPress = {()=>{Gallery()}}>
                 <Text style={{paddingTop:20}}>Gallery</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress = {()=>{UserIntrest()}}>
+                <Text style={{paddingTop:20}}>UserIntrest</Text>
             </TouchableOpacity>
 
             
