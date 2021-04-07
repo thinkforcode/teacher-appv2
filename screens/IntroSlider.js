@@ -6,10 +6,12 @@ import { connect } from 'react-redux'
 import { onDoneIntroSlider } from '../redux/actions/authActions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+const width = Dimensions.get('window').width
+    const Height = Dimensions.get('window').height
+
 const IntroSlider = (props) => {
     const { authReducer, onDoneIntroSlider } = props
-    const width = Dimensions.get('window').width
-    const Height = Dimensions.get('window').height
+    
 
     const onDone = () => {
         onDoneIntroSlider();
@@ -129,10 +131,9 @@ const styles = StyleSheet.create({
     },
     imageStyle:{
         alignItems: "center",
-        height: 300,
+        height: Height / 2.5,
         resizeMode: "contain",
-        marginTop: Dimensions.get('window').height / 5,
-        marginBottom:50
+        marginTop: Height / 5,
     },
 
     activeDot:{
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     },
 
     titleStyle:{
-        marginTop: Dimensions.get('window').height / 8
+        marginTop: Height / 7
     },
 
     dotStyleText:
