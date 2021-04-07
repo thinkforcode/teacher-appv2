@@ -9,6 +9,7 @@ import ClassCurriculum from './ClassCurriculum';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import {Image} from 'react-native'
+import UserIntrest from './RegistrationScreens/UserIntrest';
 
 const MainStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -89,8 +90,13 @@ const MainAppNavigator = () => (
           <MainStack.Screen name="Home" component={MainTab} />
           {/* <MainStack.Screen name="SelectClass" component={SelectClass} />  */}
           {/* <MainStack.Screen name="Home" component={Home} />  */}
+<<<<<<< HEAD
           {/* <MainStack.Screen name="TotalStudent" component={TotalStudent} />  */}
         {/* <MainStack.Screen name="Home" component={MainTab} /> */}
+=======
+          <MainStack.Screen name="TotalStudent" component={TotalStudent} /> 
+         <MainStack.Screen name="UserIntrest" component={UserIntrest} /> 
+>>>>>>> origin/deepak-teacher
 
 
     </MainStack.Navigator>

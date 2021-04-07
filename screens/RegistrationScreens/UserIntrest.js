@@ -1,35 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, Animated, FlatList, Dimensions, TouchableOpacity, Image, StatusBar } from 'react-native'
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import { View, Text, StyleSheet, Animated, FlatList, Dimensions, TouchableOpacity, StatusBar,ScrollView } from 'react-native'
 import { connect } from 'react-redux';
 import Headers from '../../components/Headers';
 import { userIntrestData } from '../../classData';
 import Loader from '../../components/Loader';
 import { onUserIntrest } from '../../redux/actions/authActions';
 
-
+const width = Dimensions.get('window').width
 const UserIntrest = (props) => {
     const [selectedData, setSelectedData] = useState([])
     const [selectCount, setSelectCount] = useState(1)
-    const SlideInLeft = useRef(new Animated.Value(0)).current;
 
     const { authReducer, onUserIntrest } = props
-
-    useEffect(() => {
-        return Animated.parallel([
-            Animated.timing(SlideInLeft, {
-                toValue: 1,
-                duration: 500,
-                useNativeDriver: true
-            }),
-        ]).start();
-    })
-
 
     const [intrestData, setIntrestData] = useState(userIntrestData)
 
 
-   const selectIntrests = (item, index) => {
+    const selectIntrests = (item, index) => {
         item.isSelect = !item.isSelect
         if (item.isSelect) {
             setSelectCount(selectCount - 1)
@@ -44,50 +31,41 @@ const UserIntrest = (props) => {
         setIntrestData(intrestData)
     }
 
-   const submitUserIntrest = () =>{
+    const submitUserIntrest = () => {
         onUserIntrest(selectedData)
     }
 
 
-
     return (
-        <View style={{ flex:1 }}>
-          <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
-            <Headers {...props} title="Your Intrest"  title = "Intrest" screen = "UserIntrest" btnText = "Done" item = {selectedData} _doAction = {submitUserIntrest} />
-            <View style = {{marginTop:15}}>
-                <Text style={{ textAlign: 'center', color: '#ACB9C4', fontSize: 16 }}> Choose from the options below & help us get to {"\n"} know you better</Text>
+        <View style={{ flex: 1, backgroundColor: "#2B454E" }}>
+            <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
+            <View style={styles.headerPart}>
+                <Text style={styles.headerText}>Categories</Text>
+                <Text style={styles.titleText}>Select from the options below & help us to get to know you better.</Text>
             </View>
-            <Animated.View style={{
-                 flex:1,
-                transform: [
-                    {
-                        translateX: SlideInLeft.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [600, 0]
-                        })
-                    }
-                ],
-            }}>
-
+            <ScrollView horizontal>
             <FlatList
                 data={intrestData}
-                contentContainerStyle={{ marginBottom:50, marginHorizontal: 15, marginTop: 10 }}
-                renderItem={({ item, index }) => (
-                        <TouchableOpacity style={[styles.itemContainer, {borderColor:item.isSelect ? '#E53563':'#C1C6D0'}]} onPress={() => { selectIntrests(item, index) }} >
-                            <Text style = {{textAlign:'center', color:item.isSelect?'#E53563':'#35365F', fontSize:16}}>{item.title}</Text>
-                            { item.isSelect &&
-                                <View style={{ position: 'absolute', top: 5, right: 10 }}>
-                                    <AntDesign name="checkcircleo" color="#E53563" size={20} />
-                                </View>
-                            }
-                        </TouchableOpacity>
-
-
-                )}
+                contentContainerStyle={{ marginHorizontal: 15, }}
                 keyExtractor={(item, index) => index.toString()}
-                numColumns={3} />
-            </Animated.View>
+                renderItem={({ item, index }) => (
 
+                    <TouchableOpacity style={[styles.itemContainer, { backgroundColor: item.isSelect ? '#FFF6E2' : '#426470' }
+                    ]} onPress={() => { selectIntrests(item, index) }} >
+
+                        <Text style={{ textAlign: 'center', color: item.isSelect ? '#263238' : '#8DB8C6', fontSize: 16 }}>{item.title}</Text>
+                    </TouchableOpacity>
+                )}
+                
+                  numColumns={3}
+                 />
+                 </ScrollView>
+            <View style={{ marginHorizontal: 45, marginBottom: 20 }}>
+                <TouchableOpacity style={{ backgroundColor: "#fff", alignItems: "center", justifyContent: "center", height: 50, borderRadius: 14, borderColor: '#707070' }}
+                    onPress={submitUserIntrest}>
+                    <Text style={{ color: '#263238', fontSize: 16 }}>Done</Text>
+                </TouchableOpacity>
+            </View>
             { authReducer.signUpLoading && <Loader />}
 
         </View>
@@ -104,15 +82,37 @@ const numColumns = 3;
 const size = (Dimensions.get('window').width - 20) / numColumns;
 const styles = StyleSheet.create({
     itemContainer: {
-        borderRadius:10,
+        flexDirection: "row",
+        borderRadius: 6,
         margin: 5,
-        width: size - 15,
-        height: 104,
+        paddingHorizontal:15,
+        paddingVertical: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#fff',
-        borderWidth:1,
-       
+        backgroundColor:"#426470",
+        borderColor:"#707070"
+
     },
+
+    headerPart: {
+        backgroundColor: '#2B454E',
+        width: '100%',
+        height: Dimensions.get('window').height / 3,
+        justifyContent: "center"
+    },
+    headerText: {
+        fontSize: 35,
+        fontWeight: "bold",
+        color: "#fff",
+        paddingHorizontal: 15
+    },
+    titleText: {
+        fontSize: 16,
+        color: "#C6DBE2",
+        paddingHorizontal: 15,
+        paddingTop: 10
+    },
+    
+
 
 })

@@ -13,7 +13,7 @@ export var userIntrestData = [
     { title: "Bowling", isSelect: false, },
     { title: "Writing", isSelect: false, },
     { title: "Gaming", isSelect: false, },
-    { title: "Computer Language ", isSelect: false, },
+    { title: "Computer Language", isSelect: false, },
     { title: "Cooking", isSelect: false, },
     { title: "Stitching", isSelect: false, },
     { title: "Debates", isSelect: false, }

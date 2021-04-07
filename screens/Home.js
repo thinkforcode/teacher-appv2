@@ -44,6 +44,10 @@ const Home = (props) => {
                 <Text style={{paddingTop:20}}>Gallery</Text>
             </TouchableOpacity> */}
 
+            <TouchableOpacity onPress = {()=>{UserIntrest()}}>
+                <Text style={{paddingTop:20}}>UserIntrest</Text>
+            </TouchableOpacity>
+
             
         </View>
     )
