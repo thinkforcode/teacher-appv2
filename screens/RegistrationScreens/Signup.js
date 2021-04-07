@@ -6,6 +6,8 @@ import CustomButton from '../../components/CustomButton'
 import Autoplace from '../../components/Place'
 import Loader from '../../components/Loader'
 import { onUserRegister } from '../../redux/actions/authActions'
+import { emailValidate } from '../../functions/validation'
+
 
 const Signup = (props) => {
     const { authReducer, onUserRegister } = props
@@ -18,13 +20,22 @@ const Signup = (props) => {
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
     const _registerUser = () => {
-                        
-        if (fName.length < 3) {
-            alert("Please enter a valid user name !")
-        }
+        console.log("registeruser called")
 
-        let d = { firstName: fName, lastName: lName, email: email, address: address }
-        onUserRegister(d)
+        if (fName.trim() === "") {
+            alert("Please enter Your First Name!")
+        }
+        else if (email.trim() === "") {
+            alert("Email can not be empty !")
+        }
+        else if (!(emailValidate(email))) {
+            alert("Please enter a valid email address !")
+        }
+        else {
+            console.log("else registeruser called")
+            let d = { firstName: fName, lastName: lName, email: email, address: address }
+            onUserRegister(d)
+        }
     }
 
     const selectdAddress = (arg1, arg2) => {
@@ -41,7 +52,7 @@ const Signup = (props) => {
             }),
         ]).start();
     })
-               return (
+    return (
         <SafeAreaView style={{ flex: 1 }}>
             <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
 
@@ -63,9 +74,9 @@ const Signup = (props) => {
                             }
                         ],
                     }}>
-                           <View style={{ marginTop: 10 }}>
+                        <View style={{ marginTop: 10 }}>
                             <View style={styles.inputBox}>
-                                <MaterialCommunityIcons name="account" color="#707070" size={16} />
+                                <MaterialCommunityIcons name="account-circle-outline" color="#707070" size={16} />
                                 <TextInput
                                     autoCompleteType="name"
                                     placeholder="First Name"
@@ -76,7 +87,7 @@ const Signup = (props) => {
                                 />
                             </View>
                             <View style={styles.inputBox}>
-                                <MaterialCommunityIcons name="account" color="#707070" size={16} />
+                                <MaterialCommunityIcons name="account-circle-outline" color="#707070" size={16} />
                                 <TextInput
                                     placeholder="Last Name"
                                     placeholderTextColor="#707070"
@@ -97,16 +108,21 @@ const Signup = (props) => {
                                     onChangeText={(value) => { setEmail(value) }}
                                 />
                             </View>
-                            <Autoplace addAddress={selectdAddress} title="Address" />
-                             <Text style={styles.discriptionText}>By Registering,your confirm that you accept our</Text>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <MaterialCommunityIcons name="map-marker-outline" color="#707070" size={16} />
+                                <Autoplace addAddress={selectdAddress} title="Address" />
+                            </View>
+                            
+                            <Text style={styles.discriptionText}>By Registering,your confirm that you accept our</Text>
                             <View style={{ flexDirection: "row" }}>
-                                <Text style={styles. linkText} onPress={() => { Linking.openURL('https://skugal.com/terms-of-use') }}>Terms to Use</Text>
+                                <Text style={styles.linkText} onPress={() => { Linking.openURL('https://skugal.com/terms-of-use') }}>Terms to Use</Text>
                                 <Text style={{ color: "#707070", fontSize: 14 }}> and</Text>
-                                <Text style={styles. linkText} onPress={() => { Linking.openURL('https://skugal.com/privacy-policy') }}> Privacy Policy</Text>
-                                 </View>
+                                <Text style={styles.linkText} onPress={() => { Linking.openURL('https://skugal.com/privacy-policy') }}> Privacy Policy</Text>
+                            </View>
                         </View>
 
-                      <View style={styles.buttonStyle}>
+                        <View style={styles.buttonStyle}>
                             <CustomButton {...props} button={styles.button} _doAction={_registerUser} buttonText={styles.buttonText} title="NEXT" />
                         </View>
                     </Animated.View>
@@ -176,30 +192,30 @@ const styles = StyleSheet.create({
         marginHorizontal: 30,
         marginTop: 20
     },
-    headerText:{
+    headerText: {
         fontSize: 40,
-         fontWeight: "bold", 
-         color: "#fff",
-          paddingLeft: 15
+        fontWeight: "bold",
+        color: "#fff",
+        paddingLeft: 15
     },
-    titleText:{
-        fontSize: 16, 
+    titleText: {
+        fontSize: 16,
         color: "#C6DBE2",
-         paddingLeft: 15,
-          paddingTop: 10
+        paddingLeft: 15,
+        paddingTop: 10
     },
-    inputBox:{
+    inputBox: {
         flexDirection: "row",
-         alignItems: "center",
-          borderBottomWidth: 0.5, 
-          borderColor: "#A3A4A7" 
+        alignItems: "center",
+        borderBottomWidth: 0.5,
+        borderColor: "#A3A4A7"
     },
-    discriptionText:{
-        paddingTop: 15, 
+    discriptionText: {
+        paddingTop: 15,
         color: "#707070",
-         fontSize: 14
+        fontSize: 14
     },
-    linkText:{
+    linkText: {
         color: "#FFC800",
         fontSize: 14
     }

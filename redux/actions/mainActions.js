@@ -2,8 +2,6 @@ import firestore from '@react-native-firebase/firestore';
 import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, CLEAR_ERROR, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION, GET_COMPLAIN } from '../actionTypes';
 import * as RootNavigation from '../../RootNavigation.js';
 
-
-
 //Update local data global store
 export const updateUserData = (data) => {
   return async (dispatch) => {
@@ -19,14 +17,33 @@ export const updateUserData = (data) => {
 export const getClass = (userId, schoolId, teacherId) => {
   return async (dispatch) => {
     try {
+      let standard = {}
+      let sections = {}
       firestore().collection('users').doc(userId).collection('schools').doc(schoolId).collection("teachers").doc(teacherId).collection("classes").get().then((classes) => {
-        let t = []
+        let d = []
         classes.forEach((doc) => {
           doc.data()['id'] = doc.id
-          t.push(doc.data())
+          d.push(doc.data())
         })
-        dispatch({ type: GET_CLASSES, payload: t })
-        console.log("data", t);
+        for (const doc of d) {
+          if (!standard[doc.standard]) {
+            standard[doc.standard] = doc;
+          }
+
+          if (!sections[doc.section]) {
+            sections[doc.section] = doc;
+          }
+      }
+
+      let standardArr = Object.keys(standard).map((key) => {
+          return standard[key]
+      });
+
+      let sectionArr = Object.keys(sections).map((key) => {
+        return sections[key]
+    });
+        dispatch({ type: GET_CLASSES, payload: {standard:standardArr, sections:sectionArr} })
+        console.log("standardArr, sectionArr", standardArr, sectionArr);
       }).catch(e => {
         console.log(e)
       })
@@ -76,7 +93,7 @@ export const selectClass = (item) => {
   return async (dispatch) => {
     try {
       dispatch({ type: SELECTED_CLASS, payload: item })
-      RootNavigation.navigate('TotalStudent');
+      // RootNavigation.navigate('TotalStudent');
     }
     catch (e) {
     }

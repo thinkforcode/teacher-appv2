@@ -10,14 +10,17 @@ const INITIAL_STATE = {
     notifications: [],
     onlineClass:[],
     complain:[],
-    gatepass:[]
+    gatepass:[],
+    standard:[],
+    sections:[]
 };
 
 export const mainReducer = (state = INITIAL_STATE, action) => {
+    console.log("action.payload,", action.payload)
+
     switch (action.type) {
 
         case UPDATE_LOCAL_DATA: {
-            console.log("UPDATE_LOCAL_DATA action.payload,", action.payload)
             return {
                 ...state,
                 loginData: action.payload,
@@ -27,8 +30,13 @@ export const mainReducer = (state = INITIAL_STATE, action) => {
         case GET_CLASSES:
             return {
                 ...state,
-                classes: action.payload,
-                isLoading: false
+                standard: action.payload.standard,
+                sections: action.payload.sections,
+                isLoading: false,
+                selectedClass:{
+                    section:action.payload.sections[0].section ? action.payload.sections[0].section :'' ,
+                    standard:action.payload.standard[0].standard ? action.payload.standard[0].standard :''
+                }
             }
 
         case SELECTED_CLASS:

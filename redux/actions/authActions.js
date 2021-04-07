@@ -85,7 +85,7 @@ export const verifyOtp = (code, deviceToken) => {
             }
             else {
                 ref.get().then((res) => {
-                    if (res.data().otp != code) {
+                    if (res.data().otp!= code) {
                         dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } })
                     }
                     else {
@@ -138,10 +138,12 @@ export const verifyOtp = (code, deviceToken) => {
 }
 
 export const onUserRegister = (data) => {
+    console.log("onUserRegister data is", data)
     return async (dispatch) => {
         try {
             data['isBasicDetails'] = true
-            let userInfo = store.getState().authReducer.loginData
+            let userInfo = store.getState().mainReducer.loginData
+            console.log("userInfo", userInfo)
             dispatch({ type: CLEAR_ERROR, payload: null })
             dispatch({ type: SIGNUP_LOADING, payload: true })
             firestore().collection('users').doc(userInfo.userId).collection('schools').doc(userInfo.schoolId).collection('teachers').doc(userInfo.teacherId).set(data, { merge: true }).then((r) => {
@@ -151,17 +153,18 @@ export const onUserRegister = (data) => {
                 mergeDataInLocal(data)
                 RootNavigation.navigate('UserIntrest');
             }).catch((e) => {
+                console.log("error", e)
                 dispatch({ type: 'ON_ERROR', payload: { isError: true, errorMessage: 'Error to update your details !' } })
             })
         }
         catch (err) {
+            console.log("error", err)
             dispatch({ type: 'ON_ERROR', payload: { isError: true, errorMessage: 'Error to update your details !' } })
         }
     }
 }
 
 export const onUserIntrest = (data) => {
-    console.log("onUserIntrest called", data)
     return async (dispatch) => {
         try {
             let userInfo = store.getState().authReducer.loginData

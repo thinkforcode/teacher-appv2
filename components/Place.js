@@ -34,7 +34,7 @@ export default function Autoplace(props) {
           borderColor: '#C1C6D0',
           marginVertical: 10,
           backgroundColor: 'transparent',
-          color: '#94A1AC',
+          color: '#000',
           // borderRadius:10
 
         },
