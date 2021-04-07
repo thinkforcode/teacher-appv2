@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, Animated, FlatList, Dimensions, TouchableOpacity, StatusBar,ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Animated, FlatList, Dimensions, TouchableOpacity, StatusBar } from 'react-native'
 import { connect } from 'react-redux';
 import Headers from '../../components/Headers';
 import { userIntrestData } from '../../classData';
@@ -43,23 +43,18 @@ const UserIntrest = (props) => {
                 <Text style={styles.headerText}>Categories</Text>
                 <Text style={styles.titleText}>Select from the options below & help us to get to know you better.</Text>
             </View>
-            <ScrollView horizontal>
             <FlatList
                 data={intrestData}
                 contentContainerStyle={{ marginHorizontal: 15, }}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => (
-
-                    <TouchableOpacity style={[styles.itemContainer, { backgroundColor: item.isSelect ? '#FFF6E2' : '#426470' }
-                    ]} onPress={() => { selectIntrests(item, index) }} >
-
+                    <TouchableOpacity style={[styles.itemContainer, { backgroundColor: item.isSelect ? '#FFF6E2' : '#426470' }]} onPress={() => { selectIntrests(item, index) }} >
                         <Text style={{ textAlign: 'center', color: item.isSelect ? '#263238' : '#8DB8C6', fontSize: 16 }}>{item.title}</Text>
                     </TouchableOpacity>
                 )}
-                
-                  numColumns={3}
-                 />
-                 </ScrollView>
+
+                numColumns={3}
+            />
             <View style={{ marginHorizontal: 45, marginBottom: 20 }}>
                 <TouchableOpacity style={{ backgroundColor: "#fff", alignItems: "center", justifyContent: "center", height: 50, borderRadius: 14, borderColor: '#707070' }}
                     onPress={submitUserIntrest}>
@@ -85,12 +80,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: 6,
         margin: 5,
-        paddingHorizontal:15,
+        paddingHorizontal: 15,
         paddingVertical: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:"#426470",
-        borderColor:"#707070"
+        backgroundColor: "#426470",
+        borderColor: "#707070"
 
     },
 
@@ -112,7 +107,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingTop: 10
     },
-    
-
 
 })
