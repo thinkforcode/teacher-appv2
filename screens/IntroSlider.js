@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: 300,
         resizeMode: "contain",
-        marginTop: Dimensions.get('window').height / 8,
+        marginTop: Dimensions.get('window').height / 5,
         marginBottom:50
     },
 

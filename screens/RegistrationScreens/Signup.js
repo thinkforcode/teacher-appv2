@@ -18,6 +18,11 @@ const Signup = (props) => {
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
     const _registerUser = () => {
+                        
+        if (fName.length < 3) {
+            alert("Please enter a valid user name !")
+        }
+
         let d = { firstName: fName, lastName: lName, email: email, address: address }
         onUserRegister(d)
     }

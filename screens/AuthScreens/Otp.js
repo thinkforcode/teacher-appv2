@@ -160,7 +160,7 @@ const Otp = (props) => {
         <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} keyboardShouldPersistTaps='handled' >
             <KeyboardAvoidingView behavior="padding" >
                 {/* <StatusBar backgroundColor="#fff" barStyle="light-content" /> */}
-                
+
 
                 <Animated.View style={{
                     transform: [
@@ -237,26 +237,26 @@ const Otp = (props) => {
                     </View>
 
                     {
-                    otpVisible ?
-                        <View style={{alignItems:"center", marginTop: 50,justifyContent:"center" }}>
-                            <Text style={{ fontSize: 14, fontWeight: "500", color: "#263238" }}>Resend code in 00:{seconds}</Text>
+                        otpVisible ?
+                            <View style={{ alignItems: "center", marginTop: 50, justifyContent: "center" }}>
+                                <Text style={{ fontSize: 14, fontWeight: "500", color: "#263238" }}>Resend code in 00:{seconds}</Text>
                             </View> :
-                        <View style={{alignItems:"center"}}>
-                                    
-                                     {/* Otp error */}
+                            <View style={{ alignItems: "center" }}>
 
-                                 {/* <Text style={{fontSize:16,color:"#D92410",fontWeight:"500",marginTop:50}}>
+                                {/* Otp error */}
+
+                                {/* <Text style={{fontSize:16,color:"#D92410",fontWeight:"500",marginTop:50}}>
                                     The OTP you entered is incorrect
                                 </Text> */}
-                                  
-                            <TouchableOpacity onPress={_resendOtp} style={{marginTop:20}}>
-                                <Text style={{ color: "#263238", fontSize: 14, fontWeight: '500' }}>Resend OTP</Text>
-                            </TouchableOpacity>
-                        </View>
 
-                }
+                                <TouchableOpacity onPress={_resendOtp} style={{ marginTop: 20 }}>
+                                    <Text style={{ color: "#263238", fontSize: 14, fontWeight: '500' }}>Resend OTP</Text>
+                                </TouchableOpacity>
+                            </View>
 
-                   
+                    }
+
+
 
                     <View style={{ marginHorizontal: 30, }}>
                         <CustomButton {...props} button={styles.button} _doAction={enterOtp} buttonText={styles.buttonText} title="Verify OTP" screen='Otp' />
@@ -293,9 +293,9 @@ const styles = StyleSheet.create({
         // borderColor: '#E94147',
         borderBottomWidth: 1,
         textAlign: 'center',
-        justifyContent:"center",
-        fontSize:25,
-        color:'#263238'
+        justifyContent: "center",
+        fontSize: 25,
+        color: '#263238'
     },
 
 
