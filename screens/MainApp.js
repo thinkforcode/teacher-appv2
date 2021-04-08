@@ -88,10 +88,9 @@ const MainTab = () => (
 const MainAppNavigator = () => (
     <MainStack.Navigator headerMode={false}>
           <MainStack.Screen name="Home" component={MainTab} />
-          {/* <MainStack.Screen name="SelectClass" component={SelectClass} />  */}
           {/* <MainStack.Screen name="Home" component={Home} />  */}
-          <MainStack.Screen name="TotalStudent" component={TotalStudent} /> 
-         <MainStack.Screen name="UserIntrest" component={UserIntrest} /> 
+          {/* <MainStack.Screen name="TotalStudent" component={TotalStudent} />  */}
+        {/* <MainStack.Screen name="Home" component={MainTab} /> */}
 
 
     </MainStack.Navigator>

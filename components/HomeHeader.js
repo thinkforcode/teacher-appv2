@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const HomeHeader = (props) => {
     return (
-        <View style={{ flex: 1 }}>
+        <View>
             <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
             <View style={{ backgroundColor: "#2B454E" }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 15, height: 100 }}>
