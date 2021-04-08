@@ -111,3 +111,35 @@ export function formatTimeAMPM(date) {
   var strTime = hours + ':' + minutes + ' ' + ampm;
   return strTime;
 }
+
+export function daysInMonth(month, year) {
+  return new Date(year, month, 0).getDate();
+}
+
+let weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+export function daysname(date) {
+  return weekday[date];
+}
+
+
+export function mothsData(date) {
+  let m = date.getMonth() + 1
+  let y = date.getFullYear()
+  console.log("daysInMonth(m, y).length", m, y, daysInMonth(m, y))
+  const d = []
+
+  const allDay = new Date(date)
+  for (let i = 0; i < daysInMonth(m, y); i++) {
+    allDay.setDate(allDay.getDate() + i)
+    d.push({
+      dayName: daysname(allDay.getDay()),
+      date: i + 1,
+      isSelected:i+1 == new Date().getDate() ? true : false
+    })
+
+  }
+  console.log("d", d)
+  return d
+
+}

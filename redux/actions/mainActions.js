@@ -60,6 +60,7 @@ export const getClass = (userId, schoolId, teacherId) => {
 
 //Get list of children
 export const getStudents = (userId, schoolId, standard, section) => {
+  console.log("userId, schoolId, standard, section", userId, schoolId, standard, section)
   return async (dispatch) => {
     try {
       firestore().collection('users').doc(userId).collection('schools').doc(schoolId).collection("classes").doc(standard).collection('sections').doc(section).collection('students')
@@ -77,7 +78,9 @@ export const getStudents = (userId, schoolId, standard, section) => {
             doc.data()['id'] = doc.id
             t.push(doc.data())
           })
-          dispatch({ type: GET_STUDENTS, payload: t })
+
+          console.log("presentcount, absencount", pCount, aCount, t.length )
+          dispatch({ type: GET_STUDENTS, payload: {students:t, pCount:pCount, aCount:aCount, totalStudents:t.length} })
 
         }).catch(e => {
         })

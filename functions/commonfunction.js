@@ -129,3 +129,20 @@ export const Toast = (title) =>{
         ToastAndroid.BOTTOM
     );
 }
+
+
+            {/* <TouchableOpacity onPress={() => { doLogOut() }}>
+                <Text>Logout</Text>
+            </TouchableOpacity> */}
+            {/* 
+            <TouchableOpacity onPress = {()=>{Assignment()}}>
+                <Text style={{paddingTop:20}}>Assignment</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress = {()=>{Gallery()}}>
+                <Text style={{paddingTop:20}}>Gallery</Text>
+            </TouchableOpacity> 
+
+            <TouchableOpacity onPress = {()=>{UserIntrest()}}>
+                <Text style={{paddingTop:20}}>UserIntrest</Text>
+            </TouchableOpacity> */}
