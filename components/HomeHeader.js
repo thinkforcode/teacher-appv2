@@ -20,7 +20,6 @@ const HomeHeader = (props) => {
                     <TouchableOpacity style={{ width: 26, height: 26, backgroundColor: '#fff', borderRadius: 10, justifyContent: 'center' }}>
                         <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} color={"#FFC800"} />
                     </TouchableOpacity>
-
                 </View>
 
             </View>

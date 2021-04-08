@@ -9,6 +9,7 @@ import ClassCurriculum from './ClassCurriculum';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import {Image} from 'react-native'
+
 import UserIntrest from './RegistrationScreens/UserIntrest';
 
 const MainStack = createStackNavigator();
@@ -16,10 +17,16 @@ const Tab = createMaterialBottomTabNavigator();
 
 
 const MainTab = () => (
-    <Tab.Navigator initialRouteName="Home" barStyle={{ backgroundColor: '#2B454E' }} activeColor="#000"
+    <Tab.Navigator
+        initialRouteName="Home" 
+        barStyle={{ backgroundColor: '#2B454E' }} 
+        activeColor="#000"
         inactiveColor="#fff"
         activeColor="#FFC800"
-        labeled={true} shifting={true} lazy={true}>
+        labeled={true} 
+        shifting={false}
+        lazy={true}
+        >
         <Tab.Screen
             name="Home"
             component={Home}
@@ -47,7 +54,7 @@ const MainTab = () => (
             name="Chat"
             component={OnlineClass}
             options={{
-                tabBarLabel: 'Online Class',
+                tabBarLabel: 'Curriculum',
                 tabBarIcon: ({ color }) => (
                     <Image source={require('../assets/icons/onlineClass.png')} style={{ tintColor: color }} />
                 ),
@@ -69,7 +76,7 @@ const MainTab = () => (
             name="ClassCurriculum "
             component={ClassCurriculum}
             options={{
-                tabBarLabel: 'Curriculum',
+                tabBarLabel: 'Chat',
                 tabBarIcon: ({ color }) => (
                     <Image source={require('../assets/icons/curricullum.png')} style={{ tintColor: color }} />
                 ),
