@@ -32,21 +32,21 @@ const Home = (props) => {
     return (
         <View style = {{flex:1}}>
             <HomeHeader {...props} classesArr = {standard} sectionsArr = {sections} selectedClass = {selectedClass} loginData = {loginData} selectStandard = {_selectClass} selectSection = {_selectSection} />
-            {/* <TouchableOpacity onPress = {()=>{doLogOut()}}>
+          <TouchableOpacity onPress = {()=>{doLogOut()}}>
                 <Text>Logout</Text>
             </TouchableOpacity>
-
+{/* 
             <TouchableOpacity onPress = {()=>{Assignment()}}>
                 <Text style={{paddingTop:20}}>Assignment</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress = {()=>{Gallery()}}>
                 <Text style={{paddingTop:20}}>Gallery</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity> 
 
             <TouchableOpacity onPress = {()=>{UserIntrest()}}>
                 <Text style={{paddingTop:20}}>UserIntrest</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             
         </View>
