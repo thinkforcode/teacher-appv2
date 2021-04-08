@@ -87,13 +87,7 @@ export default connect(mapStateToProps, { onDoneIntroSlider })(IntroSlider);
 
 const styles = StyleSheet.create({
 
-    headerPart: {
-        backgroundColor: '#2B454E',
-        width: '100%',
-        height: Dimensions.get('window').height / 3,
-        justifyContent: "center"
-    },
-
+   
     buttonCircle: {
         width: 46,
         height: 46,

@@ -20,12 +20,8 @@ const Signup = (props) => {
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
     const _registerUser = () => {
-<<<<<<< HEAD
-        console.log("registeruser called")
-=======
                         
         
->>>>>>> origin/deepak-teacher
 
         if (fName.trim() === "") {
             alert("Please enter Your First Name!")
@@ -197,19 +193,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 30,
         marginTop: 20
     },
-<<<<<<< HEAD
-    headerText: {
-        fontSize: 40,
-        fontWeight: "bold",
-        color: "#fff",
-        paddingLeft: 15
-=======
     headerText:{
         fontSize: 35,
          fontWeight: "bold", 
          color: "#fff",
           paddingLeft: 15
->>>>>>> origin/deepak-teacher
     },
     titleText: {
         fontSize: 16,

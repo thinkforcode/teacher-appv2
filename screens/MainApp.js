@@ -90,13 +90,8 @@ const MainAppNavigator = () => (
           <MainStack.Screen name="Home" component={MainTab} />
           {/* <MainStack.Screen name="SelectClass" component={SelectClass} />  */}
           {/* <MainStack.Screen name="Home" component={Home} />  */}
-<<<<<<< HEAD
-          {/* <MainStack.Screen name="TotalStudent" component={TotalStudent} />  */}
-        {/* <MainStack.Screen name="Home" component={MainTab} /> */}
-=======
           <MainStack.Screen name="TotalStudent" component={TotalStudent} /> 
          <MainStack.Screen name="UserIntrest" component={UserIntrest} /> 
->>>>>>> origin/deepak-teacher
 
 
     </MainStack.Navigator>
