@@ -1,9 +1,10 @@
-import React, { useState} from 'react'
-import { View, Text, StyleSheet,  Dimensions, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
 import { connect } from 'react-redux';
 import { userIntrestData } from '../../classData';
 import Loader from '../../components/Loader';
 import { onUserIntrest } from '../../redux/actions/authActions';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const width = Dimensions.get('window').width
 
@@ -39,6 +40,9 @@ const UserIntrest = (props) => {
     return (
         <View style={{ flex: 1, backgroundColor: "#2B454E" }}>
             <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
+            <TouchableOpacity onPress={() => { props.navigation.goBack() }} style={styles.dropDownStyle} >
+                <MaterialCommunityIcons name="chevron-left" color="#707070" size={18} />
+            </TouchableOpacity>
             <ScrollView>
                 <View style={styles.headerPart}>
                     <Text style={styles.headerText}>Categories</Text>
@@ -54,10 +58,10 @@ const UserIntrest = (props) => {
                     }
                 </View>
 
-                <View>
-                    <TouchableOpacity style={{ backgroundColor: "#fff", alignItems: "center", justifyContent: "center", height: 50, borderRadius: 14, borderColor: '#707070' }}
+                <View style={styles.buttonStyle}>
+                    <TouchableOpacity style={styles.button}
                         onPress={submitUserIntrest}>
-                        <Text style={{ color: '#263238', fontSize: 16 }}>Done</Text>
+                        <Text style={styles.bottonText}>Done</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
 
     headerPart: {
         backgroundColor: '#2B454E',
-        height: Dimensions.get('window').height / 3,
+        height: Dimensions.get('window').height / 4,
         justifyContent: "center"
     },
 
@@ -107,5 +111,33 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingTop: 10
     },
+    dropDownStyle: {
+        marginTop: 15,
+        marginHorizontal: 15,
+        backgroundColor: "#f2f2f2",
+        justifyContent: "center",
+        alignItems: "center",
+        width: 20,
+        height: 20,
+        borderRadius: 10
+    },
+    buttonStyle: {
+        marginHorizontal: 45,
+        marginTop: 50,
+        paddingBottom:10
+    },
+    button:{
+        backgroundColor: "#fff",
+         alignItems: "center",
+          justifyContent: "center",
+           height: 50,
+            borderRadius: 14,
+             borderColor: '#707070' 
+    },
+    bottonText:{
+        color: '#263238',
+         fontSize: 16
+    }
+    
 
 })

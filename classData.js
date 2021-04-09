@@ -17,6 +17,20 @@ export var userIntrestData = [
     { title: "Cooking", isSelect: false, },
     { title: "Stitching", isSelect: false, },
     { title: "Debates", isSelect: false, }
+    
+]
+export var curricullumData = [
+    { imageUrl: require('./assets/icons/online.png'), title: "Online Class", type: "OnlineClass" },
+    { imageUrl: require('./assets/icons/tutorials.png'), title: "Tutorials", type: "TutorialStackScreen" },
+    { imageUrl: require('./assets/icons/assignments.png'), title: "Assignment", type: "Assignment" },
+    { imageUrl: require('./assets/icons/photos.png'), title: 'Photos', type: "Gallery" },
+    { imageUrl: require('./assets/icons/test.png'), title: "Test", type: "Test" },
+    { imageUrl: require('./assets/icons/remark.png'), title: "Remarks", type: "Remarks" },
+    { imageUrl: require('./assets/icons/review.png'), title: "Review", type: "Review" },
+    { imageUrl: require('./assets/icons/message.png'), title: "Messages", type: "Message" },
+    { imageUrl: require('./assets/icons/holidays.png'), title: "Holidays", type: "Holiday" },
+    { imageUrl: require('./assets/icons/complain.png'), title: "Complain Tracking", type: "Complain" },
+    { imageUrl: require('./assets/icons/gatepass.png'), title: "Gatepass", type: "Gatepass" }
 ]
 
 export const StoryPreviewOptions = [

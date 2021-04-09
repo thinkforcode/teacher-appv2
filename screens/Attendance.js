@@ -7,8 +7,6 @@ import { getClass, selectClass, getStudents } from '../redux/actions/mainActions
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { mothsData } from '../functions/timeformat'
 
-
-
 const Attendance = (props) => {
     const [currentMonth, setCurrentMonth] = useState([])
 
