@@ -20,14 +20,28 @@ const HomeHeader = (props) => {
                     <TouchableOpacity style={{ width: 26, height: 26, backgroundColor: '#fff', borderRadius: 10, justifyContent: 'center' }}>
                         <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} color={"#FFC800"} />
                     </TouchableOpacity>
-
                 </View>
 
             </View>
 
-            <View style={{ backgroundColor: '#37545E' , height:50}}>
+            <View style={{ backgroundColor: '#37545E' , height:50, justifyContent:'center' }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems:'center' }}>
-                    <View style={{ flex: 1 }}>
+                    <TouchableOpacity style = {{flexDirection:'row', alignItems:'center'}} onPress = {()=>{props.openClassAndSection()}}>
+                        <Text style = {{color:'#fff', fontSize:14}}>Class {props.selectedClass.standard}</Text>
+                        <MaterialCommunityIcons name = "chevron-down" color = "#83A2AC" size = {24}  style = {{paddingLeft:10}} />
+
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Text>|</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style = {{flexDirection:'row', alignItems:'center'}} onPress = {()=>{props.openClassAndSection()}}>
+                        <Text style = {{color:'#fff', fontSize:14}}>Section {props.selectedClass.section }</Text>
+                        <MaterialCommunityIcons name = "chevron-down" color = "#83A2AC" size = {24} style = {{paddingLeft:10}} />
+
+                    </TouchableOpacity>
+                    {/* <View style={{ flex: 1 }}>
                         <Picker
                             style={{ color: '#fff' }}
                             mode="dropdown"
@@ -41,9 +55,9 @@ const HomeHeader = (props) => {
 
                             }
                         </Picker>
-                    </View>
+                    </View> */}
 
-                    <View style={{ flex: 1 }}>
+                    {/* <View style={{ flex: 1 }}>
                         <Picker
                             style={{ color: '#fff' }}
                             mode="dropdown"
@@ -57,7 +71,7 @@ const HomeHeader = (props) => {
 
                             }
                         </Picker>
-                    </View>
+                    </View> */}
 
 
                 </View>

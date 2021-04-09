@@ -20,8 +20,6 @@ const Signup = (props) => {
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
     const _registerUser = () => {
-        console.log("registeruser called")
-
         if (fName.trim() === "") {
             alert("Please enter Your First Name!")
         }
@@ -32,7 +30,6 @@ const Signup = (props) => {
             alert("Please enter a valid email address !")
         }
         else {
-            console.log("else registeruser called")
             let d = { firstName: fName, lastName: lName, email: email, address: address }
             onUserRegister(d)
         }
@@ -152,7 +149,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
     },
-    
+
     inputOne: {
         flex: 1,
         fontSize: 16,

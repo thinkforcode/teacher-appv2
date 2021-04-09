@@ -3,7 +3,7 @@ import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, GET_CLASS
 const INITIAL_STATE = {
     loginData: null,
     classes: [],
-    getStudent: [],
+    students: [],
     selectedClass: {},
     classData: [],
     individualData: [],
@@ -12,7 +12,10 @@ const INITIAL_STATE = {
     complain:[],
     gatepass:[],
     standard:[],
-    sections:[]
+    sections:[],
+    totalPresent:0,
+    totalAbsent:0,
+    totalStudents:0
 };
 
 export const mainReducer = (state = INITIAL_STATE, action) => {
@@ -49,8 +52,11 @@ export const mainReducer = (state = INITIAL_STATE, action) => {
         case GET_STUDENTS:
             return {
                 ...state,
-                getStudent: action.payload,
-                isLoading: false
+                students: action.payload.students,
+                isLoading: false,
+                totalPresent:action.payload.pCount,
+                totalAbsent:action.payload.aCount,
+                totalStudents:action.payload.totalStudents
             }
 
         case GET_CLASSES_DATA:

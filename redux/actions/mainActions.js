@@ -33,16 +33,16 @@ export const getClass = (userId, schoolId, teacherId) => {
           if (!sections[doc.section]) {
             sections[doc.section] = doc;
           }
-      }
+        }
 
-      let standardArr = Object.keys(standard).map((key) => {
+        let standardArr = Object.keys(standard).map((key) => {
           return standard[key]
-      });
+        });
 
-      let sectionArr = Object.keys(sections).map((key) => {
-        return sections[key]
-    });
-        dispatch({ type: GET_CLASSES, payload: {standard:standardArr, sections:sectionArr} })
+        let sectionArr = Object.keys(sections).map((key) => {
+          return sections[key]
+        });
+        dispatch({ type: GET_CLASSES, payload: { standard: standardArr, sections: sectionArr } })
         console.log("standardArr, sectionArr", standardArr, sectionArr);
       }).catch(e => {
         console.log(e)
@@ -60,6 +60,7 @@ export const getClass = (userId, schoolId, teacherId) => {
 
 //Get list of children
 export const getStudents = (userId, schoolId, standard, section) => {
+  console.log("userId, schoolId, standard, section", userId, schoolId, standard, section)
   return async (dispatch) => {
     try {
       firestore().collection('users').doc(userId).collection('schools').doc(schoolId).collection("classes").doc(standard).collection('sections').doc(section).collection('students')
@@ -77,7 +78,9 @@ export const getStudents = (userId, schoolId, standard, section) => {
             doc.data()['id'] = doc.id
             t.push(doc.data())
           })
-          dispatch({ type: GET_STUDENTS, payload: t })
+
+          console.log("presentcount, absencount", pCount, aCount, t.length)
+          dispatch({ type: GET_STUDENTS, payload: { students: t, pCount: pCount, aCount: aCount, totalStudents: t.length } })
 
         }).catch(e => {
         })
@@ -86,6 +89,24 @@ export const getStudents = (userId, schoolId, standard, section) => {
     }
 
   }
+}
+
+// take attendance 
+export const takeAttendance = (item, studentUid) => {
+  return async (dispatch) => {
+    try {
+      if (studentUid) {
+        firestore().collection('users').doc(item.userId).collection('schools').doc(item.schoolId).collection('classes')
+          .doc(item.standard).collection('sections').doc(item.section).collection("students").doc(studentUid).set({
+            status: !item.status,
+          }, { merge: true }).then(r => {
+          }).catch((e) => {
+          })
+      }
+    }
+    catch (e) {}
+  }
+
 }
 
 // Select class
@@ -275,7 +296,6 @@ export const getOnlineClass = (userId, schoolId, standard, section) => {
 }
 
 //Get List of Activity Data
-
 export const getActivityData = (loginData, collectionname, actionType) => {
   console.log("loginData, type, actionType", loginData, collectionname, actionType)
   return async (dispatch) => {
