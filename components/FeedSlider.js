@@ -16,7 +16,7 @@ const FeedSlider = () => {
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
             {image &&
                 image.map((item, index) => (
-                    <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }}>
+                    <TouchableOpacity style={{ alignItems: "center", justifyContent: "center" }} key={index}>
                         {item.displayImageUrl != '' ?
                             <Image style={{ width: 70, height: 70, borderRadius: 35, marginLeft: 15 }} source={{ uri: item.displayImageUrl }}></Image>
                             :

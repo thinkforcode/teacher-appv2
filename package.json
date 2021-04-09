@@ -26,6 +26,7 @@
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-app-intro-slider": "^4.0.4",
+    "react-native-autolink": "^3.0.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-google-places-autocomplete": "^2.2.0",
     "react-native-image-pan-zoom": "^2.1.12",
