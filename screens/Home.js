@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react'
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet,FlatList } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import HomeHeader from '../components/HomeHeader'
 import { doLogOut } from '../redux/actions/authActions'
@@ -113,50 +113,50 @@ const Home = (props) => {
                         </View>
                         <Text style={{ fontSize: 14, color: "#263238" }}>Mathematic | 9:30 Am</Text>
                     </View>
-                 </View>
+                </View>
             </View>
 
-              {/* curricullum section */}
-              <View style={{ marginTop: 12, backgroundColor: '#fff' }}>
-                    <View style={{ marginTop: 13 }}>
-                        <View style={{ flexDirection: 'row', marginHorizontal: 15, justifyContent: 'space-between' }}>
-                            <View>
-                                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#263238' }}>Curriculam</Text>
-                                
-                            </View>
+            {/* curricullum section */}
+            <View style={{ marginTop: 12, backgroundColor: '#fff' }}>
+                <View style={{ marginTop: 13 }}>
+                    <View style={{ flexDirection: 'row', marginHorizontal: 15, justifyContent: 'space-between' }}>
+                        <View>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#263238' }}>Curriculam</Text>
+
                         </View>
-
-                        <FlatList
-                            data={curricullum.slice(0, curricullumSize)}
-                            renderItem={({ item, index }) => (
-                                <HorizontalSlider item={item} openScreen={openCategories} type="curricullum" />
-                            )}
-                            keyExtractor={(item, index) => index.toString()}
-                            numColumns={4} />
-                        <TouchableOpacity onPress={() => { showMore('curricullum') }} style={{
-                            backgroundColor: '#fff', alignSelf: 'center', borderWidth: 1,
-                            borderColor: '#F2F2F2', borderRadius: 25,
-                        }}>
-                            <Text style={{ color: '#848598', fontSize: 9, fontWeight: 'bold', paddingVertical: 5, paddingHorizontal: 7 }}> {isShowCurricullum ? 'See Less' : 'See More'}{"  "}
-                                <MaterialCommunityIcons name={isShowCurricullum ? 'chevron-up' : 'chevron-down'} size={9} color="#848598" /></Text>
-                        </TouchableOpacity>
                     </View>
+
+                    <FlatList
+                        data={curricullum.slice(0, curricullumSize)}
+                        renderItem={({ item, index }) => (
+                            <HorizontalSlider item={item} openScreen={openCategories} type="curricullum" />
+                        )}
+                        keyExtractor={(item, index) => index.toString()}
+                        numColumns={4} />
+                    <TouchableOpacity onPress={() => { showMore('curricullum') }} style={{
+                        backgroundColor: '#fff', alignSelf: 'center', borderWidth: 1,
+                        borderColor: '#F2F2F2', borderRadius: 25,
+                    }}>
+                        <Text style={{ color: '#848598', fontSize: 9, fontWeight: 'bold', paddingVertical: 5, paddingHorizontal: 7 }}> {isShowCurricullum ? 'See Less' : 'See More'}{"  "}
+                            <MaterialCommunityIcons name={isShowCurricullum ? 'chevron-up' : 'chevron-down'} size={9} color="#848598" /></Text>
+                    </TouchableOpacity>
                 </View>
+            </View>
 
-                {/* Announments */}
-                <View style={{ marginTop: 25, marginHorizontal: 15, }}>
+            {/* Announments */}
+            <View style={{ marginTop: 25, marginHorizontal: 15, }}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                    <View style={{flexDirection:"row"}}>
-                    <Text style={{ fontSize: 16, fontWeight: "bold", color: "#F44336" }}>Announments</Text>
-                <View style={{ marginLeft: 10, backgroundColor: "#F2F2F2", borderRadius: 9, paddingHorizontal: 8, }}><Text >5</Text></View>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ fontSize: 16, fontWeight: "bold", color: "#F44336" }}>Announments</Text>
+                        <View style={{ marginLeft: 10, backgroundColor: "#F2F2F2", borderRadius: 9, paddingHorizontal: 8, }}><Text >5</Text></View>
                     </View>
-                
-                   
+
+
                     <TouchableOpacity>
                         <Text style={{ fontSize: 12, color: "#A3A4A7" }}>See All</Text>
                     </TouchableOpacity>
                 </View>
-                </View>
+            </View>
 
 
 
