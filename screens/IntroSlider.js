@@ -38,9 +38,7 @@ const IntroSlider = (props) => {
     };
 
     const RenderItem = ({ item, index }) => {
-        console.log("item", item, index)
         return (
-
             <ScrollView>
                 <StatusBar translucent backgroundColor="transparent" />
                 <View style={{ backgroundColor: item.backgroundColor, width: width, height:Height/2, alignItems: "center" }}>

@@ -11,6 +11,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import {Image} from 'react-native'
 
 import UserIntrest from './RegistrationScreens/UserIntrest';
+import AttendanceReport from './AttendanceReport';
 
 const MainStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -95,7 +96,7 @@ const MainTab = () => (
 const MainAppNavigator = () => (
     <MainStack.Navigator headerMode={false}>
           <MainStack.Screen name="Home" component={MainTab} />
-          {/* <MainStack.Screen name="Home" component={Home} />  */}
+          <MainStack.Screen name="AttendanceReport" component={AttendanceReport} /> 
           {/* <MainStack.Screen name="TotalStudent" component={TotalStudent} />  */}
         {/* <MainStack.Screen name="Home" component={MainTab} /> */}
 

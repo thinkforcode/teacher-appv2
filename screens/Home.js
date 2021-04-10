@@ -26,17 +26,6 @@ const Home = (props) => {
         return () => { }
     }, [])
 
-    const _selectClass = (item) => {
-        console.log("_selectClass", item)
-        // selectClass(item)
-    }
-    const _selectSection = (item) => {
-        console.log("item is", item)
-    }
-
-    console.log("classes", standard, sections, selectedClass)
-    console.log("loginData", loginData)
-
 
     const showMore = (type) => {
         if (type == 'curricullum' && !isShowCurricullum) {
@@ -64,7 +53,7 @@ const Home = (props) => {
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <HomeHeader {...props} classesArr={standard} sectionsArr={sections} selectedClass={selectedClass} loginData={loginData} selectStandard={_selectClass} selectSection={_selectSection} />
+            {/* <HomeHeader {...props} classesArr={standard} sectionsArr={sections} selectedClass={selectedClass} loginData={loginData} selectStandard={_selectClass} selectSection={_selectSection} /> */}
 
             {/* Story Section */}
             <View style={{ marginTop: 15, marginLeft: 15 }}>
@@ -186,7 +175,8 @@ const mapStateToProps = (state) => ({
     authReducer: state.authReducer,
     standard: state.mainReducer.standard,
     sections: state.mainReducer.sections,
-    selectedClass: state.mainReducer.selectedClass
+    selectedClass: state.mainReducer.selectedClass,
+
 })
 
 export default connect(mapStateToProps, { getClass, selectClass, doLogOut })(Home);

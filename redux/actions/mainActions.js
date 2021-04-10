@@ -1,6 +1,10 @@
 import firestore from '@react-native-firebase/firestore';
-import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, UPDATE_LOCAL_DATA, CLEAR_ERROR, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION, GET_COMPLAIN } from '../actionTypes';
+import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, SELECTED_SECTION, SELECTED_STUDENT, ATTENDANCE_REPORT, UPDATE_LOCAL_DATA, CLEAR_ERROR, UPDATE_STUDENTS, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION, GET_COMPLAIN } from '../actionTypes';
 import * as RootNavigation from '../../RootNavigation.js';
+import { store } from '../store';
+import { formatDate2 } from '../../functions/timeformat';
+
+
 
 //Update local data global store
 export const updateUserData = (data) => {
@@ -19,6 +23,7 @@ export const getClass = (userId, schoolId, teacherId) => {
     try {
       let standard = {}
       let sections = {}
+      // orderBy('standard')
       firestore().collection('users').doc(userId).collection('schools').doc(schoolId).collection("teachers").doc(teacherId).collection("classes").get().then((classes) => {
         let d = []
         classes.forEach((doc) => {
@@ -50,7 +55,6 @@ export const getClass = (userId, schoolId, teacherId) => {
     }
     catch (e) {
       console.log(e)
-
     }
 
   }
@@ -92,34 +96,139 @@ export const getStudents = (userId, schoolId, standard, section) => {
 }
 
 // take attendance 
-export const takeAttendance = (item, studentUid) => {
+export const takeAttendance = (status, item, index) => {
   return async (dispatch) => {
     try {
-      if (studentUid) {
-        firestore().collection('users').doc(item.userId).collection('schools').doc(item.schoolId).collection('classes')
-          .doc(item.standard).collection('sections').doc(item.section).collection("students").doc(studentUid).set({
-            status: !item.status,
-          }, { merge: true }).then(r => {
-          }).catch((e) => {
-          })
-      }
+
+      let d = store.getState().mainReducer.students;
+      d[index]['status'] = status
+
+      // pCount: pCount, aCount: aCount, totalStudents: t.length
+      dispatch({ type: GET_STUDENTS, payload: { students: [...d], } })
+
     }
-    catch (e) {}
+    catch (e) { }
   }
 
 }
 
-// Select class
-export const selectClass = (item) => {
+//Get Attendance Report
+export const getAttendanceReport = (userId, schoolId, studentUid) => {
   return async (dispatch) => {
     try {
-      dispatch({ type: SELECTED_CLASS, payload: item })
-      // RootNavigation.navigate('TotalStudent');
+      firestore().collection('users').doc(userId).collection("schools").doc(schoolId).collection('allStudents').doc(studentUid).collection('attendanceLog').get().then((snapshot) => {
+        let attendanceData = [];
+        let pCount = 0;
+        let absentcount = 0;
+        let notTakenAttendanceCount = 0
+        snapshot.forEach(function (doc) {
+          if (doc.data().status) {
+            pCount++
+          }
+          else if (doc.data().attendanceTaken || doc.data().attendanceTaken == undefined) {
+            absentcount++
+          }
+          else {
+            notTakenAttendanceCount++
+          }
+          attendanceData.push(doc.data())
+        });
+
+        var obj = attendanceData.reduce((c, v) => Object.assign(c, {
+          [formatDate2(v.timestamp * 1000)]: v.status ? 
+          { selected: true,
+            marked: false,
+            // selectedColor: '#3CB833', 
+            customStyles: {
+            container: {
+              backgroundColor: '#3CB833',
+              borderRadius:5,
+              width:28,
+              height:28
+              
+            },
+            text: {
+              color: '#fff',
+              fontSize:12
+            }
+          }
+        } : v.attendanceTaken || v.attendanceTaken === undefined ? { selected: true, marked: false,
+          //  selectedColor: '#FFC800',
+           customStyles: {
+            container: {
+              backgroundColor: '#FFC800',
+              borderRadius:5,
+              width:28,
+              height:28
+            },
+            text: {
+              color: '#fff',
+              fontSize:12
+            }
+          }
+           } : { selected: true, marked: false, 
+            // selectedColor: '#F44336',
+           customStyles: {
+            container: {
+              backgroundColor: '#F44336',
+              borderRadius:5,
+              width:28,
+              height:28
+              
+            },
+            text: {
+              color: '#fff',
+              fontSize:12
+            }
+          } }
+        }), {});
+        dispatch({ type: ATTENDANCE_REPORT, payload: { presentCount: pCount, absentcount: absentcount, notTakenAttendanceCount: notTakenAttendanceCount, attendance: obj } })
+      }).catch(e=>{})
+    }
+    catch (e) { }
+
+  }
+}
+
+// Select class
+export const selectClass = (standard) => {
+  return async (dispatch) => {
+    try {
+      let section = store.getState().mainReducer.selectedClass.section
+      dispatch({ type: SELECTED_CLASS, payload: { standard: standard, section: section } })
     }
     catch (e) {
     }
   }
 }
+
+// Select Section
+export const selectSection = (section) => {
+  return async (dispatch) => {
+    try {
+      let std = store.getState().mainReducer.selectedClass.standard
+      dispatch({ type: SELECTED_SECTION, payload: { section: section, standard: std } })
+    }
+    catch (e) {
+    }
+  }
+}
+
+//Individual students attndance report 
+
+ export const gotoAttendanceReport = (item) => {
+   return async (dispatch) =>{
+     try {
+      dispatch({ type: SELECTED_STUDENT, payload: item})
+      RootNavigation.navigate('AttendanceReport');
+     }
+     catch(e){
+
+     }
+
+   }
+ }
+
 
 
 // Get class Curriculam Data
@@ -140,7 +249,6 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
           let lastDocument = snapshot.docs[snapshot.docs.length - 1]
           snapshot.docChanges().forEach((change, index) => {
             if (change.type === "added") {
-              console.log("change.type 31", change.type)
               if (isPost) {
                 d.unshift({ ...change.doc.data() });
               }
@@ -158,7 +266,6 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
               dispatch({ type: LOADING, payload: true })
             }
           });
-          console.log("assignment", d)
           dispatch({ type: GET_CLASSES_DATA, payload: { classData: d, lastVisible: lastDocument } })
           dispatch({ type: LOADING, payload: false })
 
@@ -192,7 +299,6 @@ export const getIndividualData = (loginData, studentUid, screen) => {
           let lastDocument = snapshot.docs[snapshot.docs.length - 1]
           snapshot.docChanges().forEach((change, index) => {
             if (change.type === "added") {
-              console.log("change.type 31", change.type)
               if (isPost) {
                 d.unshift({ ...change.doc.data() });
               }
@@ -210,7 +316,6 @@ export const getIndividualData = (loginData, studentUid, screen) => {
               dispatch({ type: LOADING, payload: true })
             }
           });
-          console.log("storyData and local data is line 48", d)
           dispatch({ type: GET_INDIVIDUAL_DATA, payload: { classData: d, lastVisible: lastDocument } })
           dispatch({ type: LOADING, payload: false })
 
@@ -253,7 +358,6 @@ export const getNotification = (loginData) => {
 }
 
 // Get online class
-
 export const getOnlineClass = (userId, schoolId, standard, section) => {
   return async (dispatch) => {
     try {
