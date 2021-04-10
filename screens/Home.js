@@ -117,10 +117,10 @@ const Home = (props) => {
                 <HomeHeader {...props} classesArr={standard} sectionsArr={sections} selectedClass={selectedClass} loginData={loginData} selectStandard={_selectClass} selectSection={_selectSection} />
 
                 {/* Story Section Horizontal */}
-                <View style={styles. storyStyle}>
-                    <Text style={[styles.titleText,{paddingBottom:10}]}>Stories</Text>
+                <View style={styles.storyStyle}>
+                    <Text style={[styles.titleText, { paddingBottom: 10 }]}>Stories</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ overflow: 'visible', }} >
-                    <View style={{ alignItems: "center", justifyContent: "center", }}>
+                        <View style={{ alignItems: "center", justifyContent: "center", }}>
                             <View style={styles.currentAvtar}>
                                 <Text style={styles.currentAvtarText}>{loginData.firstName[0]}</Text>
                                 <TouchableOpacity style={styles.mainUser} >
@@ -212,7 +212,7 @@ const Home = (props) => {
                                 <Text style={{ color: '#3A9E22', fontSize: 12 }}>Recent
                                       </Text> | 9:30Am </Text>
                         </View>
-                        <Text style={{ fontSize: 14, color: "#707070",paddingTop:5 }}>The school has been deside to organized an event on 24 April</Text>
+                        <Text style={{ fontSize: 14, color: "#707070", paddingTop: 5 }}>The school has been deside to organized an event on 24 April</Text>
                         {/* <View style={{ borderBottomWidth: 0.5, borderColor: "#A3A4A7", marginTop: 15 }}></View> */}
                     </View>
                 </View>
@@ -359,7 +359,7 @@ const Home = (props) => {
                                                                 </TouchableOpacity>
                                                             </View>
                                                         }
-                                                </View>
+                                                    </View>
                                                 </View>
                                             }
                                             {item.docType == 'imageBackground' &&
@@ -498,20 +498,20 @@ const styles = StyleSheet.create({
 
     currentAvtar: {
         width: 70,
-         height: 70,
-          backgroundColor: "#EE9BA5",
-           borderRadius: 35,
-            alignItems: "center",
-             justifyContent: "center"
+        height: 70,
+        backgroundColor: "#EE9BA5",
+        borderRadius: 35,
+        alignItems: "center",
+        justifyContent: "center"
     },
     currentAvtarText: {
-         fontSize: 22,
-          fontWeight: "500",
-           color: "#fff",
-            textTransform: "capitalize" 
+        fontSize: 22,
+        fontWeight: "500",
+        color: "#fff",
+        textTransform: "capitalize"
     },
 
-    titleText:{
+    titleText: {
         fontSize: 16,
         fontWeight: "bold",
         color: "#263238",
@@ -544,10 +544,10 @@ const styles = StyleSheet.create({
         color: '#263238'
     },
 
-    annoummentText:{
-        fontSize: 14, 
+    annoummentText: {
+        fontSize: 14,
         color: "#707070",
-        paddingTop:5 
+        paddingTop: 5
     },
 
     mainUser: {
@@ -599,8 +599,8 @@ const styles = StyleSheet.create({
 
 
     },
-    
-    
+
+
     contentContainer: {
         paddingHorizontal: 10,
         paddingBottom: 5
@@ -662,13 +662,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         paddingLeft: 5
     },
-    storyStyle:{
+    storyStyle: {
         marginTop: 15,
-         marginLeft: 15 
+        marginLeft: 15
     },
-    recentStory:{
+    recentStory: {
         flexDirection: "row",
-         justifyContent: "space-between" 
+        justifyContent: "space-between"
     }
 
 })
