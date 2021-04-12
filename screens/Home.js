@@ -81,9 +81,9 @@ const Home = (props) => {
 
     const renderHeader = () => {
         return (
-            <View>
+            <View  style={{ paddingTop: 10, marginHorizontal:15 }}>
                 {/* story section */}
-                <View style={{ paddingTop: 10, marginHorizontal:15 }}>
+                <View>
                     <Text style = {{color:'#263238', fontSize:16, fontWeight:'bold'}}>Stories</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ overflow: 'visible', paddingTop:8 }}>
                         {loginData &&
@@ -99,12 +99,33 @@ const Home = (props) => {
 
                         }
 
-                        {stories.length > 0 &&
+                     {stories.length > 0 &&
                             stories.map((item, index) => (
                                 <FeedSlider key={index} ind={index} item={item} />
                             ))
                         }
                     </ScrollView>
+                </View>
+
+                {/* Recent Online Class */}
+                <View style = {{paddingTop:22}}>
+                    <View style = {{flexDirection:'row', justifyContent:'space-between'}}>
+                        <Text style = {{fontSize:16, fontWeight:'bold', color:'#263238'}}>Your Classes</Text>
+                        <TouchableOpacity>
+                            <Text>See All</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    
+                    {/* <View style={{ flexDirection: 'row',}}>
+                                {
+                                    onlineClass.slice(0, 3).map((item, index) => (
+                                        <View key={index} style={{ flexDirection: 'row' }}>
+                                         </View>
+
+                                    ))
+                                }
+                    </View> */}
                 </View>
 
             </View>
@@ -129,12 +150,6 @@ const Home = (props) => {
                 loginData={loginData} />
 
             <FlatList
-                // refreshControl={
-                //     <RefreshControl
-                //         refreshing={isRrefresh}
-                //         onRefresh={_onRefresh}
-                //     />
-                // }
                 style={{ paddingBottom: 20 }}
                 contentContainerStyle={{ backgroundColor: '#fff', }}
                 keyboardShouldPersistTaps="always"
@@ -142,15 +157,14 @@ const Home = (props) => {
                 data={stories}
                 ListHeaderComponent={renderHeader}
                 refreshing={true}
-                // onEndReached={loadMoreData}
                 onEndReachedThreshold={0.1}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item, index }) => (
                     <View>
-                        {/* <Text>helehghegjh</Text> */}
+                        <Text>hello</Text>
                     </View>
                 )}
-                keyExtractor={(item, index) => { index.toString() }}
+                keyExtractor={(item, index) => index.toString()}
             />
 
             <TouchableOpacity onPress={() => { doLogOut() }} style={{ marginTop: 100 }}>

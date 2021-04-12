@@ -5,7 +5,7 @@ import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function (props) {
     return (
-        <TouchableOpacity onPress={() => props.openSotry(props.item, props.ind)}>
+        <TouchableOpacity key = {props.ind} onPress={() => props.openSotry(props.item, props.ind)}>
             { props.item.docType == 'image' && props.item.resourceUrl != "" && props.item.review !== 2 &&
                 <View style = {{ marginLeft:16}}>
                     <Image source={{ uri: props.item.resourceUrl }} style={{ width: 76, height: 76, borderRadius: 38, borderColor:'#2B454E', borderWidth:1 }} />
