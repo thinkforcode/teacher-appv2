@@ -49,13 +49,13 @@ const AttendanceReport = (props) => {
                     <Text><Text style={{ fontSize: 14, color: '#263238', fontWeight: 'bold' }}>Today's Report |</Text> <Text style={{ color: '#A3A4A7', fontSize: 14 }}>{new Date().getDate() + ' ' + monthNames[new Date().getMonth()] + ', ' + new Date().getFullYear()}</Text></Text>
                 </View>
 
-                { activeStudents &&
-                         <TouchableOpacity style = {{backgroundColor:activeStudents.status ? '#3CB833':'#F44336', marginHorizontal:15, marginTop:8, height:30, borderRadius:6}}>
-                         <Text>{activeStudents.studentName} is {activeStudents.status ? 'Present':'Absent'} today!</Text>
-                     </TouchableOpacity>
+                {activeStudents &&
+                    <TouchableOpacity style={{ backgroundColor: activeStudents.status ? '#3CB833' : '#F44336', justifyContent: 'center', marginHorizontal: 15, marginTop: 8, height: 30, borderRadius: 6 }}>
+                        <Text style={{ color: '#fff', fontSize: 12, paddingHorizontal: 24 }}>{activeStudents.studentName} is {activeStudents.status ? 'Present' : 'Absent'} today!</Text>
+                    </TouchableOpacity>
                 }
 
-           
+
                 {attendance &&
                     <View>
                         <Calendar

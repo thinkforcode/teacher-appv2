@@ -236,7 +236,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     loginData: state.mainReducer.loginData,
-    classes: state.mainReducer.classes,
     authReducer: state.authReducer,
     standard: state.mainReducer.allStandard,
     sections: state.mainReducer.allSections,
@@ -251,5 +250,3 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, { getClass, selectClass, selectSection, getStudents, takeAttendance, gotoAttendanceReport })(Attendance);
-
-

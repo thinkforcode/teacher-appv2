@@ -1,38 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View,Image } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const FeedSlider = () => {
+import React from 'react';
+import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-    const [image, setImage] = useState([
-        {displayImageUrl:"",profileName:'rahul singh'},
-        {displayImageUrl:"https://reactnative.dev/img/tiny_logo.png",profileName:'rahul singh'},
-        {displayImageUrl:"",profileName:'rahul singh'},
-        {displayImageUrl:"https://reactnative.dev/img/tiny_logo.png",profileName:'rahul singh'},
 
-    ])
-
+export default function (props) {
     return (
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
-                    {image &&
-                        image.map((item, index) => (
-                            <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}>
-                            {item.displayImageUrl != '' ?
-                                        <Image style={{width:70,height:70,borderRadius:35,marginLeft:15}} source={{ uri: item.displayImageUrl }}></Image>
-                                        :
-                                        <View style={{width:70,height:70,backgroundColor:"#EE9BA5",borderRadius:35,alignItems:"center",justifyContent:"center",marginLeft:15}}>
-                                            <Text style={{fontSize:22,fontWeight:"500",color:"#fff",textTransform:"capitalize"}}>{item.profileName[0]}</Text>
-                                        </View>
-                                    }
-                           
-                            <Text style={{fontSize:12,fontWeight:"500",color:"#263238",paddingLeft:15,paddingTop:5}}>{item.profileName}</Text>
-                            </TouchableOpacity>
-                        ))
-                    }
+        <TouchableOpacity onPress={() => props.openSotry(props.item, props.ind)}>
+            { props.item.docType == 'image' && props.item.resourceUrl != "" && props.item.review !== 2 &&
+                <View style = {{ marginLeft:16}}>
+                    <Image source={{ uri: props.item.resourceUrl }} style={{ width: 76, height: 76, borderRadius: 38, borderColor:'#2B454E', borderWidth:1 }} />
+                    <Text style = {{fontSize:12, color:'#263238'}}>{props.item.displayName || 'N/As'}</Text>
                 </View>
-    )
-}
 
-export default FeedSlider
+            }
+        </TouchableOpacity>
 
-const styles = StyleSheet.create({})
+
+    );
+};
+
+const styles = StyleSheet.create({
+    textStyle: {
+        color: '#35365F',
+        fontWeight: '500',
+        textTransform: 'capitalize',
+        paddingTop: 20,
+        fontSize: 12,
+        textAlign: 'center'
+    },
+
+})
