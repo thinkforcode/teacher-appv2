@@ -2,29 +2,32 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState, useRef } from 'react'
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Animated, Dimensions } from 'react-native'
-// import { connect } from 'react-redux'
-// import { getClassCurricullamData } from '../redux/actions/dashboardAction'
+import { connect } from 'react-redux'
+import { getClassCurricullamData } from '../redux/actions/dashboardAction'
 import Headers from '../components/Headers'
 import Loader from '../components/Loader'
+import Backbar from '../components/Backbar'
 
 const Gallery = (props) => {
 
-    const [loginData, setLoginData] = useState(null)
+    // const [loginData, setLoginData] = useState(null)
+    const {loginData, selectedClass} = props
 
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
     const [image, setImage] = useState([
-        {resourceUrl :"https://reactnative.dev/img/tiny_logo.png"},
-        {resourceUrl :"https://reactnative.dev/img/tiny_logo.png"},
-        {resourceUrl :"https://reactnative.dev/img/tiny_logo.png"},
-        {resourceUrl :"https://reactnative.dev/img/tiny_logo.png"},
-        {resourceUrl :"https://reactnative.dev/img/tiny_logo.png"},
-        {resourceUrl :"https://reactnative.dev/img/tiny_logo.png"},
+        { resourceUrl: "https://wallpapercave.com/wp/wp3190622.jpg" },
+        { resourceUrl: "https://wallpapercave.com/wp/wp3190622.jpg" },
+        { resourceUrl:  "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
+        { resourceUrl:  "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
+        { resourceUrl:  "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
+        { resourceUrl:  "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
     ])
 
     // const { getClassCurricullamData, dashboardReducer } = props
 
-          
+    console.log("loginData",loginData)
+     console.log('selectedClass',selectedClass)
 
     useEffect(() => {
         return Animated.parallel([
@@ -50,14 +53,19 @@ const Gallery = (props) => {
 
     // }, [])
 
+    useEffect(() => {
+        if (loginData != null) {
+            getClassCurricullamData(loginData, selectedClass,'gallery')
+        }
+        return () => { }
+    }, [selectedClass])
+
 
     return (
         // dashboardReducer.isLoading ? <Loader />:
         <View style={{ flex: 1 }}>
-             <Headers {...props} title={`Photos`}  screen = "Gallery" />
-            {/* { loginData &&
-                <Headers {...props} title={`Photos`}  screen = "Gallery" />
-            } */}
+            <Backbar {...props} title="Gallery" screen="Gallery" />
+
             <Animated.View style={{
                 transform: [
                     {
@@ -68,25 +76,25 @@ const Gallery = (props) => {
                     }
                 ],
             }}>
-                <Text style={styles.headingText}>We save your children memories for lifetime</Text>
-                {/* { dashboardReducer && */}
-                    <FlatList
-                        contentContainerStyle={{ paddingBottom: 50, marginHorizontal: 3, marginTop: 3 }}
-                        // data={dashboardReducer.gallery}
-                         // extraData={dashboardReducer.gallery}
-                        data={image}
-                        extraData={image}
-                        keyExtractor={(item, index) => { return index.toString(); }}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <TouchableOpacity style={styles.itemContainer}>
-                                    <Image source={{ uri: item.resourceUrl }} style={styles.image} />
-                                   
-                                </TouchableOpacity>
 
-                            )
-                        }}
-                        numColumns={3} />
+                {/* { dashboardReducer && */}
+                <FlatList
+                    contentContainerStyle={{  marginHorizontal: 1, marginTop:1  }}
+                    // data={dashboardReducer.gallery}
+                    // extraData={dashboardReducer.gallery}
+                    data={image}
+                    extraData={image}
+                    keyExtractor={(item, index) => { return index.toString(); }}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <TouchableOpacity style={styles.itemContainer}>
+                                <Image source={{ uri: item.resourceUrl }} style={styles.image} />
+
+                            </TouchableOpacity>
+
+                        )
+                    }}
+                    numColumns={3} />
                 {/* } */}
                 {/* {
                     dashboardReducer.gallery.length == 0 &&
@@ -104,30 +112,26 @@ const styles = StyleSheet.create({
     itemContainer: {
         width: size,
     },
-    headingText:
- {
-    color: '#848598',
-     fontSize: 14,
-      textAlign: 'center',
-       paddingTop: 10 
- },
- image:
- {
-    resizeMode: 'contain',
-     width: 109,
-      height: 109,
-       marginVertical: 5,
-        marginHorizontal:5,
-         borderWidth: 0.5
- }
+
+    image:
+    {
+        resizeMode: 'contain',
+        width: 112,
+        height: 112,
+        marginVertical: 1,
+        marginHorizontal: 1,
+
+    }
 
 })
 
 
-// const mapStateToProps = (state) => ({
-//     dashboardReducer: state.dashboardReducer,
-// })
+const mapStateToProps = (state) => ({
+    loginData: state.mainReducer.loginData,
+    selectedClass: state.mainReducer.selectedClass,
 
-// export default connect(mapStateToProps, { getClassCurricullamData })(Gallery);
+})
 
-export default Gallery
+ export default connect(mapStateToProps)(Gallery);
+
+// export default Gallery

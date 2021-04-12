@@ -118,6 +118,9 @@ export function daysInMonth(month, year) {
 
 let weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+export const monthNames = ["Janauary", "Febrauary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+
 export function daysname(date) {
   return weekday[date];
 }

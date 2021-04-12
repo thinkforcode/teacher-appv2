@@ -96,24 +96,35 @@ const Login = (props) => {
 
         <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} keyboardShouldPersistTaps='handled' >
             <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
+            
             <Modal
                 animationType="slide"
                 visible={modalVisible}
                 onRequestClose={() => { setModalVisible(!modalVisible); }}>
                 <View >
-                    <Backbar {...props} title="Select Your Country" screen="Login" close={_closeModal} />
+                    {/* <Backbar {...props} title="Select Your Country" screen="Login" close={_closeModal} /> */}
+                    {/* <Backbar {...props} screen="Login" close={_closeModal} /> */}
                 </View>
+                <View>
+                <TouchableOpacity onPress={() => { props.navigation.goBack() }} style={styles.dropDownStyle} >
+                            <MaterialCommunityIcons name="chevron-left" color="#707070" size={18} />
+                        </TouchableOpacity>
+                </View>
+                
                 <View style={{ marginTop: 20 }}>
-                    <View >
+                    <TouchableOpacity style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginHorizontal:15,marginVertical: 10,borderBottomWidth:0.5,borderColor:"#A3A4A7"}}>
                         <TextInput
-                            style={{ margin: 10, }}
+                            style={{  }}
                             autoFocus={true}
                             value={text}
                             onChangeText={text => searchCountry(text)}
-                            underlineColorAndroid="#DFE4EE"
+                            // underlineColorAndroid="#DFE4EE"
                             placeholder="Search"
                         />
-                    </View>
+                        <View>
+                        <MaterialCommunityIcons name="magnify" color="#707070" size={18} />
+                        </View>
+                    </TouchableOpacity>
                     <ScrollView showsHorizontalScrollIndicator={false}>
                         {
                             countrycode.map((item, index) => (
