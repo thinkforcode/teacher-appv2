@@ -152,8 +152,11 @@ const Home = (props) => {
                 )}
                 keyExtractor={(item, index) => { index.toString() }}
             />
+            <TouchableOpacity onPress = {()=>{props.navigation.navigate('Gallery')}}>
+                <Text style={{paddingTop:20}}>Galery</Text>
+            </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { doLogOut() }} style={{ marginTop: 100 }}>
+            <TouchableOpacity onPress={() => { doLogOut() }} style={{ marginTop: 20 }}>
                 <Text>Logout</Text>
             </TouchableOpacity>
 
