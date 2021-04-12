@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, SELECTED_SECTION, SELECTED_STUDENT, ATTENDANCE_REPORT, UPDATE_LOCAL_DATA, CLEAR_ERROR, UPDATE_STUDENTS, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION, GET_COMPLAIN } from '../actionTypes';
+import { GET_CLASSES, GET_STUDENTS, SELECTED_CLASS, SELECTED_SECTION, SELECTED_STUDENT, ATTENDANCE_REPORT, UPDATE_LOCAL_DATA, GET_ONLINE_CLASS, CLEAR_ERROR, UPDATE_STUDENTS, LOADING, ON_ERROR, GET_CLASSES_DATA, GET_INDIVIDUAL_DATA, GET_NOTIFICATION, GET_COMPLAIN } from '../actionTypes';
 import * as RootNavigation from '../../RootNavigation.js';
 import { store } from '../store';
 import { formatDate2 } from '../../functions/timeformat';
@@ -385,7 +385,7 @@ export const getOnlineClass = (userId, schoolId, standard, section) => {
               groupData.push({ group: groupName, events: groups[groupName] });
             }
             console.log("groupData", groupData)
-            dispatch({ type: 'GET_ONLINE_CLASS', payload: groupData })
+            dispatch({ type: GET_ONLINE_CLASS, payload: groupData })
           }
           else {
             dispatch({ type: 'ON_ERROR ', payload: false })

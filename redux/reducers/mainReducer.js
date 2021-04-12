@@ -17,12 +17,12 @@ const INITIAL_STATE = {
     totalAbsent: 0,
     totalStudents: 0,
     isTakenAttendance: false,
-    activeStudents:{},
-    attendance:{},
-    notTakenAttendanceCount:0,
-    absentcount:0,
-    presentCount:0,
-    selectedStudents:[]
+    activeStudents: {},
+    attendance: {},
+    notTakenAttendanceCount: 0,
+    absentcount: 0,
+    presentCount: 0,
+    selectedStudents: []
 };
 
 export const mainReducer = (state = INITIAL_STATE, action) => {
@@ -132,21 +132,21 @@ export const mainReducer = (state = INITIAL_STATE, action) => {
                 isLoading: false
             };
 
-            case ATTENDANCE_REPORT:
-                return {
-                    ...state,
-                    presentCount: action.payload.presentCount,
-                    absentcount: action.payload.absentcount,
-                    notTakenAttendanceCount: action.payload.notTakenAttendanceCount,
-                    attendance: action.payload.attendance,
-                    isLoading: false
-                };
+        case ATTENDANCE_REPORT:
+            return {
+                ...state,
+                presentCount: action.payload.presentCount,
+                absentcount: action.payload.absentcount,
+                notTakenAttendanceCount: action.payload.notTakenAttendanceCount,
+                attendance: action.payload.attendance,
+                isLoading: false
+            };
 
-                case SELECTED_STUDENT : 
-                return {
-                    ...state,
-                    activeStudents:action.payload
-                }
+        case SELECTED_STUDENT:
+            return {
+                ...state,
+                activeStudents: action.payload
+            }
 
         default:
             return state;
