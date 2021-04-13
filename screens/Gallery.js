@@ -12,6 +12,7 @@ import Backbar from '../components/Backbar'
 const Gallery = (props) => {
 
     const { loginData, selectedClass, getClassCurricullamData } = props
+    const [selectImage, setselectImage] = useState(false)
 
     const SlideInLeft = useRef(new Animated.Value(0)).current;
 
@@ -43,9 +44,13 @@ const Gallery = (props) => {
         return () => { }
     }, [selectedClass])
 
+    const _selectImage = (() => {
+        setselectImage(true)
+
+    })
 
     return (
-        // dashboardReducer.isLoading ? <Loader />:
+
         <View style={{ flex: 1 }}>
             <Backbar {...props} title="Gallery" screen="Gallery" />
 
@@ -60,31 +65,29 @@ const Gallery = (props) => {
                 ],
             }}>
 
-                {/* { dashboardReducer && */}
+
                 <FlatList
                     contentContainerStyle={{ paddingBottom: 50, marginHorizontal: 3, marginTop: 3 }}
-                    // data={dashboardReducer.gallery}
-                    // extraData={dashboardReducer.gallery}
+
                     data={image}
                     extraData={image}
                     keyExtractor={(item, index) => { return index.toString(); }}
                     renderItem={({ item, index }) => {
                         return (
-                            <TouchableOpacity style={styles.itemContainer}>
+                            <TouchableOpacity style={styles.itemContainer} onPress={_selectImage}>
                                 <Image source={{ uri: item.resourceUrl }} style={styles.image} />
-                                       <View style={{position:"absolute",width:20,height:20,borderRadius:10,backgroundColor:"#FFC800",right:7,top:7,alignItems:"center",justifyContent:"center"}}>
-                                       <MaterialCommunityIcons name = "plus" size = {14} color = "#fff" />
-                                       </View>
+                                {  selectImage &&
+                                    <View style={{ position: "absolute", width: 16, height: 16, borderRadius: 8, backgroundColor: "#FFC800", right: 7, top: 7, alignItems: "center", justifyContent: "center" }}>
+                                        <MaterialCommunityIcons name="check" size={14} color="#2B454E" />
+                                    </View>
+                                }
+
                             </TouchableOpacity>
 
                         )
                     }}
                     numColumns={3} />
-                {/* } */}
-                {/* {
-                    dashboardReducer.gallery.length == 0 &&
-                    <Text style = {{color:'red', textAlign:'center', paddingTop:100}}>No Photo's from your child school yet !</Text>
-                } */}
+
             </Animated.View>
 
         </View>
@@ -115,6 +118,6 @@ const mapStateToProps = (state) => ({
 
 })
 
-export default connect(mapStateToProps, {getClassCurricullamData})(Gallery);
+export default connect(mapStateToProps, { getClassCurricullamData })(Gallery);
 
 

@@ -5,9 +5,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const HomeHeader = (props) => {
     return (
+
+        
         <View>
             <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
-            <View style={{ backgroundColor: "#2B454E" }}>
+
+            {
+                props.screen != "Assignment" && 
+                <View style={{ backgroundColor: "#2B454E" }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 15, height: 100 }}>
                     <TouchableOpacity style={{ backgroundColor: '#fff', borderRadius: 10, width: 38, height: 38, justifyContent: 'center' }}>
                         <Text style={{ textAlign: 'center', fontSize: 18, color: '#FFC800' }}>{props.loginData.firstName != undefined ? props.loginData.firstName.slice(0, 1) : ''}</Text>
@@ -21,12 +26,34 @@ const HomeHeader = (props) => {
                         <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} color={"#FFC800"} />
                     </TouchableOpacity>
                 </View>
-
             </View>
+            }
+            
+           
+
+
+            {
+                props.screen == "Assignment" &&
+
+                <View style={{ backgroundColor: "#2B454E" }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 15, height: 100 }}>
+                    <TouchableOpacity style={{ borderRadius: 50, backgroundColor: '#37545E', opacity: .5 }} onPress={() => { props.navigation.goBack() }}>
+                        <MaterialCommunityIcons name="chevron-left" color="#fff" size={24} />
+                    </TouchableOpacity>
+
+                    <View style={{ paddingLeft: 25 }}>
+                        <Text style={{ fontSize: 18, color: '#fff', fontWeight: '500' }}>{props.title}</Text>
+                    </View>
+
+
+                </View>
+            </View>
+
+            }
 
             <View style={{ backgroundColor: '#37545E', height: 50, justifyContent: 'center' }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => { props.openClassSectionModal(true, false) }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center'}} onPress={() => { props.openClassSectionModal(true, false) }}>
                         <Text style={{ color: '#fff', fontSize: 14 }}>Class {props.selectedClass.standard}</Text>
                         <MaterialCommunityIcons name="chevron-down" color="#83A2AC" size={24} style={{ paddingLeft: 10 }} />
                     </TouchableOpacity>

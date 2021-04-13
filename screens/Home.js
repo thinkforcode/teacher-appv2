@@ -152,6 +152,10 @@ const Home = (props) => {
                 )}
                 keyExtractor={(item, index) => { index.toString() }}
             />
+            <TouchableOpacity onPress = {()=>{props.navigation.navigate('Assignment')}}>
+                <Text style={{paddingTop:20}}>Assignment</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress = {()=>{props.navigation.navigate('Gallery')}}>
                 <Text style={{paddingTop:20}}>Galery</Text>
             </TouchableOpacity>
