@@ -1,33 +1,31 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import SelectClass from './SelectClass';
-import TotalStudent from './TotalStudent';
 import Home from './Home';
 import Attendance from './Attendance';
 import OnlineClass from './OnlineClass';
 import ClassCurriculum from './ClassCurriculum';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
-import {Image} from 'react-native'
+import { Image } from 'react-native'
 
 import UserIntrest from './RegistrationScreens/UserIntrest';
 import AttendanceReport from './AttendanceReport';
+import Notification from './Notification';
+
 
 const MainStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-
 const MainTab = () => (
     <Tab.Navigator
-        initialRouteName="Home" 
-        barStyle={{ backgroundColor: '#2B454E' }} 
+        initialRouteName="Home"
+        barStyle={{ backgroundColor: '#2B454E' }}
         activeColor="#000"
         inactiveColor="#fff"
         activeColor="#FFC800"
-        labeled={true} 
+        labeled={true}
         shifting={false}
         lazy={true}
-        >
+    >
         <Tab.Screen
             name="Home"
             component={Home}
@@ -52,17 +50,6 @@ const MainTab = () => (
 
 
         <Tab.Screen
-            name="Chat"
-            component={OnlineClass}
-            options={{
-                tabBarLabel: 'Curriculum',
-                tabBarIcon: ({ color }) => (
-                    <Image source={require('../assets/icons/onlineClass.png')} style={{ tintColor: color }} />
-                ),
-            }}
-        />
-
-        <Tab.Screen
             name="Attendance"
             component={Attendance}
             options={({ route }) => ({
@@ -73,11 +60,24 @@ const MainTab = () => (
             })}
         />
 
+
         <Tab.Screen
-            name="ClassCurriculum "
+            name="Imanage"
+            component={OnlineClass}
+            options={{
+                tabBarLabel: 'Imanage',
+                tabBarIcon: ({ color }) => (
+                    <Image source={require('../assets/icons/onlineClass.png')} style={{ tintColor: color }} />
+                ),
+            }}
+        />
+
+
+        <Tab.Screen
+            name="Profile "
             component={ClassCurriculum}
             options={{
-                tabBarLabel: 'Chat',
+                tabBarLabel: 'Profile',
                 tabBarIcon: ({ color }) => (
                     <Image source={require('../assets/icons/curricullum.png')} style={{ tintColor: color }} />
                 ),
@@ -88,19 +88,11 @@ const MainTab = () => (
 );
 
 
-
-
-
-
-
 const MainAppNavigator = () => (
     <MainStack.Navigator headerMode={false}>
-          <MainStack.Screen name="Home" component={MainTab} />
-          <MainStack.Screen name="AttendanceReport" component={AttendanceReport} /> 
-          {/* <MainStack.Screen name="TotalStudent" component={TotalStudent} />  */}
-        {/* <MainStack.Screen name="Home" component={MainTab} /> */}
-
-
+        <MainStack.Screen name="Home" component={MainTab} />
+        <MainStack.Screen name="AttendanceReport" component={AttendanceReport} />
+        <MainStack.Screen name="Notification" component={Notification} />
     </MainStack.Navigator>
 
 )

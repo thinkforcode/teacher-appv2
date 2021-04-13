@@ -20,18 +20,21 @@ const Backbar = (props) => {
 
                 </View>
             </View>
-            <View style={{ backgroundColor: '#37545E', height: 50, justifyContent: 'center' }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-                    <Text style={{ color: '#fff', fontSize: 14 }}>Class 10th</Text>
+            { props.screen == 'AttendanceReport' &&
+                            <View style={{ backgroundColor: '#37545E', height: 50, justifyContent: 'center' }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                                <Text style={{ color: '#fff', fontSize: 14 }}>Class 10th</Text>
+            
+                                <TouchableOpacity>
+                                    <Text>|</Text>
+                                </TouchableOpacity>
+            
+                                <Text style={{ color: '#fff', fontSize: 14 }}>Section A</Text>
+            
+                            </View>
+                        </View>
+            }
 
-                    <TouchableOpacity>
-                        <Text>|</Text>
-                    </TouchableOpacity>
-
-                    <Text style={{ color: '#fff', fontSize: 14 }}>Section A</Text>
-
-                </View>
-            </View>
 
         </View>
 

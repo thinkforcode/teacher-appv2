@@ -17,8 +17,8 @@ const HomeHeader = (props) => {
                         <Text style={{ fontSize: 12, color: '#C6DBE2', paddingTop: 2 }}>{props.loginData.schoolName != undefined ? props.loginData.schoolName : 'N/A'}</Text>
                     </View>
 
-                    <TouchableOpacity style={{ width: 26, height: 26, backgroundColor: '#fff', borderRadius: 10, justifyContent: 'center' }}>
-                        <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} color={"#FFC800"} />
+                    <TouchableOpacity style={{ width: 26, height: 26, backgroundColor: '#fff', borderRadius: 10, justifyContent: 'center' }} onPress = {()=>{props.navigation.navigate('Notification')}}>
+                        <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} col   or={"#FFC800"} />
                     </TouchableOpacity>
                 </View>
 
