@@ -1,6 +1,5 @@
 
 import { View, Text,ScrollView,Dimensions,TouchableOpacity,StyleSheet, Image,FlatList} from 'react-native'
-import Headers from '../components/Headers'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useEffect, useState} from 'react'
 
@@ -23,7 +22,6 @@ const ConfirmAttendance = (props) => {
     
     return (
         <View style={{flex:1,backgroundColor:"#fff"}}>
-             <Headers {...props} title={`Confirm Attendence`} screen="ConfirmAttendence" />
              <View style={{ backgroundColor: '#fff' }}>
                   <View style={{padding:10,backgroundColor:"#f2f2f2"}}>
                       <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>

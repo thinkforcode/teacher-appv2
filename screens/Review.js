@@ -5,7 +5,6 @@ import { View, Text, FlatList, TouchableOpacity, Animated, StatusBar, Dimensions
 // import { connect } from 'react-redux'
 // import { getReviewRemarks } from '../redux/actions/dashboardAction'
 
-import Headers from '../components/Headers'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { formatDate } from '../functions/timeformat'
@@ -65,7 +64,6 @@ const Review = (props) => {
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
 
-            <Headers {...props} title={`Reviews`} screen="Review" />
             <Animated.View style={{
                 flex: 1,
                 transform: [

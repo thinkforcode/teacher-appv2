@@ -238,13 +238,13 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
     try {
       let ref = firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('classes').doc(selectedClass.standard)
         .collection('sections').doc(selectedClass.section).collection(screen)
+      
       dispatch({ type: CLEAR_ERROR, payload: null })
       dispatch({ type: LOADING, payload: true })
 
       const d = [];
-
       ref.orderBy('createdAt', 'desc').limit(10).onSnapshot({ includeMetadataChanges: false }, (snapshot) => {
-        console.log("snapshot", snapshot)
+        
         if (!snapshot.empty) {
           let lastDocument = snapshot.docs[snapshot.docs.length - 1]
           snapshot.docChanges().forEach((change, index) => {
@@ -266,6 +266,8 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
               dispatch({ type: LOADING, payload: true })
             }
           });
+          console.log("Gallery",d)
+          
           dispatch({ type: GET_CLASSES_DATA, payload: { classData: d, lastVisible: lastDocument } })
           dispatch({ type: LOADING, payload: false })
 
@@ -277,6 +279,7 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
     }
 
     catch (e) {
+      console.log("Error", e)
       dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Error!' } })
       dispatch({ type: LOADING, payload: true })
 

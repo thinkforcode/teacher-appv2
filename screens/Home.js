@@ -449,6 +449,7 @@ const Home = (props) => {
                 keyExtractor={(item, index) => index.toString()}
             />
 
+
             {/* <TouchableOpacity onPress={() => { doLogOut() }} style={{ marginTop: 100 }}>
                 <Text>Logout</Text>
             </TouchableOpacity> */}

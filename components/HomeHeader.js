@@ -5,24 +5,48 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const HomeHeader = (props) => {
     return (
+
+
         <View>
             <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
-            <View style={{ backgroundColor: "#2B454E" }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 15, height: 100 }}>
-                    <TouchableOpacity style={{ backgroundColor: '#fff', borderRadius: 10, width: 38, height: 38, justifyContent: 'center' }}>
-                        <Text style={{ textAlign: 'center', fontSize: 18, color: '#FFC800' }}>{props.loginData.firstName != undefined ? props.loginData.firstName.slice(0, 1) : ''}</Text>
-                    </TouchableOpacity>
-                    <View style={{ paddingLeft: 16, flex: 1 }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>{props.loginData.firstName != undefined ? props.loginData.firstName : ''} {props.loginData.lastName != undefined ? props.loginData.lastName : ''}</Text>
-                        <Text style={{ fontSize: 12, color: '#C6DBE2', paddingTop: 2 }}>{props.loginData.schoolName != undefined ? props.loginData.schoolName : 'N/A'}</Text>
-                    </View>
 
-                    <TouchableOpacity style={{ width: 26, height: 26, backgroundColor: '#fff', borderRadius: 10, justifyContent: 'center' }} onPress = {()=>{props.navigation.navigate('Notification')}}>
-                        <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} col   or={"#FFC800"} />
-                    </TouchableOpacity>
+            {
+                props.screen != "Assignment" &&
+                <View style={{ backgroundColor: "#2B454E" }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 15, height: 100 }}>
+                        <TouchableOpacity style={{ backgroundColor: '#fff', borderRadius: 10, width: 38, height: 38, justifyContent: 'center' }}>
+                            <Text style={{ textAlign: 'center', fontSize: 18, color: '#FFC800' }}>{props.loginData.firstName != undefined ? props.loginData.firstName.slice(0, 1) : ''}</Text>
+                        </TouchableOpacity>
+                        <View style={{ paddingLeft: 16, flex: 1 }}>
+                            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>{props.loginData.firstName != undefined ? props.loginData.firstName : ''} {props.loginData.lastName != undefined ? props.loginData.lastName : ''}</Text>
+                            <Text style={{ fontSize: 12, color: '#C6DBE2', paddingTop: 2 }}>{props.loginData.schoolName != undefined ? props.loginData.schoolName : 'N/A'}</Text>
+                        </View>
+
+                        <TouchableOpacity style={{ width: 26, height: 26, backgroundColor: '#fff', borderRadius: 10, justifyContent: 'center' }} onPress={() => { props.navigation.navigate('Notification') }}>
+                            <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} col or={"#FFC800"} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            }
+
+
+
+
+            {
+                props.screen == "Assignment" &&
+                <View style={{ backgroundColor: "#2B454E" }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 15, height: 100 }}>
+                        <TouchableOpacity style={{ borderRadius: 50, backgroundColor: '#37545E', opacity: .5 }} onPress={() => { props.navigation.goBack() }}>
+                            <MaterialCommunityIcons name="chevron-left" color="#fff" size={24} />
+                        </TouchableOpacity>
+
+                        <View style={{ paddingLeft: 25 }}>
+                            <Text style={{ fontSize: 18, color: '#fff', fontWeight: '500' }}>{props.title}</Text>
+                        </View>
+                    </View>
                 </View>
 
-            </View>
+            }
 
             <View style={{ backgroundColor: '#37545E', height: 50, justifyContent: 'center' }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>

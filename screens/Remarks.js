@@ -4,7 +4,6 @@ import { View, Text, FlatList,TouchableOpacity, Animated,StyleSheet } from 'reac
 // import { connect } from 'react-redux'
 // import { getReviewRemarks } from '../redux/actions/dashboardAction'
 
-import Headers from '../components/Headers'
 import { formatDate } from '../functions/timeformat'
 
 
@@ -55,7 +54,6 @@ const Remarks = (props) => {
             {/* { loginData &&
                 <Headers {...props} title={`Remarks`} screen = "Remarks" />
             } */}
-            <Headers {...props} title={`Remarks`} screen = "Remarks" />
             <Animated.View style={{
                 flex: 1,
                 transform: [

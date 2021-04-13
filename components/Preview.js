@@ -39,7 +39,6 @@ const Preview = (props) => {
 
     return (
         <View style={{ flex: 1 }}>
-            <Headers {...props} title={`Preview`} screen="Preview" download={downloadData} share={shareData} />
             {/* { previewData && */}
             <View style={{ flex: 1 }}>
                 {previewData.type == 'image' &&

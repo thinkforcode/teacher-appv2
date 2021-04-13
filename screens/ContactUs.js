@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput, StyleSheet, TouchableOpacity, Linking, ScrollView, ImageBackground } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { connect } from 'react-redux';
-import Headers from '../components/Headers'
 // import { createTicket, openDocumentPicker } from '../redux/actions/dashboardAction';
 
 
@@ -101,7 +100,6 @@ const ContactUs = (props) => {
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <ScrollView style={{ backgroundColor: '#fff' }} keyboardShouldPersistTaps='handled' >
-                <Headers {...props} title={`Contact us`} screen="ContactUs" />
                 <View style={styles.container}>
                     <View style={styles.inputBox}>
                         <TextInput

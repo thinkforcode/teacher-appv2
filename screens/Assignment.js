@@ -1,202 +1,271 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, StatusBar } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, FlatList, SafeAreaView, Dimensions, Image, ImageBackground } from 'react-native'
 import { connect } from 'react-redux'
-import { getClassCurricullamData,getActivityData } from '../redux/actions/mainActions';
-import { formatDate } from '../functions/timeformat';
-import Headers from '../components/Headers'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Loader from '../components/Loader'
+import HomeHeader from '../components/HomeHeader'
+import { doLogOut } from '../redux/actions/authActions'
+import { getClass, getOnlineClass, selectClass, selectSection } from '../redux/actions/mainActions';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { curricullumData } from '../classData.js'
+import { deletePost, getStory, like, createStories, retreiveMore, gotoStory } from '../redux/actions/storyActions'
+
+
+
+
 
 
 const Assignment = (props) => {
-    // const [loginData, setLoginData] = useState(null)
-    const {  getClassCurricullamData , loginData, getActivityData , selectedClass } = props
+    const [isClassModal, setIsClassModal] = useState(false)
+    const [isSectionModal, setIsSectionModal] = useState(false)
 
-    const [assignmentData, setAssignmentData] = useState([
-        { creationTime: 10, subject: "hindi ", teacher: "deepak" },
-        { creationTime: 10, subject: "hindi", teacher: "rahul singh bisht" }
-    ])
+    const [curricullumSize, setCurricullumSize] = useState(4)
+    const [curricullum, setCurricullum] = useState(curricullumData)
+    const [showAssignment, setShowAssignment] = useState(true)
+    const [showSubmission, setshowSubmission] = useState(false)
 
-    
+
+
+
+    const { getClass, selectClass, loginData, standard, sections, selectedClass, selectSection, getStory, stories, onlineClass, getOnlineClass } = props
 
     useEffect(() => {
-        // console.log("loginData", loginData)
-        if(loginData!= null){
-            getClassCurricullamData(loginData, selectedClass, 'assignment')
+        if (loginData != null) {
+            getClass(loginData.userId, loginData.schoolId, loginData.teacherId)
         }
         return () => { }
     }, [])
-   
+
+
     useEffect(() => {
-        
-        if(loginData!= null){
-            getActivityData(loginData, 'complain', 'GET_COMPLAIN')
+        if (loginData) {
+            var unsubscribeStory = getStory(loginData.userId, loginData.schoolId, false)
+        }
+        return () => { unsubscribeStory }
+    }, [])
+
+    console.log("stories", stories)
+
+
+    const _selectClassAndSection = (standardStatus, sectionStatus, item) => {
+        _closeModal()
+        if (standardStatus) {
+            selectClass(item.standard)
+        }
+        else {
+            selectSection(item.section)
+        }
+    }
+
+    const _closeModal = () => {
+        setIsClassModal(false)
+        setIsSectionModal(false)
+    }
+
+
+    const _openClassAndSectionModal = (standardStatus, sectionStatus) => {
+        setIsClassModal(standardStatus)
+        setIsSectionModal(sectionStatus)
+    }
+
+    //Get online class
+
+    useEffect(() => {
+        if (loginData) {
+            getOnlineClass(loginData.userId, loginData.schoolId, selectedClass.standard, selectedClass.section)
         }
         return () => { }
-    }, [])
-    
+    }, [selectedClass])
 
-    console.log("Assignment selectedClass", selectedClass)
-    // console.log("Assignmentscreen ", assignment)
+    console.log("online class", onlineClass)
+
+    const _assignment = (() => {
+        setshowSubmission(false)
+        setShowAssignment(true)
+    })
+    const _submission = (() => {
+        console.log('show')
+        setShowAssignment(false)
+        setshowSubmission(true)
+
+    })
 
 
-    const gotoPreview = (item) => {
-        props.navigation.navigate('Preview', { data: item })
 
+
+    const renderHeader = () => {
+        return (
+            <View>
+                <View style={styles.midPart}>
+                    <TouchableOpacity style={{ alignItems: "center" }} onPress={() => { _assignment() }}  >
+                        <Text style={styles.tabText}>Assignments</Text>
+                        <View style={styles.lineStyle}>
+                            {showAssignment == true &&
+                                <Text style={styles.lineText}></Text>
+                            }
+
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ alignItems: "center" }} onPress={() => { _submission() }} >
+                        <Text style={styles.tabText}>Submission</Text>
+                        <View style={styles.lineStyle}>
+                            {showSubmission == true &&
+                                <Text style={styles.lineText}></Text>
+                            }
+
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                {showAssignment == true &&
+                    <View>
+                        <View style={{ marginTop: 15, marginBottom: 10, marginHorizontal: 15 }}>
+                            <Text style={{ fontSize: 12, fontWeight: "500", color: "#3A9E22" }}>Recent</Text>
+                        </View>
+                        <View style={{ marginHorizontal: 8 }}>
+                            <View style={{ paddingHorizontal: 15, paddingVertical: 8, backgroundColor: "#f2f2f2", borderRadius: 10 }}>
+                                <Text style={{ fontSize: 14, fontWeight: "bold", color: "#2B454E" }}>English</Text>
+                                <Text style={{ fontSize: 14, color: "#2B454E" }}>State and hooks are asynchronous. You won't see a change in isLoading directly after calling set..., but only on the next render of the component, which will happen "soon enough".</Text>
+                                <View style={{ flexDirection: "row", marginTop: 5 }}>
+                                    <Text style={{ color: "#707070", fontSize: 12 }}>Date - 10 April,201 | </Text>
+                                    <Text style={{ color: "#3CB833", fontSize: 12 }}>SubmissionDate - 10 April,201 | </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                }
+
+                {showSubmission == true &&
+                    <View style={{ marginTop: 150, alignItems: "center", justifyContent: "center" }}>
+                        <Text style={{ color: "#707070", fontSize: 18, fontWeight: "bold" }}>No Submissions !</Text>
+
+                    </View>
+                }
+
+                {/* No Assignment
+                <View style={{marginTop:150,alignItems:"center",justifyContent:"center"}}>
+                       <Text style={{color:"#707070",fontSize:18,fontWeight:"bold"}}>No Assignment Created</Text>
+                       <Text style={{color:"#A3A4A7",fontSize:14}}>Tab to Plus button to create new assignment</Text>
+                       </View> */}
+
+
+
+
+
+
+
+            </View>
+
+
+        )
     }
 
 
 
     return (
-        // dashboardReducer.isLoading ? <Loader />:
-        <View style={{ flex: 1 }}>
-            {/* { loginData &&
-                <Headers {...props} title={`Assignment` + ' ' + loginData.standard + ' ' + loginData.section} screen="Assignment" />
-            } */}
-            <StatusBar backgroundColor="#E61A50" barStyle="light-content" />
-            <Headers {...props} title={`Assignment`} screen="Assignment" />
-            <View style={styles.container}>
-                {/* {dashboardReducer && */}
-                <View>
-                    <FlatList
-                        contentContainerStyle={styles.contentList}
-                        // data={dashboardReducer.assignment}
-                        // extraData={dashboardReducer.assignment}
-                        data={assignmentData}
-                        keyExtractor={(item, index) => { return index.toString(); }}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <View key={index} style={styles.mainContainer}>
-                                    <View>
-                                        <View style={{ flexDirection: "row", }}>
-                                            <Text style={styles.simpleText}>Subject</Text>
-                                            <View style={{ paddingLeft: 62 }}>
-                                                <Text style={styles.subjectText}>
-                                                    {item.subject ? item.subject : 'No Subject '}</Text>
-                                                <Text style={{ fontSize: 9, color: '#848598', paddingLeft: 3 }}>{formatDate(item.creationTime ? item.creationTime : 'No Creation Time')}</Text>
-                                            </View>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+            <HomeHeader
+                {...props}
+                title="Assignment" screen="Assignment"
+                selectClassAndSection={_selectClassAndSection}
+                isClassModal={isClassModal}
+                isSectionModal={isSectionModal}
+                classesArr={standard}
+                openClassSectionModal={_openClassAndSectionModal}
+                isSelect={true}
+                sectionsArr={sections}
+                selectedClass={selectedClass}
+                loginData={loginData} />
 
-                                        </View>
+            <FlatList
+                // refreshControl={
+                //     <RefreshControl
+                //         refreshing={isRrefresh}
+                //         onRefresh={_onRefresh}
+                //     />
+                // }
+                style={{ paddingBottom: 20 }}
+                contentContainerStyle={{ backgroundColor: '#fff', }}
+                keyboardShouldPersistTaps="always"
+                keyboardDismissMode="on-drag"
 
-                                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                ListHeaderComponent={renderHeader}
+                refreshing={true}
+                // onEndReached={loadMoreData}
 
-                                            <View style={{ flexDirection: "row" }}>
-                                                <View>
-                                                    <Text style={styles.simpleText}>Submission</Text>
-                                                    <Text style={styles.dateText}>date</Text>
-                                                </View>
+                keyExtractor={(item, index) => { index.toString() }}
+            />
 
+            {/* Create Assignment */}
 
-                                                <Text style={{ fontSize: 14, color: '#392C60', paddingLeft: 35 }}>{formatDate(item.creationTime ? item.creationTime : "No Date")}</Text>
-                                            </View>
+            <TouchableOpacity style={styles.createAssignment} onPress={() => { props.navigation.navigate('CreateAssignment') }}>
+                <MaterialCommunityIcons name="plus" size={28} color="#fff" />
+            </TouchableOpacity>
 
-
-
-                                            <TouchableOpacity style={styles.button} onPress={() => gotoPreview(item)}>
-                                                <Text style={styles.buttonText}>View</Text>
-                                                <Text style={styles.iconText}><MaterialCommunityIcons name="arrow-right" size={14} color="#fff" /></Text>
-                                            </TouchableOpacity>
-
-                                        </View>
-
-
-                                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-                                            <Text style={styles.simpleText}>Teacher</Text>
-                                            <View style={{ paddingLeft: 60 }}>
-                                                <Text style={{ fontSize: 14, color: '#392C60' }}>{item.teacher ? item.teacher : 'No Teacher'}</Text>
-                                            </View>
-                                        </View>
-
-                                    </View>
-                                </View>
-                            )
-                        }}
-                    />
-                </View>
-                {/* } */}
-            </View>
-
-        </View>
+        </SafeAreaView>
     )
 }
 
-const styles = StyleSheet.create({
-    description: {
-        fontSize: 14,
-        color: "#414268",
-    },
-
-    contentList: {
-        paddingBottom: 100,
-    },
-
-    mainContainer: {
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#ECF0F8',
-        marginVertical: 10,
-        marginHorizontal: 10,
-        elevation: 1,
-        backgroundColor: '#fff',
-        padding: 10
-    },
-    simpleText:
-    {
-        fontSize: 14,
-        color: '#848598'
-    },
-    dateText:
-    {
-        fontSize: 14,
-        color: '#848598',
-        position: "absolute",
-        top: 12
-    },
-    subjectText:
-    {
-        fontSize: 14,
-        color: '#fff',
-        fontWeight: 'bold',
-        backgroundColor: '#FEB62D',
-        textAlign: "center",
-        borderRadius: 5,
-        alignItems: 'center'
-    },
-    button:
-    {
-        flexDirection: "row",
-        backgroundColor: "#E53563",
-        width: 85,
-        height: 25,
-        borderRadius: 5,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    buttonText:
-    {
-        color: "#fff",
-        fontSize: 14,
-        textAlign: "center",
-
-        fontSize: 14,
-        fontWeight: "500"
-    },
-    iconText:
-    {
-        paddingLeft: 10,
-        paddingTop: 2
-    }
-
-});
-
 
 const mapStateToProps = (state) => ({
-    loginData:state.mainReducer.loginData,
-    assignment: state.mainReducer.assignment,
+    loginData: state.mainReducer.loginData,
+    authReducer: state.authReducer,
+    standard: state.mainReducer.allStandard,
+    sections: state.mainReducer.allSections,
     selectedClass: state.mainReducer.selectedClass,
-    
+
+
+
 })
 
-export default connect(mapStateToProps, { getClassCurricullamData,getActivityData})(Assignment);
+export default connect(mapStateToProps, { getClass, selectClass, getStory, doLogOut, selectSection, getOnlineClass })(Assignment);
 
+const screenWidth = Math.round(Dimensions.get('window').width);
+const styles = StyleSheet.create({
+
+    midPart: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        backgroundColor: "#f2f2f2",
+        height: 50,
+        alignItems: "center"
+    },
+
+    lineStyle: {
+        paddingTop: 12
+    },
+
+    lineText: {
+        width: 50,
+        height: 4,
+        backgroundColor: "#2B454E",
+        borderRadius: 2
+    },
+
+    tabText: {
+        fontSize: 14,
+        color: "#707070",
+        paddingTop: 14
+    },
+    selectedTab: {
+        paddingBottom: 0,
+        borderBottomWidth: 4,
+        borderBottomColor: '#2B454E',
+        borderRadius: 2
+
+    },
+
+    nonSelectedtab: {
+        borderBottomWidth: 0
+    },
+    createAssignment: {
+        position: "absolute",
+        bottom: 10,
+        right: 10,
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#2B454E"
+    }
+
+})
