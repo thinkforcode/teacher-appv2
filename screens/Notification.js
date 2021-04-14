@@ -47,9 +47,8 @@ const Notification = (props) => {
                     renderItem={({ item, index }) => (
 
                         <View style={{ marginTop: 10, marginHorizontal: 15, flexDirection: "row",  justifyContent: "space-between" }}>
-                            <View style={{ flexDirection: "row"}}>
-
-                            {item.imageUrl == '' ?
+                            
+                           {item.imageUrl == '' ?
                                     <Image style={styles.avatar} source={{ uri: item.imageUrl }}></Image>
                                     :
                                     <View style={{ backgroundColor: '#E7398D', borderRadius: 10, width: 38, height: 38, justifyContent: 'center' }}>
@@ -57,13 +56,10 @@ const Notification = (props) => {
 
                                     </View>
                                 }
-                                <View>
-                                    <View style={{flexDirection:"row",justifyContent:"space-between"}}></View>
-                                <Text style={{ fontSize: 14, fontWeight: "bold", color: "#2B454E", paddingLeft: 10 }}>{item.name ? item.name : 'No Name'}</Text>
-                                <Text style={{ fontSize: 14, color: "#707070", paddingLeft: 10 }}>{item.messageBody} </Text>
-                                </View>
-                                
-
+                              
+                                   <View style={{flex:1}} >
+                                   <Text style={{ fontSize: 14, fontWeight: "bold", color: "#2B454E", paddingLeft: 10 }}>{item.name ? item.name : 'No Name'}</Text>
+                                <Text style={{ fontSize: 14, color: "#707070", paddingLeft: 10 }}>{item.messageBody}</Text>
                             </View>
                             <Text style={{ fontSize: 12, color: "#A3A4A7" }}>{storyDate(item.timestamp)}</Text>
 
