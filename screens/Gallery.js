@@ -1,28 +1,17 @@
 
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState, useRef } from 'react'
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Animated, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
-import { getClassCurricullamData } from '../redux/actions/mainActions';
+import { getClassCurricullamData, selectClass } from '../redux/actions/mainActions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Backbar from '../components/Backbar'
 
 const Gallery = (props) => {
 
-    const { loginData, selectedClass, getClassCurricullamData } = props
+    const { loginData, selectedClass, getClassCurricullamData, gallery } = props
     const [selectImage, setselectImage] = useState(false)
 
     const SlideInLeft = useRef(new Animated.Value(0)).current;
-
-    const [image, setImage] = useState([
-        { resourceUrl: "https://wallpapercave.com/wp/wp3190622.jpg" },
-        { resourceUrl: "https://wallpapercave.com/wp/wp3190622.jpg" },
-        { resourceUrl: "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
-        { resourceUrl: "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
-        { resourceUrl: "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
-        { resourceUrl: "https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
-    ])
-
 
 
     useEffect(() => {
@@ -35,21 +24,23 @@ const Gallery = (props) => {
         ]).start();
     })
 
+
     useEffect(() => {
         if (loginData != null) {
-            getClassCurricullamData(loginData, selectedClass, 'gallery')
+            getClassCurricullamData(loginData, selectedClass, 'gallery', 'gallery')
         }
         return () => { }
-    }, [selectedClass])
+    }, [selectClass])
+
+    console.log("gallery 44", gallery)
 
     const _selectImage = (() => {
         setselectImage(true)
-
     })
 
     return (
 
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, }}>
             <Backbar {...props} title="Gallery" screen="Gallery" />
 
             <Animated.View style={{
@@ -62,29 +53,43 @@ const Gallery = (props) => {
                     }
                 ],
             }}>
+                {gallery.length > 0 &&
+                    <View>
+                        <Text style={{ textAlign: 'center', padding: 10, fontSize: 16 }}>Access arrange of images captured during the events</Text>
+
+                        <FlatList
+                            contentContainerStyle={{ paddingBottom: 50, marginHorizontal: 3, marginTop: 3 }}
+                            data={gallery}
+                            extraData={gallery}
+                            keyExtractor={(item, index) => { return index.toString(); }}
+                            renderItem={({ item, index }) => {
+                                return (
+                                    <TouchableOpacity style={styles.itemContainer} onPress={_selectImage}>
+                                        <Image source={{ uri: item.resourceUrl }} style={styles.image} />
+                                        {  selectImage &&
+                                            <View style={{ position: "absolute", width: 16, height: 16, borderRadius: 8, backgroundColor: "#FFC800", right: 7, top: 7, alignItems: "center", justifyContent: "center" }}>
+                                                <MaterialCommunityIcons name="check" size={14} color="#2B454E" />
+                                            </View>
+                                        }
+
+                                    </TouchableOpacity>
+
+                                )
+                            }}
+                            numColumns={3} />
+
+                    </View>
+                }
 
 
-                <FlatList
-                    contentContainerStyle={{ paddingBottom: 50, marginHorizontal: 3, marginTop: 3 }}
+                {
+                    gallery.length == 0 &&
+                    <View style={{ justifyContent: 'center', alignItems: 'center', marginTop:(Dimensions.get('window').height - 100) / 2}}>
+                        <Text> No data available</Text>
+                        <Text> Tap the <MaterialCommunityIcons name="plus" size={24} color="#2B454E" /> to add Gallery </Text>
+                    </View>
 
-                    data={image}
-                    extraData={image}
-                    keyExtractor={(item, index) => { return index.toString(); }}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <TouchableOpacity style={styles.itemContainer} onPress={_selectImage}>
-                                <Image source={{ uri: item.resourceUrl }} style={styles.image} />
-                                {  selectImage &&
-                                    <View style={{ position: "absolute", width: 16, height: 16, borderRadius: 8, backgroundColor: "#FFC800", right: 7, top: 7, alignItems: "center", justifyContent: "center" }}>
-                                        <MaterialCommunityIcons name="check" size={14} color="#2B454E" />
-                                    </View>
-                                }
-
-                            </TouchableOpacity>
-
-                        )
-                    }}
-                    numColumns={3} />
+                }
 
             </Animated.View>
 
@@ -113,6 +118,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
     loginData: state.mainReducer.loginData,
     selectedClass: state.mainReducer.selectedClass,
+    gallery: state.mainReducer.gallery
 
 })
 

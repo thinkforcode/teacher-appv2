@@ -1,31 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, FlatList, SafeAreaView, Dimensions, Image, ImageBackground } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, SafeAreaView, Dimensions, Image, ImageBackground } from 'react-native'
 import { connect } from 'react-redux'
 import HomeHeader from '../components/HomeHeader'
-import { doLogOut } from '../redux/actions/authActions'
-import { getClass, getOnlineClass, selectClass, selectSection } from '../redux/actions/mainActions';
+import { getClass, selectClass, selectSection } from '../redux/actions/mainActions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { curricullumData } from '../classData.js'
-import { deletePost, getStory, like, createStories, retreiveMore, gotoStory } from '../redux/actions/storyActions'
-
-
-
-
 
 
 const Assignment = (props) => {
     const [isClassModal, setIsClassModal] = useState(false)
     const [isSectionModal, setIsSectionModal] = useState(false)
 
-    const [curricullumSize, setCurricullumSize] = useState(4)
-    const [curricullum, setCurricullum] = useState(curricullumData)
     const [showAssignment, setShowAssignment] = useState(true)
     const [showSubmission, setshowSubmission] = useState(false)
 
 
-
-
-    const { getClass, selectClass, loginData, standard, sections, selectedClass, selectSection, getStory, stories, onlineClass, getOnlineClass } = props
+    const { getClass, selectClass, loginData, standard, sections, selectedClass, selectSection, } = props
 
     useEffect(() => {
         if (loginData != null) {
@@ -35,14 +25,6 @@ const Assignment = (props) => {
     }, [])
 
 
-    useEffect(() => {
-        if (loginData) {
-            var unsubscribeStory = getStory(loginData.userId, loginData.schoolId, false)
-        }
-        return () => { unsubscribeStory }
-    }, [])
-
-    console.log("stories", stories)
 
 
     const _selectClassAndSection = (standardStatus, sectionStatus, item) => {
@@ -66,29 +48,19 @@ const Assignment = (props) => {
         setIsSectionModal(sectionStatus)
     }
 
-    //Get online class
 
-    useEffect(() => {
-        if (loginData) {
-            getOnlineClass(loginData.userId, loginData.schoolId, selectedClass.standard, selectedClass.section)
-        }
-        return () => { }
-    }, [selectedClass])
-
-    console.log("online class", onlineClass)
 
     const _assignment = (() => {
         setshowSubmission(false)
         setShowAssignment(true)
     })
+
     const _submission = (() => {
         console.log('show')
         setShowAssignment(false)
         setshowSubmission(true)
 
     })
-
-
 
 
     const renderHeader = () => {
@@ -98,7 +70,7 @@ const Assignment = (props) => {
                     <TouchableOpacity style={{ alignItems: "center" }} onPress={() => { _assignment() }}  >
                         <Text style={styles.tabText}>Assignments</Text>
                         <View style={styles.lineStyle}>
-                            {showAssignment == true &&
+                            { showAssignment &&
                                 <Text style={styles.lineText}></Text>
                             }
 
@@ -107,7 +79,7 @@ const Assignment = (props) => {
                     <TouchableOpacity style={{ alignItems: "center" }} onPress={() => { _submission() }} >
                         <Text style={styles.tabText}>Submission</Text>
                         <View style={styles.lineStyle}>
-                            {showSubmission == true &&
+                            {showSubmission &&
                                 <Text style={styles.lineText}></Text>
                             }
 
@@ -115,7 +87,7 @@ const Assignment = (props) => {
                     </TouchableOpacity>
                 </View>
 
-                {showAssignment == true &&
+                {showAssignment &&
                     <View>
                         <View style={{ marginTop: 15, marginBottom: 10, marginHorizontal: 15 }}>
                             <Text style={{ fontSize: 12, fontWeight: "500", color: "#3A9E22" }}>Recent</Text>
@@ -133,7 +105,7 @@ const Assignment = (props) => {
                     </View>
                 }
 
-                {showSubmission == true &&
+                {showSubmission &&
                     <View style={{ marginTop: 150, alignItems: "center", justifyContent: "center" }}>
                         <Text style={{ color: "#707070", fontSize: 18, fontWeight: "bold" }}>No Submissions !</Text>
 
@@ -145,13 +117,6 @@ const Assignment = (props) => {
                        <Text style={{color:"#707070",fontSize:18,fontWeight:"bold"}}>No Assignment Created</Text>
                        <Text style={{color:"#A3A4A7",fontSize:14}}>Tab to Plus button to create new assignment</Text>
                        </View> */}
-
-
-
-
-
-
-
             </View>
 
 
@@ -176,12 +141,6 @@ const Assignment = (props) => {
                 loginData={loginData} />
 
             <FlatList
-                // refreshControl={
-                //     <RefreshControl
-                //         refreshing={isRrefresh}
-                //         onRefresh={_onRefresh}
-                //     />
-                // }
                 style={{ paddingBottom: 20 }}
                 contentContainerStyle={{ backgroundColor: '#fff', }}
                 keyboardShouldPersistTaps="always"
@@ -189,12 +148,8 @@ const Assignment = (props) => {
 
                 ListHeaderComponent={renderHeader}
                 refreshing={true}
-                // onEndReached={loadMoreData}
-
                 keyExtractor={(item, index) => { index.toString() }}
             />
-
-            {/* Create Assignment */}
 
             <TouchableOpacity style={styles.createAssignment} onPress={() => { props.navigation.navigate('CreateAssignment') }}>
                 <MaterialCommunityIcons name="plus" size={28} color="#fff" />
@@ -211,16 +166,12 @@ const mapStateToProps = (state) => ({
     standard: state.mainReducer.allStandard,
     sections: state.mainReducer.allSections,
     selectedClass: state.mainReducer.selectedClass,
-
-
-
 })
 
-export default connect(mapStateToProps, { getClass, selectClass, getStory, doLogOut, selectSection, getOnlineClass })(Assignment);
+export default connect(mapStateToProps, { getClass, selectClass, selectSection })(Assignment);
 
-const screenWidth = Math.round(Dimensions.get('window').width);
+
 const styles = StyleSheet.create({
-
     midPart: {
         flexDirection: 'row',
         justifyContent: 'space-around',

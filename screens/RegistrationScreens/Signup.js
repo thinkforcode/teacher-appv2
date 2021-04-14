@@ -55,7 +55,7 @@ const Signup = (props) => {
 
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
                 <View style={styles.headerPart}>
-                    <Text style={styles.headerText}>Create</Text>
+                    <Text style={styles.headerText}>Create a new</Text>
                     <Text style={styles.headerText}>Account</Text>
                     <Text style={styles.titleText}>Enter your basic details</Text>
                 </View>
@@ -126,7 +126,7 @@ const Signup = (props) => {
 
             </ScrollView>
 
-            { authReducer.signUpLoading && <Loader />}
+            { authReducer.loading && <Loader />}
 
         </SafeAreaView>
 

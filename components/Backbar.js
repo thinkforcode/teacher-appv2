@@ -8,7 +8,10 @@ const Backbar = (props) => {
             <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
             <View style={{ backgroundColor: "#2B454E" }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 15, height: 100 }}>
-                    <TouchableOpacity style={{ borderRadius: 50, backgroundColor: '#37545E', opacity: .5 }} onPress={() => { props.navigation.goBack() }}>
+                {/* onPress={() =>
+    ifExists(item) ? handleRemoveBookmark(item) : handleAddBookmark(item)
+  } */}
+                    <TouchableOpacity style={{ borderRadius: 50, backgroundColor: '#37545E', opacity: .5 }} onPress={() => {props.screen == "Login" ? props.closeModal() : props.navigation.goBack() }}>
                         <MaterialCommunityIcons name="chevron-left" color="#fff" size={24} />
                     </TouchableOpacity>
                     <View style={{ paddingLeft: 25 }}>
@@ -18,6 +21,7 @@ const Backbar = (props) => {
 
                 </View>
             </View>
+
             { props.screen == 'AttendanceReport' &&
                 <View style={{ backgroundColor: '#37545E', height: 50, justifyContent: 'center' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>

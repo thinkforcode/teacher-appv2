@@ -113,6 +113,8 @@ const Home = (props) => {
         props.navigation.navigate(item.type, { data: item })
     }
 
+    console.log("login data 116", loginData)
+
 
 
     const renderHeader = () => {
@@ -222,18 +224,21 @@ const Home = (props) => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <HomeHeader
-                {...props}
-                selectClassAndSection={_selectClassAndSection}
-                closeModal={_closeModal}
-                isClassModal={isClassModal}
-                isSectionModal={isSectionModal}
-                classesArr={standard}
-                openClassSectionModal={_openClassAndSectionModal}
-                isSelect={true}
-                sectionsArr={sections}
-                selectedClass={selectedClass}
-                loginData={loginData} />
+            { loginData &&
+                            <HomeHeader
+                            {...props}
+                            selectClassAndSection={_selectClassAndSection}
+                            closeModal={_closeModal}
+                            isClassModal={isClassModal}
+                            isSectionModal={isSectionModal}
+                            classesArr={standard}
+                            openClassSectionModal={_openClassAndSectionModal}
+                            isSelect={true}
+                            sectionsArr={sections}
+                            selectedClass={selectedClass}
+                            loginData={loginData} />
+            }
+
 
             <FlatList
                 style={{ paddingBottom: 20 }}
@@ -283,7 +288,7 @@ const Home = (props) => {
                                     </View>
                                 </View>
                             </View>
-                            {/* {item.uid === loginData.parentId &&
+                            {/* {item.uid === loginData.teacherId &&
                             <View>
                                 <TouchableOpacity style={{ width: 30, height: 30, }} onPress={() => { showMenu(item) }}>
                                     <MaterialCommunityIcons size={22} name="dots-vertical" color="#7D7D7D" />
@@ -400,8 +405,8 @@ const Home = (props) => {
                                         <TouchableOpacity onPress={() => { likePost(item, index) }} >
                                             <AntDesign
                                                 size={22}
-                                                color={item.likedBy.indexOf(loginData.parentId) > -1 ? "red" : '#414268'}
-                                                name={item.likedBy.indexOf(loginData.parentId) > -1 ? "heart" : 'hearto'}
+                                                color={item.likedBy.indexOf(loginData.teacherId) > -1 ? "red" : '#414268'}
+                                                name={item.likedBy.indexOf(loginData.teacherId) > -1 ? "heart" : 'hearto'}
                                             />
                                         </TouchableOpacity >
 
@@ -424,11 +429,11 @@ const Home = (props) => {
                                         {item.likedBy.length > 0 &&
                                             <Text style={{ color: "#C1C6D0", fontSize: 14 }}>Like by </Text>
                                         }
-                                        {(item.likedBy.indexOf(loginData.parentId) > -1) &&
+                                        {(item.likedBy.indexOf(loginData.teacherId) > -1) &&
                                             <Text style={{ color: "#C1C6D0", fontSize: 14 }}>you</Text>
                                         }
                                         {item.likedBy.length > 0 &&
-                                            <Text style={{ color: "#C1C6D0", fontSize: 14 }}> {(item.likedBy.length > 0 && item.likedBy.indexOf(loginData.parentId) > -1) ? `and ${item.likedBy.length - 1} others` : `${item.likedBy.length} others`}</Text>
+                                            <Text style={{ color: "#C1C6D0", fontSize: 14 }}> {(item.likedBy.length > 0 && item.likedBy.indexOf(loginData.teacherId) > -1) ? `and ${item.likedBy.length - 1} others` : `${item.likedBy.length} others`}</Text>
                                         }
                                     </Text>
                                 </TouchableOpacity>
@@ -450,9 +455,9 @@ const Home = (props) => {
             />
 
 
-            {/* <TouchableOpacity onPress={() => { doLogOut() }} style={{ marginTop: 100 }}>
+            <TouchableOpacity onPress={() => { doLogOut() }} style={{ marginTop: 100 }}>
                 <Text>Logout</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
 
         </SafeAreaView>
@@ -475,6 +480,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { getClass, selectClass, getStory, doLogOut, selectSection, getOnlineClass })(Home);
 
 const screenWidth = Math.round(Dimensions.get('window').width);
+
 const styles = StyleSheet.create({
     textStyle: {
         color: '#35365F',

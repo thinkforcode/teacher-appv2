@@ -1,44 +1,42 @@
-import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING, OTP_LOADING, DO_OTP, LOG_OUT, REGISTER, USER_INTREST, } from '../actionTypes';
+import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOADING, DO_OTP, LOG_OUT, REGISTER, USER_INTREST, } from '../actionTypes';
 
 const INITIAL_STATE = {
     loginData: null,
     errorMessage: null,
-    signUpLoading: false,
-    loginLoading: false,
-    otpLoading: false,
     isLoginPage: false,
     isOtpPage: false,
     showIntroPage: false,
     isBasicDetails: false,
     isLogout: false,
     isHome: false,
-    isError:false
+    isError: false,
+    loading: false
 };
 
 export const authReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
+        case LOADING:
+            return {
+                ...state,
+                loading: action.payload
+            };
+
         case CLEAR_ERROR:
             return {
                 ...state,
                 errorMessage: action.payload,
-                signUpLoading: false,
-                isError:false
+                loading: false,
+                isError: false
             }
 
         case ON_ERROR:
             return {
                 ...state,
                 errorMessage: action.payload.errorMessage,
-                signUpLoading: false,
-                otpLoading:false,
-                isError:action.payload.isError
+                loading: false,
+                isError: action.payload.isError
             };
 
-        case LOGIN_LOADING:
-            return {
-                ...state,
-                loginLoading: action.payload
-            };
 
         case ON_DONE_SLIDER:
             return {
@@ -50,7 +48,7 @@ export const authReducer = (state = INITIAL_STATE, action) => {
         case DO_LOGIN:
             return {
                 ...state,
-                loginLoading: false,
+                loading: false,
                 loginData: action.payload,
                 isLoginPage: true
             };
@@ -59,19 +57,10 @@ export const authReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loginData: action.payload,
-                otpLoading: false,
+                loading: false,
                 isOtpPage: true
             }
         };
-
-
-
-
-        case OTP_LOADING:
-            return {
-                ...state,
-                otpLoading: action.payload
-            };
 
         case REGISTER:
             let r1 = action.payload;
@@ -79,7 +68,7 @@ export const authReducer = (state = INITIAL_STATE, action) => {
             let r3 = Object.assign({}, r1, r2);
             return {
                 ...state,
-                signUpLoading: false,
+                loading: false,
                 loginData: r3,
             };
 
@@ -91,7 +80,7 @@ export const authReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isBasicDetails: true,
-                signUpLoading: false,
+                loading: false,
                 loginData: u3,
             };
 
@@ -103,7 +92,6 @@ export const authReducer = (state = INITIAL_STATE, action) => {
                 isLogout: true,
                 loginData: null,
             }
-
 
         default:
             return state;

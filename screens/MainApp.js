@@ -3,14 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from './Home';
 import Attendance from './Attendance';
 import OnlineClass from './OnlineClass';
-import ClassCurriculum from './ClassCurriculum';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Image } from 'react-native'
 
 import AttendanceReport from './AttendanceReport';
 import Notification from './Notification';
 
-import UserIntrest from './RegistrationScreens/UserIntrest';
 import Gallery from './Gallery';
 import Assignment from './Assignment';
 import CreateAssignment from './CreateAssignment';
@@ -78,7 +76,7 @@ const MainTab = () => (
 
         <Tab.Screen
             name="Profile "
-            component={ClassCurriculum}
+            component={OnlineClass}
             options={{
                 tabBarLabel: 'Profile',
                 tabBarIcon: ({ color }) => (

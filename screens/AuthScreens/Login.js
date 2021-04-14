@@ -37,7 +37,7 @@ const Login = (props) => {
 
 
     useEffect(() => {
-        if (authReducer.loginData != null) {
+        if (authReducer.loginData!= null) {
             if (authReducer.loginData.status) {
                 props.navigation.navigate('Otp')
             }
@@ -54,9 +54,6 @@ const Login = (props) => {
         if (phoneNumber.length < 10) {
             alert("Please enter a valid mobile number !")
         }
-        // else if (!isChecked) {
-        //     alert("Please read and accept the Terms of Use & Privacy Policy to get started !")
-        // }
         else {
             onUserLogin(cc, phoneNumber)
         }
@@ -89,11 +86,13 @@ const Login = (props) => {
         });
         setCountrycode(newData)
         setText(text)
+        
     }
+
+    console.log("authReducer login", authReducer.loading)
 
 
     return (
-
         <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} keyboardShouldPersistTaps='handled' >
             <StatusBar backgroundColor="#2B454E" barStyle="light-content" />
             <Modal
@@ -101,25 +100,25 @@ const Login = (props) => {
                 visible={modalVisible}
                 onRequestClose={() => { setModalVisible(!modalVisible); }}>
                 <View >
-                    <Backbar {...props} title="Select Your Country" screen="Login" close={_closeModal} />
+                    <Backbar {...props} title="Select Your Country" screen="Login" closeModal={_closeModal} />
                 </View>
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 20, marginHorizontal:15 }}>
                     <View >
                         <TextInput
-                            style={{ margin: 10, }}
                             autoFocus={true}
                             value={text}
                             onChangeText={text => searchCountry(text)}
                             underlineColorAndroid="#DFE4EE"
-                            placeholder="Search"
+                            placeholder="Search Your Country eg. India"
                         />
                     </View>
                     <ScrollView showsHorizontalScrollIndicator={false}>
                         {
                             countrycode.map((item, index) => (
                                 <TouchableOpacity onPress={() => { selectCountry(item) }}
-                                    key={index} style={{
-                                        flexDirection: 'row', marginVertical: 10, borderBottomWidth: 1, borderBottomColor: '#DFE4EE', justifyContent: 'space-between', alignContent: 'space-between',
+                                    key={index}
+                                     style={{
+                                        flexDirection: 'row', marginVertical: 10,  borderBottomWidth: 1, borderBottomColor: '#DFE4EE', justifyContent: 'space-between', alignContent: 'space-between',
                                     }}>
                                     <View>
                                         <Text style={{ padding: 5 }}>{item.dial_code}</Text>
@@ -150,8 +149,7 @@ const Login = (props) => {
                     <Image
                         style={styles.imageStyle}
                         source={require('../../assets/images/login_illustration.png')} />
-                        {/* <Text style={{fontSize:40,fontWeight:"bold",color:"#fff",paddingLeft:15}}>Enter Your</Text>
-                        <Text style={{fontSize:40,fontWeight:"bold",color:"#fff",paddingLeft:15}}>Mobile Number</Text> */}
+
                 </View>
                 
                 <View style={{ marginHorizontal: 15, marginTop: 50 }}>
@@ -191,7 +189,7 @@ const Login = (props) => {
 
                 </View>
             </Animated.View>
-            {authReducer.loginLoading && <Loader />}
+            {authReducer.loading && <Loader />}
 
         </ScrollView>
 
@@ -209,8 +207,6 @@ export default connect(mapStateToProps, { onUserLogin })(Login);
 
 
 const styles = StyleSheet.create({
-
-
     button: {
         borderRadius: 14,
         marginTop: 70,
