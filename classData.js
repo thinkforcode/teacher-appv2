@@ -1,24 +1,38 @@
 export var userIntrestData = [
-    { title: "Astronomy", isSelect: false, },
-    { title: "Science", isSelect: false, },
-    { title: "Biology", isSelect: false, },
-    { title: "Mathematics", isSelect: false, },
-    { title: "Psychology", isSelect: false, },
-    { title: "Dancing", isSelect: false, },
+    { title: "Physics ", isSelect: false, },
+    { title: "Applied mathematics ", isSelect: false, },
+    { title: "Art & Craft ", isSelect: false, },
+    { title: "Science ", isSelect: false, },
+    { title: "Sketching ", isSelect: false, },
     { title: "Music", isSelect: false, },
-    { title: "Guitar", isSelect: false, },
+    { title: "Playing Instruments", isSelect: false, },
+    { title: "Adventure sports ", isSelect: false, },
     { title: "Football", isSelect: false, },
-    { title: "Sports", isSelect: false, },
-    { title: "Cricket", isSelect: false, },
-    { title: "Bowling", isSelect: false, },
-    { title: "Writing", isSelect: false, },
-    { title: "Gaming", isSelect: false, },
-    { title: "Computer Language", isSelect: false, },
+    { title: "Cricket ", isSelect: false, },
+    { title: "Dance", isSelect: false, },
+    { title: "Research", isSelect: false, },
+    { title: "Economics", isSelect: false, },
+    { title: "Reading", isSelect: false, },
+    { title: "Swimming", isSelect: false, },
+    { title: "Current Affairs", isSelect: false, },
     { title: "Cooking", isSelect: false, },
-    { title: "Stitching", isSelect: false, },
-    { title: "Debates", isSelect: false, }
+    { title: "Makeup", isSelect: false, },
+    { title: "Event organizing", isSelect: false, },
+    { title: "Environmental studies", isSelect: false, },
+    { title: "Branding ", isSelect: false, },
+    { title: "Marketing", isSelect: false, },
+    { title: "Finance", isSelect: false, },
+    { title: "Operations", isSelect: false, },
+    { title: "Software development", isSelect: false, },
+    { title: "Computer science", isSelect: false, },
+    { title: "Creative writing ", isSelect: false, },
+    { title: "Chemistry", isSelect: false, },
+    { title: "Accounting", isSelect: false, }
     
 ]
+
+
+
 export var curricullumData = [
     { imageUrl: require('./assets/icons/online.png'), title: "Online Class", type: "OnlineClass" },
     { imageUrl: require('./assets/icons/tutorials.png'), title: "Tutorials", type: "TutorialStackScreen" },

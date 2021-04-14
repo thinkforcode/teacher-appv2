@@ -175,7 +175,7 @@ const Login = (props) => {
                             <View style={styles.inputBox}>
                                 <TextInput 
                                     placeholderTextColor="#A3A4A7"
-                                    placeholder="Enter Your Mobile Number"
+                                    placeholder="Your 10-digit mobile number "
                                     keyboardType="number-pad"
                                     maxLength={10}
                                     onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}

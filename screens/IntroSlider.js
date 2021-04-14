@@ -159,22 +159,22 @@ const slides = [
     {
         key: 'key1',
         image: require('../assets/images/attendance.png'),
-        title: "Attendance Management \n System",
-        text: 'Enabling a face recognition attendance \n process for quick roll calling ',
+        title: "Instant Attendance",
+        text: 'Enabling an automated roll calling interface in \n order to optimize your lecture hours',
         backgroundColor: '#FFF6E2',
     },
     {
         key: 'key2',
         image: require('../assets/images/notification.png'),
-        title: "Get Notified Instantly",
-        text: 'Know when an event takes place  \n at your institute premises',
+        title: "Real- Time Notification",
+        text: 'Know when an event takes place  \n at your insititution premises',
         backgroundColor: '#E4F8FE',
     },
     {
         key: 'key3',
         image: require('../assets/images/talent.png'),
         title: "Showcase Your Talent",
-        text: 'Upload your recent research result in a closed \n social media platform',
+        text: 'Share the result of your latest researches \n or achievenents, with your teachers \n and friends.',
         backgroundColor: '#FFEFEC',
 
     },
@@ -183,15 +183,15 @@ const slides = [
         key: 'key4',
         image: require('../assets/images/student.png'),
         title: "Smartly Manage Your \n Students ",
-        text: 'Integrating all your regular management \n efforts',
+        text: 'Integrating and easing your regular class \n management efforts',
         backgroundColor: '#D9FDEA',
     },
 
     {
         key: 'key5',
         image: require('../assets/images/management.png'),
-        title: "Enhanced Class Management",
-        text: 'Looking into automating and recording your \n class activities',
+        title: "Empowering classrooms",
+        text: 'Initiating a smart teaching modules in \n your regular classes.',
         backgroundColor: '#EAE4FC',
 
     },
