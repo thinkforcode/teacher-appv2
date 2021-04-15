@@ -2,8 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { View, Text, TouchableOpacity, Image, StyleSheet, TextInput, ScrollView, FlatList, Vibration, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import HomeHeader from '../components/HomeHeader'
-import { doLogOut } from '../redux/actions/authActions'
-import { getClass, getStudents, gotoAttendanceReport, selectClass, selectSection, takeAttendance,_searchStudent } from '../redux/actions/mainActions';
+import { getClass, getStudents, gotoAttendanceReport, selectClass, selectSection, takeAttendance } from '../redux/actions/mainActions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { mothsData } from '../functions/timeformat'
 
@@ -121,9 +120,6 @@ const Attendance = (props) => {
     }
      
 
-     console.log("students", students)
-
-    console.log("loginData ln 84", loginData)
 
     const renderHeader = () => {
         return (

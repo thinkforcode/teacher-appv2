@@ -27,8 +27,19 @@ export var userIntrestData = [
     { title: "Computer science", isSelect: false, },
     { title: "Creative writing ", isSelect: false, },
     { title: "Chemistry", isSelect: false, },
-    { title: "Accounting", isSelect: false, }
-    
+    { title: "Accounting", isSelect: false, }  
+]
+
+export var settingData = [
+    { navOptionThumb: 'account-edit-outline', title: 'Edit Profile', subTitle: 'Name, Profile, email', screen: 'EditProfile' },
+    { navOptionThumb: 'help-circle-outline', title: 'Help center', subTitle: 'Help center, contact us, privacy & policy', screen: 'Help' },
+    { navOptionThumb: 'bell', title: 'Notification', subTitle: 'List of notifications', screen: 'Notification' },
+    { navOptionThumb: 'help-circle-outline', title: 'Choose your interest', subTitle: 'Technology, Sports, Music, Gaming, Cooking etc', screen: 'UserIntrest' },
+    { navOptionThumb: 'folder-star', title: 'Story Archives', subTitle: 'Go through all your uploads', screen: 'UserIntrest' },
+    { navOptionThumb: 'note', title: 'Your Notes', subTitle: 'Manage your personal work', screen: 'UserIntrest' },
+    { navOptionThumb: 'account-box', title: 'Contact Us', subTitle: 'Create ticket, Contact us ', screen: 'ContactUs' },
+    { navOptionThumb: 'logout', title: 'Logout', subTitle: 'Logout from the app', screen: 'Logout' },
+
 ]
 
 
@@ -50,9 +61,4 @@ export var curricullumData = [
 export const StoryPreviewOptions = [
     { navOptionThumb: 'alert', title: 'Find Support or Report post', subTitle: 'I am concerned about this post.', screen: 'ReportAlert' },
     { navOptionThumb: 'link-variant', title: 'Copy link', subTitle: 'Copy post link', screen: 'CopyLink' },
-    // { navOptionThumb: 'bell', title: 'Notification', subTitle: 'List of notifications', screen: 'Notification' },
-    // { navOptionThumb: 'help-circle-outline', title: 'Choose your interest', subTitle: 'Technology, Sports, Music, Gaming, Cooking etc', screen: 'EditIntrest' },
-    // { navOptionThumb: 'account-box', title: 'Contact Us', subTitle: 'Create ticket, Contact us ', screen: 'ContactUs' },
-    // { navOptionThumb: 'logout', title: 'Logout', subTitle: 'Logout from the app', screen: 'Logout' }
-
 ]

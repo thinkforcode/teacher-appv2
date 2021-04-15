@@ -1,12 +1,11 @@
 import { mergeDataInLocal, mergeDataInshowIntroPage, clearLocalStorage } from "../../functions/localSorage"
 import { enternationLoginEndPoint, loginEndPoint } from "../api"
 import auth from '@react-native-firebase/auth';
-import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOGIN_LOADING, DO_OTP, UPDATE_LOCAL_DATA, OTP_LOADING, LOG_OUT, SIGNUP_LOADING, REGISTER, USER_INTREST } from '../actionTypes';
+import { DO_LOGIN, ON_DONE_SLIDER, CLEAR_ERROR, ON_ERROR, LOADING,  DO_OTP, LOG_OUT,  REGISTER, USER_INTREST } from '../actionTypes';
 import { store } from "../store";
 import { version } from '../../package.json';
 import firestore from '@react-native-firebase/firestore';
 import * as RootNavigation from '../../RootNavigation.js';
-
 
 export const onDoneIntroSlider = () => {
     return async (dispatch) => {
@@ -14,17 +13,18 @@ export const onDoneIntroSlider = () => {
             dispatch({ type: ON_DONE_SLIDER, payload: true })
             mergeDataInshowIntroPage({ showIntroPage: true })
         }
-        catch (e) { }
+        catch (e) {
+
+         }
     }
 }
-
 
 //Login functionality
 export const onUserLogin = (code, mobileNumber) => {
     return async (dispatch) => {
         try {
             dispatch({ type: CLEAR_ERROR, payload: null })
-            dispatch({ type: LOGIN_LOADING, payload: true })
+            dispatch({ type: LOADING, payload: true })
             if (code == "+91") {
                 fetch(loginEndPoint, {
                     method: "POST",
@@ -32,7 +32,8 @@ export const onUserLogin = (code, mobileNumber) => {
                     body: JSON.stringify({ mobileNumber: `${code}${mobileNumber}`, type: 'teachers' })
                 }).then((response) => response.json()).then((confirmResult) => {
                     if (confirmResult.status) {
-                        confirmResult['mobileNumber'] = `${code}${mobileNumber}`
+                        confirmResult['mobileNumber'] = `${mobileNumber}`,
+                        confirmResult['countryCode'] = code
                         auth().signInWithCustomToken(confirmResult.token).then((res) => {
                             dispatch({ type: DO_LOGIN, payload: confirmResult })
                         }).catch((err) => {
@@ -41,6 +42,7 @@ export const onUserLogin = (code, mobileNumber) => {
 
                     } else {
                         alert("Please talk to your school to, login with Skugal!")
+                        dispatch({ type: LOADING, payload: false })
                     }
                 }).catch((err) => {
                     dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } })
@@ -89,8 +91,7 @@ export const verifyOtp = (code, deviceToken) => {
                         dispatch({ type: ON_ERROR, payload: { isError: true, errorMessage: 'Incorrect OTP you have entered !' } })
                     }
                     else {
-                        dispatch({ type: OTP_LOADING, payload: true })
-                        console.log("res.data().isBasicDetails", res.data().isBasicDetails)
+                        dispatch({ type: LOADING, payload: true })
                         if (!res.data().isBasicDetails) {
                             ref.set({
                                 teacherId: teacherId,
@@ -104,6 +105,7 @@ export const verifyOtp = (code, deviceToken) => {
                                 dispatch({ type: DO_OTP, payload: { mobileNumber: userInfo.loginData.mobileNumber, isBasicDetails: false, isOtpVerified: true, userId:userId, schoolId:schoolId, teacherId: teacherId } })
                                 mergeDataInLocal({
                                     mobileNumber: userInfo.loginData.mobileNumber,
+                                    countryCode:userInfo.loginData.countryCode,
                                     teacherId: teacherId,
                                     isBasicDetails: false,
                                     deviceToken: deviceToken,
@@ -123,7 +125,7 @@ export const verifyOtp = (code, deviceToken) => {
                                     dispatch({ type: DO_OTP, payload: teacher })
                                 }).catch((e) => { })
                             } else {
-                                dispatch({ type: DO_OTP, payload: { mobileNumber: userInfo.loginData.mobileNumber, isOtpVerified: true,  userId:userId, schoolId:schoolId,  teacherId: teacherId } })
+                                dispatch({ type: DO_OTP, payload: { mobileNumber: userInfo.loginData.mobileNumber, countryCode:userInfo.loginData.countryCode, isOtpVerified: true,  userId:userId, schoolId:schoolId,  teacherId: teacherId } })
                             }
                         }
                     }
@@ -138,27 +140,23 @@ export const verifyOtp = (code, deviceToken) => {
 }
 
 export const onUserRegister = (data) => {
-    console.log("onUserRegister data is", data)
     return async (dispatch) => {
         try {
             data['isBasicDetails'] = true
             let userInfo = store.getState().mainReducer.loginData
-            console.log("userInfo", userInfo)
             dispatch({ type: CLEAR_ERROR, payload: null })
-            dispatch({ type: SIGNUP_LOADING, payload: true })
+            dispatch({ type: LOADING, payload: true })
             firestore().collection('users').doc(userInfo.userId).collection('schools').doc(userInfo.schoolId).collection('teachers').doc(userInfo.teacherId).set(data, { merge: true }).then((r) => {
                 dispatch({ type: REGISTER, payload: data })
-                dispatch({ type: SIGNUP_LOADING, payload: false })
+                dispatch({ type: LOADING, payload: false })
                 dispatch({ type: CLEAR_ERROR, payload: null })
                 mergeDataInLocal(data)
                 RootNavigation.navigate('UserIntrest');
             }).catch((e) => {
-                console.log("error", e)
                 dispatch({ type: 'ON_ERROR', payload: { isError: true, errorMessage: 'Error to update your details !' } })
             })
         }
         catch (err) {
-            console.log("error", err)
             dispatch({ type: 'ON_ERROR', payload: { isError: true, errorMessage: 'Error to update your details !' } })
         }
     }
@@ -171,7 +169,7 @@ export const onUserIntrest = (data) => {
             console.log("onUserIntrest userInfo", userInfo)
 
             dispatch({ type: CLEAR_ERROR, payload: null })
-            dispatch({ type: SIGNUP_LOADING, payload: true })
+            dispatch({ type: LOADING, payload: true })
             let localD = []
             let docRef = firestore().collection('users').doc(userInfo.userId).collection('schools').doc(userInfo.schoolId).collection('teachers').doc(userInfo.teacherId)
 
@@ -183,7 +181,7 @@ export const onUserIntrest = (data) => {
                         intrests: firestore.FieldValue.arrayUnion(d)
                     }).then((r) => {
                         dispatch({ type: USER_INTREST, payload: localD })
-                        dispatch({ type: SIGNUP_LOADING, payload: false })
+                        dispatch({ type: LOADING, payload: false })
                         dispatch({ type: CLEAR_ERROR, payload: null })
                         mergeDataInLocal({ intrests: localD, isBasicDetails: true })
                     }).catch((e) => {
@@ -203,6 +201,7 @@ export const onUserIntrest = (data) => {
 
 //Logout from teacher app
 export const doLogOut = () => {
+    console.log("logout here")
     return async (dispatch) => {
         try {
             dispatch({ type: LOG_OUT, payload: null })

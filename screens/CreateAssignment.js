@@ -9,10 +9,6 @@ import { curricullumData } from '../classData.js'
 import { deletePost, getStory, like, createStories, retreiveMore, gotoStory } from '../redux/actions/storyActions'
 
 
-
-
-
-
 const CreateAssignment = (props) => {
     const [isClassModal, setIsClassModal] = useState(false)
     const [isSectionModal, setIsSectionModal] = useState(false)

@@ -22,11 +22,14 @@ const INITIAL_STATE = {
     notTakenAttendanceCount:0,
     absentcount:0,
     presentCount:0,
-    selectedStudents:[]
+    selectedStudents:[],
+    gallery:[],
+    assignment:[],
+    test:[],
 };
 
 export const mainReducer = (state = INITIAL_STATE, action) => {
-    console.log("action.payload,", action.payload)
+    console.log("action.payload,", action.payload, action.payload)
 
     switch (action.type) {
 
@@ -93,7 +96,7 @@ export const mainReducer = (state = INITIAL_STATE, action) => {
         case GET_CLASSES_DATA:
             return {
                 ...state,
-                classData: action.payload,
+                [action.payload.type]: action.payload.classData,
                 isLoading: false
             };
 

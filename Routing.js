@@ -17,7 +17,7 @@ const Routing = (props) => {
   const [loginData, setLoginData] = useState(null)
   const [introPageStatus, setIntroPageStatus] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const {updateUserData} = props
+  const { updateUserData } = props
 
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Routing = (props) => {
         const introData = await AsyncStorage.getItem("showIntroPage");
         setIntroPageStatus(JSON.parse(introData))
         setIsLoading(false)
-        if (data!= null) {
+        if (data != null) {
           updateUserData(JSON.parse(data))
           setLoginData(JSON.parse(data))
         }
@@ -39,7 +39,7 @@ const Routing = (props) => {
       }
       catch (e) {
         setIsLoading(false)
-       }
+      }
     };
 
     bootstrapAsync();
@@ -51,9 +51,9 @@ const Routing = (props) => {
 
 
   return (
-    <NavigationContainer ref = {navigationRef} >
+    <NavigationContainer ref={navigationRef} >
       {
-       isLoading ? <Loader />: introPageStatus == null ? (<IntroSlider />) : loginData != null ? !loginData.isBasicDetails ? (<RegisterStack />) : loginData.isBasicDetails ? (<MainAppNavigator />) : (<AuthStack />) : (<AuthStack />)
+        isLoading ? <Loader /> : introPageStatus == null ? (<IntroSlider />) : loginData != null ? !loginData.isBasicDetails ? (<RegisterStack />) : loginData.isBasicDetails ? (<MainAppNavigator />) : (<AuthStack />) : (<AuthStack />)
       }
     </NavigationContainer>
   );
@@ -63,9 +63,9 @@ const Routing = (props) => {
 const mapStateToProps = (state) => {
   return {
     authReducer: state.authReducer,
-  }; 
+  };
 };
 
-export default connect(mapStateToProps, {updateUserData })(Routing);
+export default connect(mapStateToProps, { updateUserData })(Routing);
 
 

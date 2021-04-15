@@ -43,12 +43,14 @@ const Otp = (props) => {
                 setOtpVisible(false)
             }
             else {
-                setSeconds(seconds => seconds - 1);
+                setSeconds(seconds - 1);
             }
         }, 1000);
 
         return () => clearInterval(interval);
     }, [seconds]);
+
+    console.log("seconds", seconds)
 
 
     useEffect(() => {
@@ -70,7 +72,7 @@ const Otp = (props) => {
     const _resendOtp = () => {
         setSeconds(30)
         setOtpVisible(true)
-        onUserLogin(authReducer.loginData.mobileNumber)
+        onUserLogin(authReducer.loginData.countryCode, authReducer.loginData.mobileNumber)
     }
 
     useEffect(() => {
@@ -143,18 +145,16 @@ const Otp = (props) => {
             } else {
             }
         }
-
         getDeviceToken();
     }, [])
 
+
+    console.log("authReducer ", authReducer )
 
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: "#fff" }} keyboardShouldPersistTaps='handled' >
             <KeyboardAvoidingView behavior="padding" >
-                {/* <StatusBar backgroundColor="#fff" barStyle="light-content" /> */}
-
-
                 <Animated.View style={{
                     transform: [
                         {
@@ -166,7 +166,6 @@ const Otp = (props) => {
                     ],
                 }}>
 
-
                     <View style={styles.headerText}>
                         <TouchableOpacity onPress={() => { props.navigation.goBack() }} style={styles.dropDownStyle} >
                             <MaterialCommunityIcons name="chevron-left" color="#707070" size={18} />
@@ -174,7 +173,7 @@ const Otp = (props) => {
                         <Text style={styles.titleText}>Enter the-6 digit verification </Text>
                         <Text style={styles.titleTextTwo}>code sent to your number</Text>
 
-                        {/* <Text style={{ textAlign: 'center', color: '#414268', paddingTop: 10 }}>{userReducer.loginData.mobileNumber}</Text> */}
+                        
                     </View>
 
                     <View style={styles.otpSection}>
@@ -235,8 +234,6 @@ const Otp = (props) => {
                                 <Text style={{ fontSize: 14, fontWeight: "500", color: "#263238" }}>Resend code in 00:{seconds}</Text>
                             </View> :
                             <View style={{ alignItems: "center" }}>
-
-                                {/* Otp error */}
                                 {
                                  authReducer.isError &&
                                     <Text style={{fontSize:16,color:"#D92410",fontWeight:"500",marginTop:50}}>
@@ -244,16 +241,12 @@ const Otp = (props) => {
                                 </Text>
                                 }
 
-                       
-
-                                <TouchableOpacity onPress={_resendOtp} style={{ marginTop: 20 }}>
+                                <TouchableOpacity onPress={()=>{_resendOtp()}} style={{ marginTop: 20 }}>
                                     <Text style={{ color: "#263238", fontSize: 14, fontWeight: '500' }}>Resend OTP</Text>
                                 </TouchableOpacity>
                             </View>
 
                     }
-
-
 
                     <View style={{ marginHorizontal: 30, }}>
                         <CustomButton {...props} button={styles.button} _doAction={enterOtp} buttonText={styles.buttonText} title="Verify OTP" screen='Otp' />
@@ -261,7 +254,7 @@ const Otp = (props) => {
 
                 </Animated.View>
 
-                {authReducer.otpLoading && <Loader />}
+                {authReducer.loading && <Loader />}
 
             </KeyboardAvoidingView>
         </ScrollView>

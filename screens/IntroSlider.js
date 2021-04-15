@@ -166,7 +166,7 @@ const slides = [
     {
         key: 'key2',
         image: require('../assets/images/notification.png'),
-        title: "Real- Time Notification",
+        title: "Real Time Notification",
         text: 'Know when an event takes place  \n at your insititution premises',
         backgroundColor: '#E4F8FE',
     },
@@ -174,7 +174,7 @@ const slides = [
         key: 'key3',
         image: require('../assets/images/talent.png'),
         title: "Showcase Your Talent",
-        text: 'Share the result of your latest researches \n or achievenents, with your teachers \n and friends.',
+        text: 'Share the result of your latest researches \n or achievenents, with your students \n and colleague.',
         backgroundColor: '#FFEFEC',
 
     },

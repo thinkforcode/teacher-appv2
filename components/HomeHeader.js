@@ -23,7 +23,7 @@ const HomeHeader = (props) => {
                         </View>
 
                         <TouchableOpacity style={{ width: 26, height: 26, backgroundColor: '#fff', borderRadius: 10, justifyContent: 'center' }} onPress={() => { props.navigation.navigate('Notification') }}>
-                            <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} col or={"#FFC800"} />
+                            <MaterialCommunityIcons name="bell" size={18} style={{ textAlign: 'center' }} color={"#FFA000"} />
                         </TouchableOpacity>
                     </View>
                 </View>

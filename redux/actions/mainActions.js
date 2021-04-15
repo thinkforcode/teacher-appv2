@@ -48,7 +48,6 @@ export const getClass = (userId, schoolId, teacherId) => {
           return sections[key]
         });
         dispatch({ type: GET_CLASSES, payload: { standard: standardArr, sections: sectionArr } })
-        console.log("standardArr, sectionArr", standardArr, sectionArr);
       }).catch(e => {
         console.log(e)
       })
@@ -64,7 +63,6 @@ export const getClass = (userId, schoolId, teacherId) => {
 
 //Get list of children
 export const getStudents = (userId, schoolId, standard, section) => {
-  console.log("userId, schoolId, standard, section", userId, schoolId, standard, section)
   return async (dispatch) => {
     try {
       firestore().collection('users').doc(userId).collection('schools').doc(schoolId).collection("classes").doc(standard).collection('sections').doc(section).collection('students')
@@ -138,7 +136,6 @@ export const getAttendanceReport = (userId, schoolId, studentUid) => {
           [formatDate2(v.timestamp * 1000)]: v.status ? 
           { selected: true,
             marked: false,
-            // selectedColor: '#3CB833', 
             customStyles: {
             container: {
               backgroundColor: '#3CB833',
@@ -153,7 +150,6 @@ export const getAttendanceReport = (userId, schoolId, studentUid) => {
             }
           }
         } : v.attendanceTaken || v.attendanceTaken === undefined ? { selected: true, marked: false,
-          //  selectedColor: '#FFC800',
            customStyles: {
             container: {
               backgroundColor: '#FFC800',
@@ -167,7 +163,6 @@ export const getAttendanceReport = (userId, schoolId, studentUid) => {
             }
           }
            } : { selected: true, marked: false, 
-            // selectedColor: '#F44336',
            customStyles: {
             container: {
               backgroundColor: '#F44336',
@@ -215,7 +210,6 @@ export const selectSection = (section) => {
 }
 
 //Individual students attndance report 
-
  export const gotoAttendanceReport = (item) => {
    return async (dispatch) =>{
      try {
@@ -223,7 +217,6 @@ export const selectSection = (section) => {
       RootNavigation.navigate('AttendanceReport');
      }
      catch(e){
-
      }
 
    }
@@ -232,18 +225,19 @@ export const selectSection = (section) => {
 
 
 // Get class Curriculam Data
-export const getClassCurricullamData = (loginData, selectedClass, screen) => {
-  console.log("loginData, selectedClass, screen", loginData, selectedClass, screen)
+export const getClassCurricullamData = (loginData, selectedClass, cName, type) => {
   return async (dispatch) => {
     try {
+      let isPost = true
       let ref = firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('classes').doc(selectedClass.standard)
-        .collection('sections').doc(selectedClass.section).collection(screen)
+        .collection('sections').doc(selectedClass.section).collection(cName)
       
       dispatch({ type: CLEAR_ERROR, payload: null })
       dispatch({ type: LOADING, payload: true })
 
       const d = [];
-      ref.orderBy('createdAt', 'desc').limit(10).onSnapshot({ includeMetadataChanges: false }, (snapshot) => {
+      ref.orderBy('creationTime', 'desc').limit(10).onSnapshot({ includeMetadataChanges: false }, (snapshot) => {
+        console.log("snapshot", snapshot)
         
         if (!snapshot.empty) {
           let lastDocument = snapshot.docs[snapshot.docs.length - 1]
@@ -266,9 +260,8 @@ export const getClassCurricullamData = (loginData, selectedClass, screen) => {
               dispatch({ type: LOADING, payload: true })
             }
           });
-          console.log("Gallery",d)
-          
-          dispatch({ type: GET_CLASSES_DATA, payload: { classData: d, lastVisible: lastDocument } })
+          console.log("Gallery", d)
+          dispatch({ type: GET_CLASSES_DATA, payload: {type:type, classData: d, lastVisible: lastDocument } })
           dispatch({ type: LOADING, payload: false })
 
         }
@@ -421,10 +414,8 @@ export const getActivityData = (loginData, collectionname, actionType) => {
         console.log('activity Data', dt)
         dispatch({ type: actionType, payload: dt })
       })
-
     }
     catch (e) {
-
     }
   }
 }
@@ -444,4 +435,29 @@ export const getActivityData = (loginData, collectionname, actionType) => {
       return itemData.indexOf(textData) > -1;
   });
   this.setState({ student: newData, text: text, });
+}
+
+//Update teacher profile
+export const updateProfile = (data, id) => {
+  console.log("data, id",data, id)
+  return async (dispatch) => {
+    try {
+      dispatch({ type: 'LOADING', payload: true })
+        firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('teachers').doc(loginData.teacherId).set(data, { merge: true }).then((r) => {
+          console.log('res',r)
+        dispatch({ type: 'EDIT_PROFILE', payload: data })
+        dispatch({ type: 'LOADING', payload: false })
+        mergeDataInLocal(data)
+        Toast('Your Profile has been successfully updated!')
+        RootNavigation.navigate('Settings');
+      }).catch((e) => {
+        alert("Technical error! Please update after some times.")
+        dispatch({ type: 'LOADING', payload: false })
+      })
+    }
+    catch (err) {
+      alert("Technical error! Please update after some times.")
+      dispatch({ type: 'LOADING', payload: false })
+    }
+  }
 }

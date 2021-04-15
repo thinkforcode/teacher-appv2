@@ -6,7 +6,6 @@ import Loader from '../../components/Loader';
 import { onUserIntrest } from '../../redux/actions/authActions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const width = Dimensions.get('window').width
 
 const UserIntrest = (props) => {
     const [selectedData, setSelectedData] = useState([])
@@ -66,7 +65,7 @@ const UserIntrest = (props) => {
                 </View>
             </ScrollView>
 
-            { authReducer.signUpLoading && <Loader />}
+            { authReducer.loading && <Loader />}
 
         </View>
     )
