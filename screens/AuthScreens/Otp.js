@@ -170,9 +170,8 @@ const Otp = (props) => {
                         <TouchableOpacity onPress={() => { props.navigation.goBack() }} style={styles.dropDownStyle} >
                             <MaterialCommunityIcons name="chevron-left" color="#707070" size={18} />
                         </TouchableOpacity>
-                        {/*         //enter the 6 digit verification code sent to your  */}
-                        <Text style={styles.titleText}>Enter 6 digit verification </Text>
-                        <Text style={styles.titleTextTwo}>code sent to your number {authReducer.loginData.mobileNumber!=undefined ? authReducer.loginData.mobileNumber:''}</Text>
+                        <Text style={styles.titleText}>Enter the-6 digit verification </Text>
+                        <Text style={styles.titleTextTwo}>code sent to your number</Text>
 
                         
                     </View>

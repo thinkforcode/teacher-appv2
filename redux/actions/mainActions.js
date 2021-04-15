@@ -330,17 +330,22 @@ export const getIndividualData = (loginData, studentUid, screen) => {
 
 //Get notifications
 export const getNotification = (loginData) => {
+
   return async (dispatch) => {
     try {
       dispatch({ type: LOADING, payload: true })
-      firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('teachers').doc(loginData.teacherId).collection('notifications').where('visibility', '==', true).orderBy('timestamp', 'desc').limit(10).get().then((r) => {
+      firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('teachers').doc(loginData.teacherId).collection('notifications')
+      .where('visibility', '==', true).orderBy('timestamp', 'desc').limit(10).get().then((r) => {
+        console.log('responce',r)
         let d = []
         let lastDocument = r.docs[r.docs.length - 1];
         r.forEach((doc) => {
           doc.data()['isSelect'] = false
           doc.data()['id'] = doc.id
           d.push(doc.data())
+        
         })
+       
         dispatch({ type: GET_NOTIFICATION, payload: d })
       }).catch((e) => {
         dispatch({ type: LOADING, payload: false })
@@ -415,3 +420,19 @@ export const getActivityData = (loginData, collectionname, actionType) => {
   }
 }
 
+    // Search Student
+  export const _searchStudent = (text) => {
+  console.log("text",text)
+  const newData = this.state.searchData.filter(function (item) {
+      if (item.studentName) {
+          let d = item.studentName
+          var itemData = d.trim().toUpperCase()
+          var textData = text.toUpperCase();
+      }
+      else {
+          ''.toUpperCase();
+      }
+      return itemData.indexOf(textData) > -1;
+  });
+  this.setState({ student: newData, text: text, });
+}

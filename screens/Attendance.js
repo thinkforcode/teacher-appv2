@@ -12,6 +12,9 @@ const Attendance = (props) => {
     const [currentMonth, setCurrentMonth] = useState([])
     const [isClassModal, setIsClassModal] = useState(false)
     const [isSectionModal, setIsSectionModal] = useState(false)
+    const [filterData, setFilterData] = useState([])
+    const [masterData, setMasterData] = useState([])
+    const [search, setSearch] = useState('')
 
     const scrollRef = useRef()
 
@@ -19,12 +22,15 @@ const Attendance = (props) => {
 
     const { getClass, selectClass, gotoAttendanceReport, takeAttendance, isTakenAttendance, selectSection, loginData, standard, sections, selectedClass, getStudents, students, totalStudents, totalAbsent, totalPresent } = props
 
+    
+
     useEffect(() => {
         let m = mothsData(new Date())
         setCurrentMonth(m)
         return () => {
         }
     }, [])
+
 
     useEffect(() => {
         if (loginData != null) {
@@ -86,6 +92,37 @@ const Attendance = (props) => {
         takeAttendance(status, item, index)
 
     }
+        
+
+    const searchFilter = (text)=>
+    {
+        // if(text)
+        // {
+        //     const newData = students.filter((item)=>
+        //     {
+        //         console.log("students1", item.studentName)
+        //         const itemData = item.studentName ?
+        //          item.studentName.toUpperCase()
+        //           : ''.toUpperCase();
+        //           const textData = text.toUpperCase();
+        //           return itemData.indexOf(textData) > -1;
+        //     })
+        //     setFilterData(newData);
+        //     setSearch(text);
+        // } else{
+        //     setFilterData(students)
+        //     setSearch(text);
+        // }
+        _searchStudent(text)
+        
+    }
+    useEffect(() => {
+        
+        setFilterData(students)
+        console.log('filterData',filterData)
+        return () => {
+        }
+    }, [])   
 
 
     const renderHeader = () => {
@@ -94,8 +131,10 @@ const Attendance = (props) => {
                 <View style={styles.sectionStyle}>
                     <TextInput
                         style={{ flex: 1, paddingLeft:16 }}
+                        value={search}
                         placeholder="Search Student By name"
                         underlineColorAndroid="transparent"
+                        onChangeText={(text)=>searchFilter(text)}
                     />
                     <MaterialCommunityIcons name="magnify" size={18} color="#707070" style={styles.searchIcon} />
 

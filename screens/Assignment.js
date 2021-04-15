@@ -5,6 +5,8 @@ import HomeHeader from '../components/HomeHeader'
 import { getClass, selectClass, selectSection } from '../redux/actions/mainActions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { curricullumData } from '../classData.js'
+import FloatingButton from '../components/FloatingButton';
+
 
 
 const Assignment = (props) => {
@@ -61,6 +63,10 @@ const Assignment = (props) => {
         setshowSubmission(true)
 
     })
+
+    const _doAction = () => {
+        props.navigation.navigate('CreateAssignment') 
+    }
 
 
     const renderHeader = () => {
@@ -151,9 +157,11 @@ const Assignment = (props) => {
                 keyExtractor={(item, index) => { index.toString() }}
             />
 
+            <FloatingButton {...props} iconName = "plus" doAction = {_doAction} />
+{/* 
             <TouchableOpacity style={styles.createAssignment} onPress={() => { props.navigation.navigate('CreateAssignment') }}>
                 <MaterialCommunityIcons name="plus" size={28} color="#fff" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
         </SafeAreaView>
     )
@@ -207,16 +215,5 @@ const styles = StyleSheet.create({
     nonSelectedtab: {
         borderBottomWidth: 0
     },
-    createAssignment: {
-        position: "absolute",
-        bottom: 10,
-        right: 10,
-        width: 56,
-        height: 56,
-        borderRadius: 28,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#2B454E"
-    }
 
 })

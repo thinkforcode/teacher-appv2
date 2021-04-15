@@ -13,9 +13,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Autolink from 'react-native-autolink'
 
 
+
 import { deletePost, getStory, like, createStories, retreiveMore, gotoStory } from '../redux/actions/storyActions'
 
 import { storyDate } from '../functions/timeformat'
+import FloatingButton from '../components/FloatingButton'
 
 const Home = (props) => {
     const [isClassModal, setIsClassModal] = useState(false)
@@ -454,12 +456,14 @@ const Home = (props) => {
                 )}
                 keyExtractor={(item, index) => index.toString()}
             />
+                        <FloatingButton {...props} iconName = "pencil" />
 
 
-            <TouchableOpacity onPress={() => { doLogOut() }} style={{ marginTop: 100 }}>
+
+            {/* <TouchableOpacity onPress={() => { doLogOut() }} style={{ marginTop: 100 }}>
                 <Text>Logout</Text>
             </TouchableOpacity>
-
+ */}
 
         </SafeAreaView>
     )
