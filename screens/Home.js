@@ -14,6 +14,7 @@ import Autolink from 'react-native-autolink'
 
 
 import { deletePost, getStory, like, createStories, retreiveMore, gotoStory } from '../redux/actions/storyActions'
+
 import { storyDate } from '../functions/timeformat'
 
 const Home = (props) => {
