@@ -64,6 +64,8 @@ const Attendance = (props) => {
         }
       }, [])
 
+    
+
 
     const _openClassAndSectionModal = (standardStatus, sectionStatus) => {
         setIsClassModal(standardStatus)
@@ -116,13 +118,7 @@ const Attendance = (props) => {
         _searchStudent(text)
         
     }
-    useEffect(() => {
-        
-        setFilterData(students)
-        console.log('filterData',filterData)
-        return () => {
-        }
-    }, [])   
+     
 
 
     const renderHeader = () => {

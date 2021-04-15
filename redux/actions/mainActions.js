@@ -441,3 +441,28 @@ export const getActivityData = (loginData, collectionname, actionType) => {
   });
   this.setState({ student: newData, text: text, });
 }
+
+//Update teacher profile
+export const updateProfile = (data, id) => {
+  console.log("data, id",data, id)
+  return async (dispatch) => {
+    try {
+      dispatch({ type: 'LOADING', payload: true })
+        firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('teachers').doc(loginData.teacherId).set(data, { merge: true }).then((r) => {
+          console.log('res',r)
+        dispatch({ type: 'EDIT_PROFILE', payload: data })
+        dispatch({ type: 'LOADING', payload: false })
+        mergeDataInLocal(data)
+        Toast('Your Profile has been successfully updated!')
+        RootNavigation.navigate('Settings');
+      }).catch((e) => {
+        alert("Technical error! Please update after some times.")
+        dispatch({ type: 'LOADING', payload: false })
+      })
+    }
+    catch (err) {
+      alert("Technical error! Please update after some times.")
+      dispatch({ type: 'LOADING', payload: false })
+    }
+  }
+}

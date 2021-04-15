@@ -201,6 +201,7 @@ export const onUserIntrest = (data) => {
 
 //Logout from teacher app
 export const doLogOut = () => {
+    console.log("logout here")
     return async (dispatch) => {
         try {
             dispatch({ type: LOG_OUT, payload: null })
