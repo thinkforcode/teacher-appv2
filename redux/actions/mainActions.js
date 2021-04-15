@@ -17,6 +17,7 @@ export const updateUserData = (data) => {
   }
 }
 
+
 //get list of classes
 export const getClass = (userId, schoolId, teacherId) => {
   return async (dispatch) => {
