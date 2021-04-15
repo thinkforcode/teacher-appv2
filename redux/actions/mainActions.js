@@ -228,6 +228,7 @@ export const selectSection = (section) => {
 export const getClassCurricullamData = (loginData, selectedClass, cName, type) => {
   return async (dispatch) => {
     try {
+      console.log("getClassCurricullamData called",  loginData, selectedClass, cName, type)
       let isPost = true
       let ref = firestore().collection('users').doc(loginData.userId).collection('schools').doc(loginData.schoolId).collection('classes').doc(selectedClass.standard)
         .collection('sections').doc(selectedClass.section).collection(cName)
@@ -260,15 +261,19 @@ export const getClassCurricullamData = (loginData, selectedClass, cName, type) =
               dispatch({ type: LOADING, payload: true })
             }
           });
-          console.log("Gallery", d)
+          console.log("If condition is running", d)
           dispatch({ type: GET_CLASSES_DATA, payload: {type:type, classData: d, lastVisible: lastDocument } })
           dispatch({ type: LOADING, payload: false })
-
         }
         else {
-          dispatch({ type: LOADING, payload: true })
+          console.log("else condition is running", d)
+          dispatch({ type: GET_CLASSES_DATA, payload: {type:type, classData: d, lastVisible: null } })
+          dispatch({ type: LOADING, payload: false })
         }
       });
+
+      console.log("d is ", d)
+
     }
 
     catch (e) {
